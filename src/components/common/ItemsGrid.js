@@ -60,13 +60,22 @@ function ItemsGrid(props) {
         item.id > 0 ? (
           <Grid item key={item.id} xs={12} sm={6} md={4}>
             <Card className={props.classes.card}>
-              <Link to={"/store/" + item.id}>
+              {item.type === "store" ? (
+                <Link to={"/store/" + item.id}>
+                  <CardMedia
+                    className={props.classes.cardMedia}
+                    image={`${process.env.PUBLIC_URL}/imgs/${item.coverImage}`}
+                    title={item.name}
+                  />
+                </Link>
+              ) : (
                 <CardMedia
+                  onClick={() => changeState(item.id)}
                   className={props.classes.cardMedia}
                   image={`${process.env.PUBLIC_URL}/imgs/${item.coverImage}`}
                   title={item.name}
                 />
-              </Link>
+              )}
             </Card>
           </Grid>
         ) : null
