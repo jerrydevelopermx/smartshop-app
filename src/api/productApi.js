@@ -1,5 +1,5 @@
 import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = process.env.REACT_APP_API_URL + "/products/";
+const baseUrl = "http://641979585fd3.ngrok.io/products/";
 
 export function getProducts() {
   return fetch(baseUrl).then(handleResponse).catch(handleError);
