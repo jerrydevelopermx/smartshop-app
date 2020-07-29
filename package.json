@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "express": "^4.17.1",
     "flux": "^3.1.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -17,7 +18,7 @@
     "video-react": "^0.14.1"
   },
   "scripts": {
-    "start": "run-p start:dev start:api",
+    "start": "NODE_ENV=production=http://641979585fd3.ngrok.io node server.js",
     "start:dev": "cross-env REACT_APP_API_URL=http://localhost:3004 react-scripts start",
     "prestart:api": "node tools/createMockDb.js",
     "start:api": "node tools/apiServer.js",
