@@ -1,0 +1,28 @@
+import { handleResponse, handleError } from "./apiUtils";
+const baseUrl = process.env.REACT_APP_API_URL + "/products/";
+
+export function getProducts() {
+  return fetch(baseUrl).then(handleResponse).catch(handleError);
+}
+
+export function getProductsByStoreId(id) {
+  return fetch(baseUrl + "?storeId=" + id)
+    .then((response) => {
+      if (!response.ok) throw new Error("Network response was not ok.");
+      return response.json().then((products) => {
+        return products;
+      });
+    })
+    .catch(handleError);
+}
+
+export function getProductsByStoreAndCategory(storeId, category) {
+  return fetch(baseUrl + "?categoryId=" + category + "&storeId=" + storeId)
+    .then((response) => {
+      if (!response.ok) throw new Error("Network response was not ok.");
+      return response.json().then((products) => {
+        return products;
+      });
+    })
+    .catch(handleError);
+}
