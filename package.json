@@ -2,6 +2,9 @@
   "name": "ecomm-app",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "npm": "6.x"
+  },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
@@ -19,6 +22,7 @@
   },
   "scripts": {
     "start": "node server.js",
+    "start:serve": "NODE_ENV=production=http://641979585fd3.ngrok.io node server.js",
     "start:dev": "cross-env REACT_APP_API_URL=http://localhost:3004 react-scripts start",
     "prestart:api": "node tools/createMockDb.js",
     "start:api": "node tools/apiServer.js",
