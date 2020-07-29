@@ -18,7 +18,7 @@
     "video-react": "^0.14.1"
   },
   "scripts": {
-    "start": "NODE_ENV=production=http://641979585fd3.ngrok.io node server.js",
+    "start": "REACT_APP_API_URL=http://641979585fd3.ngrok.io node server.js",
     "start:dev": "cross-env REACT_APP_API_URL=http://localhost:3004 react-scripts start",
     "prestart:api": "node tools/createMockDb.js",
     "start:api": "node tools/apiServer.js",
