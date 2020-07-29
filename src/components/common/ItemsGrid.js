@@ -36,6 +36,7 @@ import productStore from "../../stores/productStore";
 }));
 */
 function ItemsGrid(props) {
+  console.log(props);
   const [product, setProduct] = useState({});
   const [details, setDetails] = useState({ open: false });
 
@@ -59,23 +60,13 @@ function ItemsGrid(props) {
         item.id > 0 ? (
           <Grid item key={item.id} xs={12} sm={6} md={4}>
             <Card className={props.classes.card}>
-              <CardMedia
-                className={props.classes.cardMedia}
-                image={`${process.env.PUBLIC_URL}/imgs/${item.coverImage}`}
-                title="Image title"
-              />
-              <CardContent className={props.classes.cardContent}></CardContent>
-              <CardActions>
-                <Link to={"/store/" + item.id}> {item.name}</Link>
-
-                <Button
-                  size="small"
-                  color="primary"
-                  onClick={() => changeState(item.id)}
-                >
-                  View
-                </Button>
-              </CardActions>
+              <Link to={"/store/" + item.id}>
+                <CardMedia
+                  className={props.classes.cardMedia}
+                  image={`${process.env.PUBLIC_URL}/imgs/${item.coverImage}`}
+                  title={item.name}
+                />
+              </Link>
             </Card>
           </Grid>
         ) : null

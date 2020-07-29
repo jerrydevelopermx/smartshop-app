@@ -13,7 +13,7 @@ function Slider(props) {
         infiniteLoop={true}
         stopOnHover={true}
         emulateTouch={true}
-        dynamicHeight={true}
+        dynamicHeight={false}
         showStatus={false}
         useKeyboardArrows={true}
         transitionTime={550}
