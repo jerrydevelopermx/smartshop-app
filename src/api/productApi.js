@@ -26,3 +26,14 @@ export function getProductsByStoreAndCategory(storeId, category) {
     })
     .catch(handleError);
 }
+
+export function getProductsByStoreAndFilter(storeId, filter, value) {
+  return fetch(baseUrl + "?storeId=" + storeId + "&" + filter + "=" + value)
+    .then((response) => {
+      if (!response.ok) throw new Error("Network response was not ok.");
+      return response.json().then((products) => {
+        return products;
+      });
+    })
+    .catch(handleError);
+}

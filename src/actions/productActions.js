@@ -33,3 +33,15 @@ export function loadProductsByStoreAndCategory(storeId, category) {
       });
     });
 }
+
+export function loadProductsByStoreAndFilter(storeId, filter, value) {
+  return productApi
+    .getProductsByStoreAndFilter(storeId, filter, value)
+    .then((products) => {
+      //Hey dispatcher, go tell all stores that a course was just created
+      dispatcher.dispatch({
+        actionType: actionTypes.LOAD_PRODUCTS,
+        products,
+      });
+    });
+}

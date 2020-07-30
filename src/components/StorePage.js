@@ -92,6 +92,12 @@ function StorePage(props) {
     //setProducts(productStore.getProductsByCategory(target.value));
   }
 
+  function filterChangeHandler({ target }) {
+    productActions.loadProductsByStoreAndFilter(pageId, "color", target.value);
+    //console.log(productStore.getProductsByCategory(target.value));
+    //setProducts(productStore.getProductsByCategory(target.value));
+  }
+
   const useStyles = makeStyles((theme) => page.classes);
   const classes = useStyles();
   //console.log(classes);
@@ -104,13 +110,14 @@ function StorePage(props) {
         <Container className={classes.cardGrid} maxWidth="lg">
           <SearchFilter
             onCategoryChange={categoryChangeHandler}
+            onFilterChange={filterChangeHandler}
             classes={classes}
             categories={page.categories}
             filters={page.filters}
           />
           <ItemsGrid items={products} classes={classes} />
           <VideoGallery video={page.video} classes={classes} />
-          <Gallery />
+          <Slider slides={page.offers} classes={classes} />
         </Container>
       </main>
       <Footer classes={classes} />
