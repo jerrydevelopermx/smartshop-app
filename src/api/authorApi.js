@@ -1,5 +1,5 @@
 import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = "http://641979585fd3.ngrok.io/authors/";
+const baseUrl = "http://f8465b5a45b9.ngrok.io/authors/";
 
 export function getAuthors() {
   return fetch(baseUrl).then(handleResponse).catch(handleError);
