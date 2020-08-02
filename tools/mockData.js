@@ -106,10 +106,10 @@ const pages = [
           { text: "Tour the Site", action: "tour" },
         ],
       },
-      { type: "link", label: "Contact Us", url: "/contact" },
+      { type: "link", label: "Contact Us", url: "", action: "contact" },
       { type: "logo" },
-      { type: "link", label: "Events", url: "/events" },
-      { type: "link", label: "Blog", url: "/blog" },
+      { type: "link", label: "Events", url: "/#events-scroll" },
+      { type: "link", label: "Blog", url: "", action: "blog" },
       { type: "link", label: "Login", url: "/login" },
     ],
     styles: {
@@ -202,6 +202,7 @@ const pages = [
       },
       slider: {
         marginTop: "80px",
+        textAlign: "center",
       },
       searchContent: {
         border: "1px solid #ccc",
@@ -406,10 +407,65 @@ const pages = [
       {
         id: "cat5",
         name: "Business",
+        filters: [
+          {
+            id: "f1",
+            name: "Color",
+            values: ["Red", "Yellow", "Black", "Blue", "Pink", "Beige"],
+          },
+          {
+            id: "f3",
+            name: "Style",
+            values: ["ST1898", "ST18999", "ST1800", "ST19000"],
+          },
+        ],
       },
       {
         id: "cat6",
         name: "Casual",
+        filters: [
+          {
+            id: "f1",
+            name: "Color",
+            values: [
+              { type: "color", value: "Red" },
+              { type: "color", value: "Yellow" },
+              { type: "color", value: "Black" },
+              { type: "color", value: "Blue" },
+              { type: "color", value: "Pink" },
+              { type: "color", value: "Beige" },
+            ],
+          },
+          {
+            id: "f2",
+            name: "Size",
+            values: [
+              { type: "size", value: "small" },
+              { type: "size", value: "medium" },
+              { type: "size", value: "big" },
+            ],
+          },
+          {
+            id: "f3",
+            name: "Style",
+            values: [
+              { type: "style", value: "ST1898" },
+              { type: "style", value: "ST18999" },
+              { type: "style", value: "ST1800" },
+              { type: "style", value: "ST19000" },
+            ],
+          },
+          {
+            id: "f4",
+            name: "Material",
+            values: [
+              { type: "style", value: "Synthetic" },
+              { type: "style", value: "Mat" },
+              { type: "style", value: "Scrii" },
+              { type: "style", value: "PI" },
+            ],
+          },
+        ],
       },
     ],
     filters: [
@@ -872,6 +928,55 @@ const sectionsContent = [
         type: "p",
         text:
           "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
+      },
+    ],
+  },
+  {
+    pageId: 0,
+    sectionId: "contact",
+    title: "Contact us",
+    content: [
+      {
+        type: "p",
+        text:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      },
+      {
+        type: "p",
+        text:
+          "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+      },
+    ],
+  },
+  {
+    pageId: 0,
+    sectionId: "blog",
+    title: "Blog",
+    content: [
+      {
+        type: "p",
+        text:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      },
+      {
+        type: "p",
+        text:
+          "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+      },
+      {
+        type: "p",
+        text:
+          "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
+      },
+      {
+        type: "p",
+        text:
+          "Vestibulum id euismod augue, nec ultrices mi. Mauris dolor arcu, convallis sed auctor a, maximus sit amet purus. Aenean sed ultrices nulla. Sed sodales mattis leo at congue. In mattis ipsum non lacus venenatis, et placerat dui convallis. Aliquam aliquet, dui nec tristique dapibus, ex nisi tempor ligula, id finibus massa neque nec tellus. Vestibulum dapibus arcu id lacus sodales elementum. Vivamus id erat ante. Curabitur nec ante ex.",
+      },
+      {
+        type: "p",
+        text:
+          "Cras nec justo congue, facilisis erat vel, porta enim. Sed imperdiet bibendum purus, at tempus lacus interdum eget. Cras et est a ex volutpat faucibus. Nulla rhoncus purus ac lobortis auctor. Aenean consequat libero mi, eget laoreet quam dictum molestie. Morbi eget quam vitae neque consequat viverra sed non turpis. Vivamus ac faucibus nunc, et lobortis tortor. Donec gravida commodo ultrices. Aenean venenatis fringilla ipsum, ut egestas lectus imperdiet et. Nulla sit amet condimentum urna. Vivamus fermentum augue eu neque vestibulum, vel ullamcorper lorem elementum. Quisque sit amet sagittis leo, id placerat ligula. Mauris nec enim et sem bibendum lobortis. Suspendisse ac malesuada leo, sed iaculis libero. Integer enim massa, dapibus ut blandit rhoncus, aliquam ut ex. Maecenas convallis velit a diam hendrerit laoreet. Donec tincidunt, nisl eget commodo volutpat, diam arcu egestas enim, nec ultrices nulla magna at purus. Praesent ut sapien velit. Donec nisi libero, ultrices sit amet volutpat quis, luctus ac nisl. Donec a dui mauris. Etiam venenatis condimentum odio ut dapibus. Pellentesque pulvinar aliquam lectus, ut luctus risus laoreet ac. Integer sed fermentum elit. Nam maximus, odio vitae commodo facilisis, odio mi vulputate odio, vitae aliquam nulla augue eu odio. Donec venenatis ut diam sit amet sagittis. Proin condimentum felis ac purus viverra fringilla. Fusce a quam eget leo sodales aliquam et vitae erat. Quisque volutpat non mauris ut gravida. Nunc at ornare purus, ut iaculis sem. Proin a mauris eu leo ornare commodo eu et diam.",
       },
     ],
   },

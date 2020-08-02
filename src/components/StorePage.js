@@ -17,7 +17,11 @@ function StorePage(props) {
   const [pageId, setPageId] = useState(0);
   const [products, setProducts] = useState(productStore.getProducts());
   const [page, setPage] = useState(pageStore.getPage());
+  const [filters, setFilters] = useState([]);
+  const [categoryId, setCategoryId] = useState({});
+
   const videoRef = useRef();
+
   useEffect(() => {
     pageStore.addChangeListener(onChange);
     productStore.addChangeListener(onProductsChange);
@@ -43,10 +47,13 @@ function StorePage(props) {
     setProducts(productStore.getProducts());
   }
   function categoryChangeHandler({ target }) {
+    setFilters(pageStore.getFiltersByCategory(target.value));
+    setCategoryId(target.value);
     productActions.loadProductsByStoreAndCategory(pageId, target.value);
   }
 
   function filterChangeHandler({ target }) {
+    console.log(categoryId, target);
     productActions.loadProductsByStoreAndFilter(pageId, "color", target.value);
   }
 
@@ -70,7 +77,7 @@ function StorePage(props) {
             onFilterChange={filterChangeHandler}
             classes={classes}
             categories={page.categories}
-            filters={page.filters}
+            filters={filters}
           />
           <ItemsGrid items={products} classes={classes} />
           <VideoGallery

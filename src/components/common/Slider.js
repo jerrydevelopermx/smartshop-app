@@ -8,7 +8,7 @@ function Slider(props) {
   return (
     <div id={props.id} className={props.classes.slider}>
       {props.id === "events-scroll" ? (
-        <Typography variant="h3">Events & Promos</Typography>
+        <Typography variant="h3">Hot Sales, Promos and Events</Typography>
       ) : null}
       <Carousel
         showArrows={true}

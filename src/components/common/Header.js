@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import MobileNavBar from "./MobileNavBar";
-import { NavLink } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
@@ -20,6 +19,7 @@ import DraftsIcon from "@material-ui/icons/Drafts";
 import SendIcon from "@material-ui/icons/Send";
 import ModalContent from "./ModalContent";
 import contentStore from "../../stores/contentStore";
+import { NavHashLink as NavLink } from "react-router-hash-link";
 
 const StyledMenu = withStyles({
   paper: {
@@ -121,6 +121,9 @@ function Header(props) {
                         activeClassName={props.classes.headerActive}
                         className={props.classes.headerMenu}
                         to={item.url}
+                        onClick={() =>
+                          item.action ? handleSubMenuClick(item.action) : null
+                        }
                         exact
                       >
                         {item.label}

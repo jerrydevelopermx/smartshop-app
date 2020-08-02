@@ -17,7 +17,6 @@ function SearchFilter(props) {
           labelId="demo-simple-select-outlined-label"
           id="demo-simple-select-outlined"
           label="Categories"
-          value={""}
           onChange={props.onCategoryChange}
         >
           <MenuItem value="">
@@ -63,8 +62,8 @@ function SearchFilter(props) {
                   {item &&
                     item.values &&
                     item.values.map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
+                      <MenuItem key={option} value={option.value}>
+                        {option.value}
                       </MenuItem>
                     ))}
                 </Select>

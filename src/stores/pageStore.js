@@ -28,6 +28,11 @@ class PageStore extends EventEmitter {
   getPageById(id) {
     return _pages.find((page) => page.id === parseInt(id));
   }
+
+  getFiltersByCategory(categoryId) {
+    return _page.categories.find((category) => category.id === categoryId)
+      .filters;
+  }
 }
 
 const store = new PageStore();
