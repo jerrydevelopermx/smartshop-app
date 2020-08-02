@@ -62,8 +62,8 @@ function SearchFilter(props) {
                   {item &&
                     item.values &&
                     item.values.map((option) => (
-                      <MenuItem key={option} value={option.value}>
-                        {option.value}
+                      <MenuItem key={option} value={option}>
+                        {option}
                       </MenuItem>
                     ))}
                 </Select>
