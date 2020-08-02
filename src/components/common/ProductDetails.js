@@ -54,7 +54,9 @@ function ProductDetails(props) {
             <Typography variant="h6">Warranties</Typography>
             <Typography variant="body2">{props.product.warranties}</Typography>
           </Grid>
-          <Grid item xs={12} sm={12} md={12}>
+        </Grid>
+        <Grid container spacing={2} style={{ border: "1px solid" }}>
+          <Grid item xs={12} sm={4} md={4}>
             {props.product.attributes &&
               props.product.attributes.length > 0 &&
               props.product.attributes.map((item) => (
@@ -62,8 +64,8 @@ function ProductDetails(props) {
                   key={item.name}
                   variant="outlined"
                   style={{
-                    margin: "8px",
-                    minWidth: 200,
+                    margin: "4px",
+                    width: "100%",
                   }}
                 >
                   <InputLabel id="demo-simple-select-outlined-label">

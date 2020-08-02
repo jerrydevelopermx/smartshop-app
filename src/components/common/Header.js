@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import MobileNavBar from "./MobileNavBar";
 import { NavLink } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
@@ -13,44 +13,178 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/core/ListItemText";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import DraftsIcon from "@material-ui/icons/Drafts";
+import SendIcon from "@material-ui/icons/Send";
+import ModalContent from "./ModalContent";
+import contentStore from "../../stores/contentStore";
+
+const StyledMenu = withStyles({
+  paper: {
+    //border: "1px solid #d3d4d5",
+    backgroundColor: "#590F10",
+    color: "white",
+  },
+})((props) => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "center",
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "center",
+    }}
+    {...props}
+  />
+));
+
+const StyledMenuItem = withStyles((theme) => ({
+  root: {
+    /*"&:focus": {
+      backgroundColor: theme.palette.primary.main,
+      "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
+        color: theme.palette.common.white,
+      },
+    },*/
+    "&:hover": {
+      backgroundColor: "#350909",
+    },
+  },
+}))(MenuItem);
 
 function Header(props) {
-  console.log(props);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [content, setContent] = useState({});
+  const [modalContent, setModalContent] = useState({
+    open: false,
+    sectionId: "",
+  });
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleSubMenuClick = (action) => {
+    setAnchorEl(null);
+    setModalContent({ open: true, sectionId: action });
+    setContent(contentStore.getContentBySectionId(action));
+  };
+
+  function handleSubMenuScroll(action) {
+    //console.log(props.inputRef.current);
+    var element = document.getElementById(action + "-scroll");
+    //props.inputRef.current.scrollIntoView({ block: "end", behavior: "smooth" });
+    element.scrollIntoView({ block: "end", behavior: "smooth" });
+    //setAnchorEl(null);
+  }
+
+  function closeModal() {
+    setModalContent({ open: false, sectionId: "" });
+  }
+
   return (
-    <AppBar className={props.classes.header} position="fixed">
-      <Toolbar
-        component="nav"
-        variant="dense"
-        className={props.classes.toolbarSecondary}
-      >
-        <Hidden only={["sm", "md", "lg"]}>
-          <MobileNavBar list={props.menu} classes={props.classes} />
-        </Hidden>
-        {props.menu &&
-          props.menu.map((item) =>
-            item.type === "link" ? (
-              <Hidden only={["xs"]}>
-                <NavLink
-                  activeClassName={props.classes.headerActive}
-                  className={props.classes.headerMenu}
-                  exact
-                  to={item.url}
-                >
-                  {item.label}
-                </NavLink>
-              </Hidden>
-            ) : (
-              <div>
-                <img
-                  src={`${process.env.PUBLIC_URL}/imgs/${props.logo}`}
-                  height="50"
-                  alt="s"
-                />
-              </div>
-            )
-          )}
-      </Toolbar>
-    </AppBar>
+    <>
+      <ModalContent
+        open={modalContent.open}
+        classes={props.classes}
+        contents={content}
+        onClose={closeModal}
+      />
+      <AppBar className={props.classes.header} position="fixed">
+        <Toolbar
+          component="nav"
+          variant="dense"
+          className={props.classes.toolbarSecondary}
+        >
+          <Hidden only={["sm", "md", "lg"]}>
+            <MobileNavBar list={props.menu} classes={props.classes} />
+          </Hidden>
+          {props.menu &&
+            props.menu.map((item) => {
+              switch (item.type) {
+                case "link":
+                  return (
+                    <Hidden key={item.label} only={["xs"]}>
+                      <NavLink
+                        style={{
+                          width: "110px",
+                          textAlign: "center",
+                        }}
+                        activeClassName={props.classes.headerActive}
+                        className={props.classes.headerMenu}
+                        to={item.url}
+                        exact
+                      >
+                        {item.label}
+                      </NavLink>
+                    </Hidden>
+                  );
+                case "submenu":
+                  return (
+                    <Hidden key={item.label} only={["xs"]}>
+                      <NavLink
+                        onClick={handleClick}
+                        style={{
+                          width: "110px",
+                          textAlign: "center",
+                        }}
+                        activeClassName={props.classes.headerActive}
+                        className={props.classes.headerMenu}
+                        exact
+                        to=""
+                      >
+                        {item.label}
+                      </NavLink>
+
+                      <StyledMenu
+                        id="customized-menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                      >
+                        {item.items.map((submenu) => (
+                          <StyledMenuItem
+                            onClick={() =>
+                              submenu.action === "events" ||
+                              submenu.action === "tour"
+                                ? handleSubMenuScroll(submenu.action)
+                                : handleSubMenuClick(submenu.action)
+                            }
+                          >
+                            <ListItemText primary={submenu.text} />
+                          </StyledMenuItem>
+                        ))}
+                      </StyledMenu>
+                    </Hidden>
+                  );
+
+                case "logo":
+                  return (
+                    <div key={item.type}>
+                      <img
+                        src={`${process.env.PUBLIC_URL}/imgs/${props.logo}`}
+                        style={{ height: "60px" }}
+                        alt=""
+                      />
+                    </div>
+                  );
+
+                default:
+                  break;
+              }
+            })}
+        </Toolbar>
+      </AppBar>
+    </>
   );
 }
 

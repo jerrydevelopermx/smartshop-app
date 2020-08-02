@@ -2,10 +2,14 @@ import React from "react";
 import { Carousel } from "react-responsive-carousel";
 //import "react-responsive-carousel/lib/styles/carousel.min.css";
 import styles from "react-responsive-carousel/lib/styles/carousel.min.css";
+import Typography from "@material-ui/core/Typography";
 
 function Slider(props) {
   return (
-    <div className={props.classes.slider}>
+    <div id={props.id} className={props.classes.slider}>
+      {props.id === "events-scroll" ? (
+        <Typography variant="h3">Events & Promos</Typography>
+      ) : null}
       <Carousel
         showArrows={true}
         showThumbs={false}
