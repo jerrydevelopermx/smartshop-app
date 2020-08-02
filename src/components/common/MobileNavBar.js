@@ -89,6 +89,7 @@ function MobileNavBar(props) {
                         {element.items.map((submenu) => (
                           <ListItem
                             button
+                            onClick={() => props.onClick(submenu.action)}
                             style={{ marginLeft: "10px" }}
                             className={classes.nested}
                           >

@@ -90,6 +90,10 @@ function Header(props) {
     setModalContent({ open: false, sectionId: "" });
   }
 
+  function mobileMenuClickHandler(section) {
+    setModalContent({ open: true, sectionId: section });
+    setContent(contentStore.getContentBySectionId(section));
+  }
   return (
     <>
       <ModalContent
@@ -105,7 +109,11 @@ function Header(props) {
           className={props.classes.toolbarSecondary}
         >
           <Hidden only={["sm", "md", "lg"]}>
-            <MobileNavBar list={props.menu} classes={props.classes} />
+            <MobileNavBar
+              list={props.menu}
+              classes={props.classes}
+              onClick={mobileMenuClickHandler}
+            />
           </Hidden>
           {props.menu &&
             props.menu.map((item) => {
