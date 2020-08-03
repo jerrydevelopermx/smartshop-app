@@ -164,6 +164,7 @@ function Header(props) {
                       >
                         {item.items.map((submenu) => (
                           <StyledMenuItem
+                            key={submenu.action}
                             onClick={() =>
                               submenu.action === "events" ||
                               submenu.action === "tour"

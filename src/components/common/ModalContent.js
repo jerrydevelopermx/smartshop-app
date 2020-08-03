@@ -34,8 +34,8 @@ function ModalContent(props) {
       <DialogContent className={props.classes.contentModalsBody}>
         {props.contents.content &&
           props.contents.content.length > 0 &&
-          props.contents.content.map((paragraph) => (
-            <Typography variant="body2" paragraph={true}>
+          props.contents.content.map((paragraph, index) => (
+            <Typography variant="body2" key={"pr" + index} paragraph={true}>
               {paragraph.text}
             </Typography>
           ))}

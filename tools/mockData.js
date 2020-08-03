@@ -427,43 +427,18 @@ const pages = [
           {
             id: "f1",
             name: "Color",
-            values: [
-              { type: "color", value: "Red" },
-              { type: "color", value: "Yellow" },
-              { type: "color", value: "Black" },
-              { type: "color", value: "Blue" },
-              { type: "color", value: "Pink" },
-              { type: "color", value: "Beige" },
-            ],
+            values: ["Red", "Yellow", "Black", "Blue", "Pink", "Beige"],
           },
-          {
-            id: "f2",
-            name: "Size",
-            values: [
-              { type: "size", value: "small" },
-              { type: "size", value: "medium" },
-              { type: "size", value: "big" },
-            ],
-          },
+          { id: "f2", name: "Size", values: ["small", "medium", "big"] },
           {
             id: "f3",
             name: "Style",
-            values: [
-              { type: "style", value: "ST1898" },
-              { type: "style", value: "ST18999" },
-              { type: "style", value: "ST1800" },
-              { type: "style", value: "ST19000" },
-            ],
+            values: ["ST1898", "ST18999", "ST1800", "ST19000"],
           },
           {
             id: "f4",
             name: "Material",
-            values: [
-              { type: "style", value: "Synthetic" },
-              { type: "style", value: "Mat" },
-              { type: "style", value: "Scrii" },
-              { type: "style", value: "PI" },
-            ],
+            values: ["Synthetic", "Mat", "Scrii", "PI"],
           },
         ],
       },

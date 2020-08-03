@@ -3,19 +3,12 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import { makeStyles } from "@material-ui/core/styles";
 import Collapse from "@material-ui/core/Collapse";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import SendIcon from "@material-ui/icons/Send";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import StarBorder from "@material-ui/icons/StarBorder";
 
 const useStyles = makeStyles({
   list: {
@@ -66,7 +59,7 @@ function MobileNavBar(props) {
         onEscapeKeyDown={toggleDrawer}
         onBackdropClick={toggleDrawer}
         open={state}
-        onOpen
+        onOpen={() => {}}
         classes={{ paper: props.classes.drawer }}
         onClose={toggleDrawer(false)}
       >
@@ -79,15 +72,16 @@ function MobileNavBar(props) {
                     <ListItemText primary={element.label} />
                   </ListItem>
                 ) : element.type === "submenu" ? (
-                  <>
-                    <ListItem button onClick={handleClick}>
+                  <div key={"f" + index}>
+                    <ListItem key={"s" + index} button onClick={handleClick}>
                       <ListItemText primary="Our Services" />
                       {submenuOpen ? <ExpandLess /> : <ExpandMore />}
                     </ListItem>
                     <Collapse in={submenuOpen} timeout="auto" unmountOnExit>
                       <List component="div" disablePadding>
-                        {element.items.map((submenu) => (
+                        {element.items.map((submenu, index) => (
                           <ListItem
+                            key={index}
                             button
                             onClick={() => props.onClick(submenu.action)}
                             style={{ marginLeft: "10px" }}
@@ -98,7 +92,7 @@ function MobileNavBar(props) {
                         ))}
                       </List>
                     </Collapse>
-                  </>
+                  </div>
                 ) : null
               )}
           </List>
