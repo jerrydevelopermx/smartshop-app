@@ -9,7 +9,7 @@ function Footer(props) {
         {props.content &&
           props.content.columns.length > 0 &&
           props.content.columns.map((column) => (
-            <Grid item key={column.id} xs={12} sm={6} md={3}>
+            <Grid item key={column.id} xs={6} sm={6} md={3}>
               <div style={{ margin: "auto", textAlign: "center" }}>
                 {column.title}
               </div>
@@ -17,7 +17,6 @@ function Footer(props) {
                 style={{
                   margin: "auto",
                   textAlign: "left",
-                  paddingLeft: "20%",
                 }}
               >
                 <ul style={{ listStyleType: "none" }}>
