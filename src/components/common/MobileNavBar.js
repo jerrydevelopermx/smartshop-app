@@ -82,7 +82,6 @@ function MobileNavBar(props) {
                           <ListItem
                             key={index}
                             button
-                            onClick={props.onClick}
                             style={{ marginLeft: "10px" }}
                             className={classes.nested}
                           >
