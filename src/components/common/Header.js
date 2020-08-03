@@ -91,15 +91,15 @@ function Header(props) {
     setModalContent({ open: false, sectionId: "", content: {} });
   }
 
-  function mobileMenuClickHandler(action) {
+  const mobileMenuClickHandler = (action) => {
     console.log(action);
     setModalContent({
       open: true,
-      sectionId: "mission",
+      sectionId: action,
       content: contentStore.getContentBySectionId(action),
     });
     //setContent(contentStore.getContentBySectionId("mission"));
-  }
+  };
 
   return (
     <>
