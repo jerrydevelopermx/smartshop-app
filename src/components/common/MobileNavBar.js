@@ -23,8 +23,8 @@ const useStyles = makeStyles({
   },
 });
 
-function alertHo() {
-  alert("no mms");
+function alertHo(action) {
+  alert(action);
 }
 
 function MobileNavBar(props) {
@@ -86,7 +86,7 @@ function MobileNavBar(props) {
                           <ListItem
                             key={index}
                             button
-                            onClick={alertHo}
+                            onClick={() => alertHo(submenu.action)}
                             style={{ marginLeft: "10px" }}
                             className={classes.nested}
                           >
