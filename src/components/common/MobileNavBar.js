@@ -40,7 +40,6 @@ function MobileNavBar(props) {
   };
 
   const handleClick = (event) => {
-    event.preventDefault();
     setSubmenuOpen(!submenuOpen);
   };
 
