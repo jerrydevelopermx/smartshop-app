@@ -12,29 +12,37 @@ function Footer(props) {
             <Grid item key={column.id} xs={6} sm={6} md={3}>
               <div style={{ margin: "auto", textAlign: "center" }}>
                 {column.title}
+                <div
+                  style={{
+                    width: "100%",
+                    margin: "auto",
+                    textAlign: "left",
+                    border: "1px solid",
+                  }}
+                >
+                  <ul style={{ listStyleType: "none", padding: "5% 15%" }}>
+                    {column.options.map((option, index) => (
+                      <li key={"footOpt" + index}>
+                        <NavLink
+                          style={{
+                            color: "#fff",
+                            textDecoration: "none",
+                          }}
+                          to=""
+                        >
+                          {option.text}
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
               <div
                 style={{
                   margin: "auto",
                   textAlign: "left",
                 }}
-              >
-                <ul style={{ listStyleType: "none" }}>
-                  {column.options.map((option, index) => (
-                    <li key={"footOpt" + index}>
-                      <NavLink
-                        style={{
-                          color: "#fff",
-                          textDecoration: "none",
-                        }}
-                        to=""
-                      >
-                        {option.text}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              ></div>
             </Grid>
           ))}
       </Grid>
