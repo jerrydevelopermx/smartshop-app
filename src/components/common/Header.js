@@ -117,7 +117,7 @@ function Header(props) {
             <MobileNavBar
               list={props.menu}
               classes={props.classes}
-              alertHo={alertHo}
+              onClick={alertHo}
             />
           </Hidden>
           {props.menu &&
