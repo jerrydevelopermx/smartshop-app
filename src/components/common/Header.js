@@ -63,6 +63,7 @@ function Header(props) {
   const [modalContent, setModalContent] = useState({
     open: false,
     sectionId: "",
+    content: {},
   });
 
   const handleClick = (event) => {
@@ -87,11 +88,15 @@ function Header(props) {
   }
 
   function closeModal() {
-    setModalContent({ open: false, sectionId: "" });
+    setModalContent({ open: false, sectionId: "", content: {} });
   }
 
   function mobileMenuClickHandler(action) {
-    setModalContent({ open: true, sectionId: "mission" });
+    setModalContent({
+      open: true,
+      sectionId: "mission",
+      content: contentStore.getContentBySectionId(action),
+    });
     //setContent(contentStore.getContentBySectionId("mission"));
   }
 
@@ -104,7 +109,7 @@ function Header(props) {
       <ModalContent
         open={modalContent.open}
         classes={props.classes}
-        contents={content}
+        contents={modalContent.content}
         onClose={closeModal}
       />
       <AppBar className={props.classes.header} position="fixed">
