@@ -88,7 +88,7 @@ function StorePage(props) {
           <Slider id="events-scroll" slides={page.offers} classes={classes} />
         </Container>
       </main>
-      <Footer classes={classes} />
+      <Footer classes={classes} content={page.footer} />
     </div>
   );
 }

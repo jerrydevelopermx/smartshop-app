@@ -112,35 +112,6 @@ const pages = [
       { type: "link", label: "Blog", url: "", action: "blog" },
       { type: "link", label: "Login", url: "/login" },
     ],
-    styles: {
-      body: {
-        background: "#fff",
-      },
-      header: {
-        header: {
-          background: "#590F10",
-          height: "100px",
-        },
-        toolbarSecondary: {
-          justifyContent: "space-between",
-          overflowX: "auto",
-          marginTop: "20px",
-        },
-        toolbarLink: {
-          //padding: theme.spacing(1), *8
-          padding: "8px",
-          flexShrink: 0,
-        },
-        headerActive: {
-          color: "#fff",
-        },
-        headerMenu: {
-          color: "#fff",
-          fontSize: "20px",
-          textDecoration: "none",
-        },
-      },
-    },
     classes: {
       body: {
         background: "#fff",
@@ -180,8 +151,9 @@ const pages = [
       footer: {
         background: "#590F10",
         //padding: theme.spacing(6),
-        padding: "48px",
+        padding: "30px",
         color: "#fff",
+        fontSize: "13px",
       },
       cardGrid: {
         paddingTop: "30px",
@@ -279,6 +251,45 @@ const pages = [
         text: null,
       },
     ],
+    footer: {
+      copyright: "Copyright. 2020 | HLProductions ",
+      columns: [
+        {
+          id: "foo1",
+          title: "ABOUT US",
+          options: [
+            { text: "Who we are", url: "" },
+            { text: "History", url: "" },
+            { text: "Contact", url: "" },
+          ],
+        },
+        {
+          id: "foo2",
+          title: "DISCLAIMERS",
+          options: [
+            { text: "Views expressed", url: "" },
+            { text: "Fairs use", url: "" },
+            { text: "No responsability", url: "" },
+            { text: "Copyright notice", url: "" },
+          ],
+        },
+        {
+          id: "foo3",
+          title: "TWEETS",
+          options: [
+            { text: "Views expressed", url: "" },
+            { text: "Fairs use", url: "" },
+            { text: "No responsability", url: "" },
+            { text: "Copyright notice", url: "" },
+          ],
+        },
+        {
+          id: "foo4",
+          title: "JOIN US",
+          options: [{ text: "Subscribe", url: "" }],
+        },
+      ],
+    },
   },
   {
     id: 1,
@@ -329,7 +340,7 @@ const pages = [
       footer: {
         background: "#2E3B55",
         //padding: theme.spacing(6),
-        padding: "48px",
+        padding: "30px",
         color: "#fff",
       },
       cardGrid: {
@@ -526,7 +537,7 @@ const pages = [
       footer: {
         background: "#607c3c",
         //padding: theme.spacing(6),
-        padding: "48px",
+        padding: "30px",
         color: "#fff",
       },
       cardGrid: {
@@ -679,7 +690,7 @@ const pages = [
       footer: {
         background: "#000",
         //padding: theme.spacing(6),
-        padding: "48px",
+        padding: "30px",
         color: "#fff",
       },
       cardGrid: {
