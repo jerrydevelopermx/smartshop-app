@@ -92,7 +92,7 @@ function Header(props) {
 
   function mobileMenuClickHandler(action) {
     setModalContent({ open: true, sectionId: "mission" });
-    setContent(contentStore.getContentBySectionId("mission"));
+    //setContent(contentStore.getContentBySectionId("mission"));
   }
 
   function alertHo(action) {
