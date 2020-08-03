@@ -94,6 +94,11 @@ function Header(props) {
     setModalContent({ open: true, sectionId: "mission" });
     setContent(contentStore.getContentBySectionId("mission"));
   }
+
+  function alertHo(action) {
+    alert(action);
+  }
+
   return (
     <>
       <ModalContent
@@ -112,7 +117,7 @@ function Header(props) {
             <MobileNavBar
               list={props.menu}
               classes={props.classes}
-              onClick={mobileMenuClickHandler}
+              alertHo={alertHo}
             />
           </Hidden>
           {props.menu &&

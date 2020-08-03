@@ -86,7 +86,7 @@ function MobileNavBar(props) {
                           <ListItem
                             key={index}
                             button
-                            onClick={() => alertHo(submenu.action)}
+                            onClick={() => props.alertHo(submenu.action)}
                             style={{ marginLeft: "10px" }}
                             className={classes.nested}
                           >
