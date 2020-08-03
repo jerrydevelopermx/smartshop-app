@@ -18,7 +18,6 @@ import pageStore from "../../stores/pageStore";
 import * as contentActions from "../../actions/contentActions";
 
 function ModalContent(props) {
-  console.log(props);
   return (
     <Dialog
       fullWidth={true}
