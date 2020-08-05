@@ -1,5 +1,5 @@
 import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = "http://65810b28dd90.ngrok.io/sectionsContent/";
+const baseUrl = "http://655a44da32c9.ngrok.io/sectionsContent/";
 
 export function getContentByPageAndId(pageId, sectionId) {
   return fetch(baseUrl + "?pageId=" + pageId + "&sectionId=" + sectionId)
