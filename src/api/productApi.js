@@ -1,5 +1,5 @@
 import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = "http://1935443b3c23.ngrok.io/products/";
+const baseUrl = "http://f1b595e8f179.ngrok.io/products/";
 
 export function getProducts() {
   return fetch(baseUrl).then(handleResponse).catch(handleError);
