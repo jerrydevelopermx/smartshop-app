@@ -2,71 +2,86 @@ import React, { useState } from "react";
 import MobileNavBar from "./MobileNavBar";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import Button from "@material-ui/core/Button";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/core/ListItemText";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import SendIcon from "@material-ui/icons/Send";
 import ModalContent from "./ModalContent";
-import contentStore from "../../stores/contentStore";
 import { NavHashLink as NavLink } from "react-router-hash-link";
+import { useLazyQuery, gql } from "@apollo/client";
 
-const StyledMenu = withStyles({
-  paper: {
-    //border: "1px solid #d3d4d5",
-    backgroundColor: "#590F10",
-    color: "white",
-  },
-})((props) => (
-  <Menu
-    elevation={0}
-    getContentAnchorEl={null}
-    anchorOrigin={{
-      vertical: "bottom",
-      horizontal: "center",
-    }}
-    transformOrigin={{
-      vertical: "top",
-      horizontal: "center",
-    }}
-    {...props}
-  />
-));
-
-const StyledMenuItem = withStyles((theme) => ({
-  root: {
-    /*"&:focus": {
-      backgroundColor: theme.palette.primary.main,
-      "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
-        color: theme.palette.common.white,
-      },
-    },*/
-    "&:hover": {
-      backgroundColor: "#350909",
-    },
-  },
-}))(MenuItem);
+const GET_CONTENT_BY_SECTION = gql`
+  query GetContent($storeId: ID!, $sectionId: String) {
+    content(storeId: $storeId, sectionId: $sectionId) {
+      pageId
+      sectionId
+      title
+      content {
+        type
+        text
+      }
+    }
+  }
+`;
 
 function Header(props) {
+  const [getContent, { loading, data }] = useLazyQuery(GET_CONTENT_BY_SECTION);
+
+  /*
+  let styles = {
+    paper: {
+      //border: "1px solid #d3d4d5",
+      backgroundColor: "#590F10",
+      color: "white",
+    },
+  };
+  let styles2 = {
+    root: {
+      "&:hover": {
+        backgroundColor: "#350909",
+      },
+    },
+  };*/
+  const StyledMenu = withStyles(props.styles.styledMenu)((props) => (
+    <Menu
+      elevation={0}
+      getContentAnchorEl={null}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "center",
+      }}
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "center",
+      }}
+      {...props}
+    />
+  ));
+
+  let styledMenuItem = {
+    root: {
+      "&:hover": props.styles.styledMenuItem.root.hover,
+    },
+  };
+  const StyledMenuItem = withStyles((theme) => styledMenuItem)(MenuItem);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [content, setContent] = useState({});
   const [modalContent, setModalContent] = useState({
     open: false,
-    sectionId: "",
+    sectionId: "mission",
     content: {},
+  });
+  const [modalStatus, setModalStatus] = useState({
+    open: false,
+    sectionId: "",
+    storeId: props.pageId,
   });
 
   const handleClick = (event) => {
+    event.preventDefault();
     setAnchorEl(event.currentTarget);
   };
 
@@ -74,9 +89,25 @@ function Header(props) {
     setAnchorEl(null);
   };
   const handleSubMenuClick = (action) => {
+    getContent({
+      variables: {
+        storeId: props.pageId,
+        sectionId: action,
+      },
+    });
     setAnchorEl(null);
-    setModalContent({ open: true, sectionId: action });
-    setContent(contentStore.getContentBySectionId(action));
+    setModalStatus({ ...modalStatus, ...{ open: true, sectionId: action } });
+  };
+
+  const mobileMenuClickHandler = (action) => {
+    getContent({
+      variables: {
+        storeId: props.pageId,
+        sectionId: action,
+      },
+    });
+
+    setModalStatus({ ...modalStatus, ...{ open: true, sectionId: action } });
   };
 
   function handleSubMenuScroll(action) {
@@ -88,37 +119,34 @@ function Header(props) {
   }
 
   function closeModal() {
-    setModalContent({ open: false, sectionId: "" });
-  }
-
-  const mobileMenuClickHandler = (action) => {
-    console.log(action);
-    setModalContent({
-      open: true,
-      sectionId: action,
+    setModalStatus({
+      ...modalStatus,
+      ...{ open: false },
     });
-    setContent(contentStore.getContentBySectionId("mission"));
-  };
+  }
 
   return (
     <>
-      <ModalContent
-        open={modalContent.open}
-        classes={props.classes}
-        contents={content}
-        sectionId={modalContent.sectionId}
-        onClose={closeModal}
-      />
-      <AppBar className={props.classes.header} position="fixed">
+      {data && data.content ? (
+        <ModalContent
+          open={modalStatus.open}
+          styles={props.modalStyles}
+          status={modalStatus}
+          onClose={closeModal}
+          content={data.content}
+        />
+      ) : null}
+      <AppBar style={props.styles.topBar} position="fixed">
         <Toolbar
           component="nav"
           variant="dense"
-          className={props.classes.toolbarSecondary}
+          style={props.styles.toolbarSecondary}
         >
           <Hidden only={["sm", "md", "lg"]}>
             <MobileNavBar
               list={props.menu}
               classes={props.classes}
+              styles={props.mobileBarStyles}
               onClick={mobileMenuClickHandler}
             />
           </Hidden>
@@ -129,15 +157,18 @@ function Header(props) {
                   return (
                     <Hidden key={item.label} only={["xs"]}>
                       <NavLink
-                        style={{
-                          width: "110px",
-                          textAlign: "center",
-                        }}
-                        activeClassName={props.classes.headerActive}
-                        className={props.classes.headerMenu}
+                        activeStyle={props.styles.headerActive}
+                        style={props.styles.headerMenu}
                         to={item.url}
                         onClick={() =>
-                          item.action ? handleSubMenuClick(item.action) : null
+                          item.action
+                            ? getContent({
+                                variables: {
+                                  storeId: "0",
+                                  sectionId: "mission",
+                                },
+                              })
+                            : null
                         }
                         exact
                       >
@@ -149,13 +180,10 @@ function Header(props) {
                   return (
                     <Hidden key={item.label} only={["xs"]}>
                       <NavLink
+                        id={item.id}
                         onClick={handleClick}
-                        style={{
-                          width: "110px",
-                          textAlign: "center",
-                        }}
-                        activeClassName={props.classes.headerActive}
-                        className={props.classes.headerMenu}
+                        activeStyle={props.styles.headerActive}
+                        style={props.styles.headerMenu}
                         exact
                         to=""
                       >

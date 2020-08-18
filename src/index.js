@@ -2,10 +2,19 @@ import React from "react";
 import { render } from "react-dom";
 import App from "./components/App";
 import { BrowserRouter as Router } from "react-router-dom";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: "https://pure-dusk-14672.herokuapp.com/", //"http://localhost:4000/graphql", //https://pure-dusk-14672.herokuapp.com/",
+  cache: new InMemoryCache(),
+});
 
 render(
   <Router>
-    <App />
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
   </Router>,
   document.getElementById("root")
 );

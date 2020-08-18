@@ -1,5 +1,5 @@
 import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = " http://04871452a51a.ngrok.io/pages/";
+const baseUrl = " http://localhost:3004/pages/";
 
 export function getPages() {
   return fetch(baseUrl).then(handleResponse).catch(handleError);

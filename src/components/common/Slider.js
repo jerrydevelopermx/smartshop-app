@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 
 function Slider(props) {
   return (
-    <div id={props.id} className={props.classes.slider}>
+    <div id={props.id} style={props.styles}>
       {props.id === "events-scroll" ? (
         <Typography variant="h3">Hot Sales, Promos and Events</Typography>
       ) : null}

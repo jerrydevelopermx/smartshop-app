@@ -8,9 +8,9 @@ function VideoGallery(props) {
     <div
       id="tour-scroll"
       ref={props.inputRef}
-      className={props.classes.videoContainer}
+      style={props.styles.videoContainer}
     >
-      <div className={props.classes.videoPlayer}>
+      <div style={props.styles.videoPlayer}>
         <Typography variant="h3">Take a Tour!</Typography>
         {props.video ? (
           <Player

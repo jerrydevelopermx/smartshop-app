@@ -23,10 +23,6 @@ const useStyles = makeStyles({
   },
 });
 
-function alertHo(action) {
-  alert(action);
-}
-
 function MobileNavBar(props) {
   const classes = useStyles();
   const [state, setState] = useState(false);
@@ -39,7 +35,7 @@ function MobileNavBar(props) {
     ) {
       return;
     }
-
+    console.log(open);
     setState(open);
   };
 
@@ -63,11 +59,11 @@ function MobileNavBar(props) {
         onBackdropClick={toggleDrawer}
         open={state}
         onOpen={() => {}}
-        classes={{ paper: props.classes.drawer }}
+        classes={{ paper: classes.paper }}
         onClose={toggleDrawer(false)}
       >
         <div role="presentation">
-          <List className={props.classes.drawerList}>
+          <List className={classes.drawerList}>
             {props.list &&
               props.list.map((element, index) =>
                 element.type === "link" ? (
@@ -86,6 +82,10 @@ function MobileNavBar(props) {
                           <ListItem
                             key={index}
                             button
+                            onClick={() => {
+                              props.onClick(submenu.action);
+                              toggleDrawer(false);
+                            }}
                             style={{ marginLeft: "10px" }}
                             className={classes.nested}
                           >

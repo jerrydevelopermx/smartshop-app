@@ -37,20 +37,24 @@ import productStore from "../../stores/productStore";
 */
 function ItemsGrid(props) {
   const [product, setProduct] = useState({});
-  const [details, setDetails] = useState({ open: false });
+  const [details, setDetails] = useState({
+    open: false,
+    productId: "",
+    pageId: "",
+  });
   const [hovers, setHovers] = useState([]);
 
   useEffect(() => {
     setHovers(props.items.map(() => false));
   }, [props.items]);
 
-  function changeState(id) {
-    setProduct(productStore.getProductById(id));
-    setDetails({ open: true });
+  function changeState(id, pageId) {
+    //setProduct(productStore.getProductById(id));
+    setDetails({ open: true, productId: id, pageId: pageId });
   }
 
   function closeModal() {
-    setDetails({ open: false });
+    setDetails({ open: false, productId: "", pageId: "" });
   }
 
   function toggleHover(id, flag) {
@@ -59,63 +63,29 @@ function ItemsGrid(props) {
 
   return (
     <Grid container spacing={4}>
-      <ProductDetails
-        product={product}
-        open={details.open}
-        onClose={closeModal}
-        classes={props.classes}
-      />
-      {props.items.map((item, index) =>
-        item.id > 0 ? (
-          <Grid item key={item.id} xs={12} sm={6} md={4}>
-            <Card className={props.classes.card}>
-              {item.type === "store" ? (
-                <Link to={"/store/" + item.id}>
-                  <div
-                    style={{
-                      position: "relative",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <CardMedia
-                      className={props.classes.cardMedia}
-                      image={`${process.env.PUBLIC_URL}/imgs/${item.coverImage}`}
-                      title={item.name}
-                    />
-                    <div
-                      style={{
-                        position: "absolute",
-                        backgroundColor: "rgba(52, 52, 52, 0.4)",
-                        top: 0,
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        zIndex: 5,
-                        color: "#fff",
-                      }}
-                    >
-                      New layer
-                    </div>
-                  </div>
-                </Link>
-              ) : (
+      {props.pageId !== "0" ? (
+        <ProductDetails
+          params={details}
+          open={details.open}
+          onClose={closeModal}
+          styles={props.detailStyles}
+          classes={props.classes}
+        />
+      ) : null}
+
+      {props.items.map((item, index) => (
+        <Grid item key={item.id} xs={12} sm={6} md={4}>
+          <Card classes={props.styles.card}>
+            {item.type === "store" ? (
+              <Link to={"/store/" + item.id}>
                 <div
-                  onMouseEnter={() => toggleHover(index, true)}
-                  onMouseLeave={() => toggleHover(index, false)}
-                  onClick={() => toggleHover(index, true)}
                   style={{
                     position: "relative",
                     cursor: "pointer",
-                    zIndex: 0,
-                    "&:hover": {
-                      textDecoration: "underline",
-                      cursor: "pointer",
-                    },
                   }}
                 >
                   <CardMedia
-                    style={{ zIndex: 1 }}
-                    className={props.classes.cardMedia}
+                    style={props.styles.cardMedia}
                     image={`${process.env.PUBLIC_URL}/imgs/${item.coverImage}`}
                     title={item.name}
                   />
@@ -129,35 +99,70 @@ function ItemsGrid(props) {
                       right: 0,
                       zIndex: 5,
                       color: "#fff",
-                      display: hovers[index] ? "block" : "none",
                     }}
                   >
-                    <div style={{ textAlign: "center", border: "1px solid" }}>
-                      <h3>{item.name}</h3>
-                      <div>{item.description}</div>
-                      <div style={{ marginTop: "20px" }}>
-                        <Button variant="contained" color="primary">
-                          Add to cart
-                        </Button>
-                        <Button variant="contained" color="secondary">
-                          Fast Checkout
-                        </Button>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={() => changeState(item.id)}
-                        >
-                          View More
-                        </Button>
-                      </div>
+                    New layer
+                  </div>
+                </div>
+              </Link>
+            ) : (
+              <div
+                onMouseEnter={() => toggleHover(index, true)}
+                onMouseLeave={() => toggleHover(index, false)}
+                onClick={() => toggleHover(index, true)}
+                style={{
+                  position: "relative",
+                  cursor: "pointer",
+                  zIndex: 0,
+                  "&:hover": {
+                    textDecoration: "underline",
+                    cursor: "pointer",
+                  },
+                }}
+              >
+                <CardMedia
+                  style={props.styles.cardMedia}
+                  image={`${process.env.PUBLIC_URL}/imgs/${item.coverImage}`}
+                  title={item.name}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    backgroundColor: "rgba(52, 52, 52, 0.4)",
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    zIndex: 5,
+                    color: "#fff",
+                    display: hovers[index] ? "block" : "none",
+                  }}
+                >
+                  <div style={{ textAlign: "center", border: "1px solid" }}>
+                    <h3>{item.name}</h3>
+                    <div>{item.description}</div>
+                    <div style={{ marginTop: "20px" }}>
+                      <Button variant="contained" color="primary">
+                        Add to cart
+                      </Button>
+                      <Button variant="contained" color="secondary">
+                        Fast Checkout
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => changeState(item.id, props.pageId)}
+                      >
+                        View More
+                      </Button>
                     </div>
                   </div>
                 </div>
-              )}
-            </Card>
-          </Grid>
-        ) : null
-      )}
+              </div>
+            )}
+          </Card>
+        </Grid>
+      ))}
     </Grid>
   );
 }
