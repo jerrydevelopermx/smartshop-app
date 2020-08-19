@@ -14,6 +14,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { useQuery, gql } from "@apollo/client";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import { withStyles } from "@material-ui/core/styles";
 
 const GET_PRODUCT_BY_ID = gql`
   query GetProduct($storeId: String!, $id: ID!) {
@@ -42,7 +45,33 @@ const GET_PRODUCT_BY_ID = gql`
 `;
 
 function ProductDetails(props) {
-  console.log(props);
+  let styledCloseButton = {
+    root: {
+      "&:hover": props.buttons.closeModal.root.hover,
+      color: props.buttons.closeModal.root.color,
+      backgroundColor: props.buttons.closeModal.root.backgroundColor,
+    },
+  };
+
+  let styledCartButton = {
+    root: {
+      "&:hover": props.buttons.addToCart.root.hover,
+      color: props.buttons.addToCart.root.color,
+      backgroundColor: props.buttons.addToCart.root.backgroundColor,
+    },
+  };
+
+  let styledWishButton = {
+    root: {
+      "&:hover": props.buttons.wishList.root.hover,
+      color: props.buttons.wishList.root.color,
+      backgroundColor: props.buttons.wishList.root.backgroundColor,
+    },
+  };
+  const CloseButton = withStyles((theme) => styledCloseButton)(Button);
+  const CartButton = withStyles((theme) => styledCartButton)(Button);
+  const WishListButton = withStyles((theme) => styledWishButton)(Button);
+
   const { loading, error, data } = useQuery(GET_PRODUCT_BY_ID, {
     variables: {
       storeId: props.params.pageId,
@@ -52,7 +81,6 @@ function ProductDetails(props) {
   if (loading) return <p></p>;
   if (error) return <p>There is an error!</p>;
 
-  console.log(data);
   return data.product ? (
     <Dialog
       fullWidth={true}
@@ -65,17 +93,29 @@ function ProductDetails(props) {
         id="max-width-dialog-title"
       >
         Product detail
+        <IconButton
+          aria-label="close"
+          style={{
+            position: "absolute",
+            right: "8px",
+            top: "8px",
+            color: "#fff",
+          }}
+          onClick={props.onClose}
+        >
+          <CloseIcon />
+        </IconButton>
       </DialogTitle>
       <DialogContent style={props.styles.detailsBody}>
         <Grid container spacing={3}>
           <Grid item key={props.params.productId} xs={12} sm={6} md={6}>
-            <Card classes={props.classes.card}>
+            <Card classes={props.styles.card}>
               <CardMedia
                 style={props.styles.cardMedia}
                 image={`${process.env.PUBLIC_URL}/imgs/${data.product.coverImage}`}
                 title="Image title"
               />
-              <CardContent className={props.classes.cardContent}>
+              <CardContent className={props.styles.cardContent}>
                 <Typography variant="subtitle" component="h2">
                   {data.product.name}
                 </Typography>
@@ -129,15 +169,15 @@ function ProductDetails(props) {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button color="primary" onClick={props.onClose}>
+        <WishListButton color="primary" onClick={props.onClose}>
           Add to Wish List
-        </Button>
-        <Button color="primary" onClick={props.onClose}>
+        </WishListButton>
+        <CartButton color="primary" onClick={props.onClose}>
           Add to Cart
-        </Button>
-        <Button color="primary" onClick={props.onClose}>
+        </CartButton>
+        <CloseButton color="primary" onClick={props.onClose}>
           Close
-        </Button>
+        </CloseButton>
       </DialogActions>
     </Dialog>
   ) : null;

@@ -27,6 +27,84 @@ const GET_CONTENT_BY_SECTION = gql`
 `;
 
 function Header(props) {
+  /*
+  xs extra-pequeño: 0px
+sm pequeño: 600px
+md, mediano: 960px
+lg, grande: 1280px
+xl extra-grande: 1920px
+
+  */
+  const useStyles = makeStyles((theme) => ({
+    header: {
+      [theme.breakpoints.only("xs")]: {
+        // 600-959
+        height: "70px",
+      },
+      [theme.breakpoints.up("sm")]: {
+        // 600-959
+        height: "70px",
+      },
+      [theme.breakpoints.up("md")]: {
+        //960 - 1279
+        height: "80px",
+      },
+
+      [theme.breakpoints.up("lg")]: {
+        //1280 - 1919
+        height: "100px",
+      },
+      [theme.breakpoints.up("xl")]: {
+        //>= 1920
+        height: "130px",
+      },
+    },
+    headerMenu: {
+      [theme.breakpoints.up("sm")]: {
+        // 600-959
+        fontSize: "13px",
+        width: "85px",
+      },
+      [theme.breakpoints.up("md")]: {
+        // 600-959
+        fontSize: "15px",
+        width: "110px",
+      },
+      [theme.breakpoints.up("lg")]: {
+        // 600-959
+        fontSize: "18px",
+        width: "130px",
+      },
+      [theme.breakpoints.up("xl")]: {
+        // 600-959
+        fontSize: "23px",
+        width: "150px",
+      },
+    },
+    logo: {
+      [theme.breakpoints.up("xs")]: {
+        height: "50px",
+        margin: "8px",
+      },
+      [theme.breakpoints.up("sm")]: {
+        height: "60px",
+        margin: "8px",
+      },
+      [theme.breakpoints.up("md")]: {
+        height: "70px",
+        margin: "10px",
+      },
+      [theme.breakpoints.up("lg")]: {
+        height: "90px",
+        margin: "10px",
+      },
+      [theme.breakpoints.up("xl")]: {
+        height: "120px",
+        margin: "10px",
+      },
+    },
+  }));
+  const classes = useStyles();
   const [getContent, { loading, data }] = useLazyQuery(GET_CONTENT_BY_SECTION);
 
   /*
@@ -136,13 +214,17 @@ function Header(props) {
           content={data.content}
         />
       ) : null}
-      <AppBar style={props.styles.topBar} position="fixed">
+      <AppBar
+        position="fixed"
+        style={props.styles.topBar}
+        className={classes.header}
+      >
         <Toolbar
           component="nav"
           variant="dense"
           style={props.styles.toolbarSecondary}
         >
-          <Hidden only={["sm", "md", "lg"]}>
+          <Hidden only={["sm", "md", "lg", "xl"]}>
             <MobileNavBar
               list={props.menu}
               classes={props.classes}
@@ -158,6 +240,7 @@ function Header(props) {
                     <Hidden key={item.label} only={["xs"]}>
                       <NavLink
                         activeStyle={props.styles.headerActive}
+                        className={classes.headerMenu}
                         style={props.styles.headerMenu}
                         to={item.url}
                         onClick={() =>
@@ -183,6 +266,7 @@ function Header(props) {
                         id={item.id}
                         onClick={handleClick}
                         activeStyle={props.styles.headerActive}
+                        className={classes.headerMenu}
                         style={props.styles.headerMenu}
                         exact
                         to=""
@@ -219,7 +303,7 @@ function Header(props) {
                     <div key={item.type}>
                       <img
                         src={`${process.env.PUBLIC_URL}/imgs/${props.logo}`}
-                        style={{ height: "60px" }}
+                        className={classes.logo}
                         alt=""
                       />
                     </div>

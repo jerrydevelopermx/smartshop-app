@@ -182,6 +182,15 @@ const GET_PAGE_INFO = gql`
           contentModalsBody {
             background
           }
+          closeButton {
+            root {
+              color
+              backgroundColor
+              hover {
+                backgroundColor
+              }
+            }
+          }
         }
         mobileNavBar {
           drawer {
@@ -199,6 +208,53 @@ const GET_PAGE_INFO = gql`
           }
           detailsBody {
             background
+          }
+        }
+        buttons {
+          closeModal {
+            root {
+              color
+              backgroundColor
+              hover {
+                backgroundColor
+              }
+            }
+          }
+          addToCart {
+            root {
+              color
+              backgroundColor
+              hover {
+                backgroundColor
+              }
+            }
+          }
+          wishList {
+            root {
+              color
+              backgroundColor
+              hover {
+                backgroundColor
+              }
+            }
+          }
+          checkout {
+            root {
+              color
+              backgroundColor
+              hover {
+                backgroundColor
+              }
+            }
+          }
+          viewMore {
+            root {
+              color
+              backgroundColor
+              hover {
+                backgroundColor
+              }
+            }
           }
         }
       }
@@ -310,6 +366,7 @@ function StorePage(props) {
             pageId={data.page.id}
             styles={data.page.styles.grid}
             detailStyles={data.page.styles.detailsModal}
+            buttonsStyles={data.page.styles.buttons}
           />
           <VideoGallery
             inputRef={videoRef}

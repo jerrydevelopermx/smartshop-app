@@ -70,6 +70,7 @@ function ItemsGrid(props) {
           onClose={closeModal}
           styles={props.detailStyles}
           classes={props.classes}
+          buttons={props.buttonsStyles}
         />
       ) : null}
 
