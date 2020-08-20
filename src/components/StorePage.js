@@ -193,11 +193,11 @@ const GET_PAGE_INFO = gql`
           }
         }
         mobileNavBar {
-          drawer {
+          paper {
             background
             color
           }
-          drawerList {
+          list {
             width
           }
         }

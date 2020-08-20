@@ -10,20 +10,8 @@ import Collapse from "@material-ui/core/Collapse";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 
-const useStyles = makeStyles({
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: "auto",
-  },
-  paper: {
-    background: "black",
-    color: "white",
-  },
-});
-
 function MobileNavBar(props) {
+  const useStyles = makeStyles(props.styles);
   const classes = useStyles();
   const [state, setState] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
@@ -35,7 +23,6 @@ function MobileNavBar(props) {
     ) {
       return;
     }
-    console.log(open);
     setState(open);
   };
 
@@ -63,7 +50,7 @@ function MobileNavBar(props) {
         onClose={toggleDrawer(false)}
       >
         <div role="presentation">
-          <List className={classes.drawerList}>
+          <List className={classes.list}>
             {props.list &&
               props.list.map((element, index) =>
                 element.type === "link" ? (
@@ -87,7 +74,6 @@ function MobileNavBar(props) {
                               toggleDrawer(false);
                             }}
                             style={{ marginLeft: "10px" }}
-                            className={classes.nested}
                           >
                             <ListItemText primary={submenu.text} />
                           </ListItem>
