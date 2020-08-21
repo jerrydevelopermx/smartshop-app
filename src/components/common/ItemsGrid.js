@@ -7,11 +7,10 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import ProductDetails from "./ProductDetails";
 import productStore from "../../stores/productStore";
-
 /*grid : {
   
 }
@@ -49,7 +48,7 @@ function ItemsGrid(props) {
   }, [props.items]);
 
   function changeState(id, pageId) {
-    //setProduct(productStore.getProductById(id));
+    console.log(id, pageId);
     setDetails({ open: true, productId: id, pageId: pageId });
   }
 
@@ -63,7 +62,7 @@ function ItemsGrid(props) {
 
   return (
     <Grid container spacing={4}>
-      {props.pageId !== "0" ? (
+      {props.pageId !== "0" && details.productId !== "" ? (
         <ProductDetails
           params={details}
           open={details.open}
@@ -109,8 +108,8 @@ function ItemsGrid(props) {
               </Link>
             ) : (
               <div
-                onMouseEnter={() => toggleHover(index, true)}
-                onMouseLeave={() => toggleHover(index, false)}
+                onMouseOver={() => toggleHover(index, true)}
+                onMouseOut={() => toggleHover(index, false)}
                 onClick={() => toggleHover(index, true)}
                 style={{
                   position: "relative",
@@ -142,12 +141,14 @@ function ItemsGrid(props) {
                 >
                   <div style={{ textAlign: "center", border: "1px solid" }}>
                     <h3>{item.name}</h3>
-                    <div></div>
+                    <div>{item.description.substring(0, 80)}</div>
                     <div style={{ marginTop: "20px" }}>
                       <Button
                         variant="contained"
                         color="primary"
-                        onClick={() => changeState(item.id, props.pageId)}
+                        onClick={() => {
+                          changeState(item.id, props.pageId);
+                        }}
                       >
                         View More
                       </Button>

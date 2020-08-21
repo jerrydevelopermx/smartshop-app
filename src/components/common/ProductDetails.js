@@ -51,6 +51,7 @@ const GET_PRODUCT_BY_ID = gql`
 
 function ProductDetails(props) {
   console.log(props);
+
   let styledCloseButton = {
     root: {
       "&:hover": props.buttons.closeModal.root.hover,
@@ -86,6 +87,7 @@ function ProductDetails(props) {
   });
   if (loading) return <p></p>;
   if (error) return <p>There is an error!</p>;
+  console.log("Rendering: MenuContainer");
 
   return data.product ? (
     <Dialog
@@ -140,8 +142,8 @@ function ProductDetails(props) {
         <Grid container spacing={2}>
           {data.product.attributes &&
             data.product.attributes.length > 0 &&
-            data.product.attributes.map((item) => (
-              <Grid item xs={12} sm={3} md={3}>
+            data.product.attributes.map((item, index) => (
+              <Grid key={"attr-" + index} item xs={12} sm={3} md={3}>
                 <FormControl
                   key={item.name}
                   variant="outlined"
@@ -162,8 +164,10 @@ function ProductDetails(props) {
                     </MenuItem>
                     {item &&
                       item.values &&
-                      item.values.map((option) => (
-                        <MenuItem value={option}>{option}</MenuItem>
+                      item.values.map((option, index) => (
+                        <MenuItem key={item.name + index} value={option}>
+                          {option}
+                        </MenuItem>
                       ))}
                   </Select>
                 </FormControl>
