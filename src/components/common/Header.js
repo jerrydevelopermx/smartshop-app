@@ -91,15 +91,15 @@ xl extra-grande: 1920px
       },
       [theme.breakpoints.up("md")]: {
         height: "70px",
-        margin: "10px",
+        margin: "8px",
       },
       [theme.breakpoints.up("lg")]: {
-        height: "90px",
+        height: "70px",
         margin: "10px",
       },
       [theme.breakpoints.up("xl")]: {
-        height: "120px",
-        margin: "10px",
+        height: "110px",
+        margin: "8px",
       },
     },
   }));

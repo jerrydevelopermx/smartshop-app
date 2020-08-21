@@ -351,7 +351,12 @@ function StorePage(props) {
         mobileBarStyles={data.page.styles.mobileNavBar}
       />
       <main>
-        <Slider slides={data.page.slides} styles={data.page.styles.slider} />
+        <Slider
+          autoplay={true}
+          maxHeight="300px"
+          slides={data.page.slides}
+          styles={data.page.styles.slider}
+        />
 
         <Container style={{ border: "1px solid" }}>
           <SearchFilter
@@ -375,6 +380,8 @@ function StorePage(props) {
           />
           <Slider
             id="events-scroll"
+            maxHeight="350px"
+            autoplay={true}
             slides={data.page.offers}
             styles={data.page.styles.slider}
           />

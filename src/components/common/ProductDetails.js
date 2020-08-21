@@ -17,6 +17,7 @@ import { useQuery, gql } from "@apollo/client";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { withStyles } from "@material-ui/core/styles";
+import Slider from "./Slider";
 
 const GET_PRODUCT_BY_ID = gql`
   query GetProduct($storeId: String!, $id: ID!) {
@@ -40,11 +41,16 @@ const GET_PRODUCT_BY_ID = gql`
         name
         values
       }
+      gallery {
+        img
+        text
+      }
     }
   }
 `;
 
 function ProductDetails(props) {
+  console.log(props);
   let styledCloseButton = {
     root: {
       "&:hover": props.buttons.closeModal.root.hover,
@@ -109,18 +115,13 @@ function ProductDetails(props) {
       <DialogContent style={props.styles.detailsBody}>
         <Grid container spacing={3}>
           <Grid item key={props.params.productId} xs={12} sm={6} md={6}>
-            <Card classes={props.styles.card}>
-              <CardMedia
-                style={props.styles.cardMedia}
-                image={`${process.env.PUBLIC_URL}/imgs/${data.product.coverImage}`}
-                title="Image title"
-              />
-              <CardContent className={props.styles.cardContent}>
-                <Typography variant="subtitle" component="h2">
-                  {data.product.name}
-                </Typography>
-              </CardContent>
-            </Card>
+            <Slider
+              autoplay={false}
+              maxHeight="250px"
+              slides={data.product.gallery}
+              styles={{ textAlign: "center" }}
+            />
+            <Typography variant="h6">{data.product.name}</Typography>
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
             <Typography variant="h6">Description</Typography>
@@ -133,16 +134,18 @@ function ProductDetails(props) {
             <Typography variant="body2">{data.product.warranties}</Typography>
           </Grid>
         </Grid>
-        <Grid container spacing={2} style={{ border: "1px solid" }}>
-          <Grid item xs={12} sm={4} md={4}>
-            {data.product.attributes &&
-              data.product.attributes.length > 0 &&
-              data.product.attributes.map((item) => (
+        <Typography variant="h6" style={{ margin: "15px" }}>
+          Attributes
+        </Typography>
+        <Grid container spacing={2}>
+          {data.product.attributes &&
+            data.product.attributes.length > 0 &&
+            data.product.attributes.map((item) => (
+              <Grid item xs={12} sm={3} md={3}>
                 <FormControl
                   key={item.name}
                   variant="outlined"
                   style={{
-                    margin: "4px",
                     width: "100%",
                   }}
                 >
@@ -164,8 +167,8 @@ function ProductDetails(props) {
                       ))}
                   </Select>
                 </FormControl>
-              ))}
-          </Grid>
+              </Grid>
+            ))}
         </Grid>
       </DialogContent>
       <DialogActions>

@@ -13,7 +13,7 @@ function Slider(props) {
       <Carousel
         showArrows={true}
         showThumbs={false}
-        autoPlay={true}
+        autoPlay={props.autoplay}
         infiniteLoop={true}
         stopOnHover={true}
         emulateTouch={true}
@@ -26,7 +26,11 @@ function Slider(props) {
           props.slides.length > 0 &&
           props.slides.map((item, index) => (
             <div key={index}>
-              <img src={`${process.env.PUBLIC_URL}/imgs/${item.img}`} alt="1" />
+              <img
+                style={{ maxHeight: props.maxHeight }}
+                src={`${process.env.PUBLIC_URL}/imgs/${item.img}`}
+                alt="1"
+              />
               {item.text ? <p className="legend">Legend 3</p> : null}
             </div>
           ))}

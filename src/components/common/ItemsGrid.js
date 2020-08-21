@@ -71,6 +71,7 @@ function ItemsGrid(props) {
           styles={props.detailStyles}
           classes={props.classes}
           buttons={props.buttonsStyles}
+          gridStyles={props.styles}
         />
       ) : null}
 
@@ -141,14 +142,8 @@ function ItemsGrid(props) {
                 >
                   <div style={{ textAlign: "center", border: "1px solid" }}>
                     <h3>{item.name}</h3>
-                    <div>{item.description}</div>
+                    <div></div>
                     <div style={{ marginTop: "20px" }}>
-                      <Button variant="contained" color="primary">
-                        Add to cart
-                      </Button>
-                      <Button variant="contained" color="secondary">
-                        Fast Checkout
-                      </Button>
                       <Button
                         variant="contained"
                         color="primary"
