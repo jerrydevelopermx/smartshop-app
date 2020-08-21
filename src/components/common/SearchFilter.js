@@ -12,10 +12,10 @@ function SearchFilter(props) {
   return (
     <div
       style={{
-        border: "1px solid",
-        position: "sticky",
-        top: "150",
+        border: "1px solid #ccc",
         zIndex: "1",
+        margin: "20px",
+        borderRadius: "8px",
       }}
     >
       <Container style={{ padding: "15px" }}>

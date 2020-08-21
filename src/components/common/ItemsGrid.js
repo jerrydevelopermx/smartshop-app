@@ -11,29 +11,7 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import ProductDetails from "./ProductDetails";
 import productStore from "../../stores/productStore";
-/*grid : {
-  
-}
-*/
-/*const useStyles = makeStyles((theme) => ({
-  cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
-  },
-  card: {
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-  },
-  cardMedia: {
-    paddingTop: "56.25%", // 16:9
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  detailsModal: {},
-}));
-*/
+
 function ItemsGrid(props) {
   const [product, setProduct] = useState({});
   const [details, setDetails] = useState({
@@ -42,6 +20,15 @@ function ItemsGrid(props) {
     pageId: "",
   });
   const [hovers, setHovers] = useState([]);
+
+  let viewMoreButton = {
+    root: {
+      color: "#fff",
+      backgroundColor: "red",
+      height: 28,
+    },
+  };
+  const ViewMoreButton = withStyles((theme) => viewMoreButton)(Button);
 
   useEffect(() => {
     setHovers(props.items.map(() => false));
@@ -80,9 +67,17 @@ function ItemsGrid(props) {
             {item.type === "store" ? (
               <Link to={"/store/" + item.id}>
                 <div
+                  onMouseOver={() => toggleHover(index, true)}
+                  onMouseOut={() => toggleHover(index, false)}
+                  onClick={() => toggleHover(index, true)}
                   style={{
                     position: "relative",
                     cursor: "pointer",
+                    zIndex: 0,
+                    "&:hover": {
+                      textDecoration: "underline",
+                      cursor: "pointer",
+                    },
                   }}
                 >
                   <CardMedia
@@ -100,9 +95,19 @@ function ItemsGrid(props) {
                       right: 0,
                       zIndex: 5,
                       color: "#fff",
+                      display: hovers[index] ? "block" : "none",
                     }}
                   >
-                    New layer
+                    <div style={{ textAlign: "center" }}>
+                      <h3>{item.name}</h3>
+                      <div>
+                        <img
+                          style={{ maxHeight: "120px" }}
+                          src={`${process.env.PUBLIC_URL}/imgs/${item.hoverImage}`}
+                          alt=""
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </Link>
@@ -115,10 +120,6 @@ function ItemsGrid(props) {
                   position: "relative",
                   cursor: "pointer",
                   zIndex: 0,
-                  "&:hover": {
-                    textDecoration: "underline",
-                    cursor: "pointer",
-                  },
                 }}
               >
                 <CardMedia
@@ -139,19 +140,59 @@ function ItemsGrid(props) {
                     display: hovers[index] ? "block" : "none",
                   }}
                 >
-                  <div style={{ textAlign: "center", border: "1px solid" }}>
+                  <div style={{ textAlign: "center" }}>
                     <h3>{item.name}</h3>
-                    <div>{item.description.substring(0, 80)}</div>
-                    <div style={{ marginTop: "20px" }}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => {
+                    <div>{item.description.substring(0, 50)}...</div>
+                    <div style={{ marginTop: "30px" }}>
+                      <Link
+                        to=""
+                        style={{
+                          height: "35px",
+                          backgroundColor: "#228b22",
+                          color: "white",
+                          border: "1px solid #228b22",
+                          borderRadius: "5px",
+                          textDecoration: "none",
+                          padding: "5px",
+                          margin: "5px",
+                        }}
+                      >
+                        Add to cart
+                      </Link>
+                      <Link
+                        to=""
+                        style={{
+                          height: "35px",
+                          backgroundColor: "#cccc00",
+                          color: "white",
+                          border: "1px solid #cccc00",
+                          borderRadius: "5px",
+                          textDecoration: "none",
+                          padding: "5px",
+                          margin: "5px",
+                        }}
+                      >
+                        Checkout
+                      </Link>
+                      <Link
+                        to=""
+                        style={{
+                          height: "35px",
+                          backgroundColor: "red",
+                          color: "white",
+                          border: "1px solid red",
+                          borderRadius: "5px",
+                          textDecoration: "none",
+                          padding: "5px",
+                          margin: "5px",
+                        }}
+                        onClick={(e) => {
+                          e.preventDefault();
                           changeState(item.id, props.pageId);
                         }}
                       >
-                        View More
-                      </Button>
+                        View more
+                      </Link>
                     </div>
                   </div>
                 </div>

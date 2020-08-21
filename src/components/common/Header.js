@@ -106,21 +106,6 @@ xl extra-grande: 1920px
   const classes = useStyles();
   const [getContent, { loading, data }] = useLazyQuery(GET_CONTENT_BY_SECTION);
 
-  /*
-  let styles = {
-    paper: {
-      //border: "1px solid #d3d4d5",
-      backgroundColor: "#590F10",
-      color: "white",
-    },
-  };
-  let styles2 = {
-    root: {
-      "&:hover": {
-        backgroundColor: "#350909",
-      },
-    },
-  };*/
   const StyledMenu = withStyles(props.styles.styledMenu)((props) => (
     <Menu
       elevation={0}
@@ -183,7 +168,17 @@ xl extra-grande: 1920px
         sectionId: action,
       },
     });
+    setModalStatus({ ...modalStatus, ...{ open: true, sectionId: action } });
+  };
 
+  const menuClickHandler = (action, event) => {
+    event.preventDefault();
+    getContent({
+      variables: {
+        storeId: props.pageId,
+        sectionId: action,
+      },
+    });
     setModalStatus({ ...modalStatus, ...{ open: true, sectionId: action } });
   };
 
@@ -233,6 +228,7 @@ xl extra-grande: 1920px
           </Hidden>
           {props.menu &&
             props.menu.map((item) => {
+              console.log(item);
               switch (item.type) {
                 case "link":
                   return (
@@ -242,15 +238,8 @@ xl extra-grande: 1920px
                         className={classes.headerMenu}
                         style={props.styles.headerMenu}
                         to={item.url}
-                        onClick={() =>
-                          item.action
-                            ? getContent({
-                                variables: {
-                                  storeId: "0",
-                                  sectionId: "mission",
-                                },
-                              })
-                            : null
+                        onClick={(e) =>
+                          item.action ? menuClickHandler(item.action, e) : null
                         }
                         exact
                       >

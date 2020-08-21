@@ -271,6 +271,7 @@ const GET_PAGE_INFO = gql`
       material
       name
       coverImage
+      hoverImage
       description
       price
       specifications
