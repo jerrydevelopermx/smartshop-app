@@ -81,25 +81,25 @@ xl extra-grande: 1920px
       },
     },
     logo: {
-      [theme.breakpoints.up("xs")]: {
-        height: "50px",
-        margin: "8px",
+      [theme.breakpoints.only("xs")]: {
+        height: "68px",
+        //margin: "8px",
       },
       [theme.breakpoints.up("sm")]: {
-        height: "60px",
-        margin: "8px",
+        height: "70px",
+        //margin: "8px",
       },
       [theme.breakpoints.up("md")]: {
-        height: "70px",
-        margin: "8px",
+        height: "80px",
+        //margin: "8px",
       },
       [theme.breakpoints.up("lg")]: {
-        height: "70px",
-        margin: "10px",
+        height: "100px",
+        //margin: "10px",
       },
       [theme.breakpoints.up("xl")]: {
-        height: "110px",
-        margin: "8px",
+        height: "130px",
+        //margin: "8px",
       },
     },
   }));
