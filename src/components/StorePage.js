@@ -8,283 +8,12 @@ import Header from "./common/Header";
 import Footer from "./common/Footer";
 import Slider from "./common/Slider";
 import { useQuery, gql } from "@apollo/client";
-
-const GET_PAGE_INFO = gql`
-  query GetPageInfo($storeId: ID!) {
-    page(id: $storeId) {
-      name
-      id
-      logo
-      coverImage
-      description
-      headerMenu {
-        type
-        label
-        url
-        action
-        items {
-          text
-          action
-        }
-      }
-      slides {
-        img
-        text
-      }
-      categories {
-        id
-        name
-        filters {
-          id
-          name
-          values
-        }
-      }
-      offers {
-        img
-        text
-      }
-      video {
-        autoPlay
-        poster
-        src
-      }
-      footer {
-        columns {
-          id
-          title
-          options {
-            text
-            url
-          }
-          social
-        }
-        copyright
-      }
-      styles {
-        body {
-          background
-          fontFamily
-        }
-        header {
-          topBar {
-            background
-            height
-          }
-          toolbarSecondary {
-            justifyContent
-            overflowX
-            marginTop
-          }
-          toolbarLink {
-            width
-            padding
-            flexShrink
-          }
-          headerActive {
-            color
-          }
-          headerMenu {
-            color
-            fontSize
-            textDecoration
-            width
-            textAlign
-          }
-          styledMenu {
-            paper {
-              backgroundColor
-              color
-            }
-          }
-          styledMenuItem {
-            root {
-              hover {
-                backgroundColor
-              }
-            }
-          }
-        }
-        footer {
-          bottomBar {
-            background
-            fontSize
-            padding
-            color
-          }
-          footerColumn {
-            width
-            margin
-            textAlign
-          }
-          footerLinks {
-            color
-            textDecoration
-          }
-          centeredContent {
-            margin
-            textAlign
-          }
-          socialMediaIcons {
-            margin
-            width
-          }
-        }
-        searchFilter {
-          searchContent {
-            border
-            padding
-            margin
-          }
-          searchField {
-            margin
-            minWidth
-            borderCollapse
-            borderRadius
-          }
-        }
-        video {
-          videoContainer {
-            marginTop
-            marginBottom
-          }
-          videoPlayer {
-            margin
-            width
-            textAlign
-          }
-        }
-        slider {
-          marginTop
-          textAlign
-        }
-        grid {
-          cardGrid {
-            paddingTop
-            paddingBottom
-          }
-          card {
-            height
-            display
-          }
-          cardMedia {
-            paddingTop
-          }
-          cardContent {
-            flexGrow
-          }
-        }
-        contentModal {
-          contentModalsHeader {
-            background
-            color
-          }
-          contentModalsBody {
-            background
-          }
-          closeButton {
-            root {
-              color
-              backgroundColor
-              hover {
-                backgroundColor
-              }
-            }
-          }
-        }
-        mobileNavBar {
-          paper {
-            background
-            color
-          }
-          list {
-            width
-          }
-        }
-        detailsModal {
-          detailsHeader {
-            background
-            color
-          }
-          detailsBody {
-            background
-          }
-        }
-        buttons {
-          closeModal {
-            root {
-              color
-              backgroundColor
-              hover {
-                backgroundColor
-              }
-            }
-          }
-          addToCart {
-            root {
-              color
-              backgroundColor
-              hover {
-                backgroundColor
-              }
-            }
-          }
-          wishList {
-            root {
-              color
-              backgroundColor
-              hover {
-                backgroundColor
-              }
-            }
-          }
-          checkout {
-            root {
-              color
-              backgroundColor
-              hover {
-                backgroundColor
-              }
-            }
-          }
-          viewMore {
-            root {
-              color
-              backgroundColor
-              hover {
-                backgroundColor
-              }
-            }
-          }
-        }
-      }
-    }
-
-    storeGrid(storeId: $storeId) {
-      id
-      name
-      type
-      categoryId
-      color
-      size
-      style
-      material
-      name
-      coverImage
-      hoverImage
-      description
-      price
-      specifications
-      warranties
-      attributes {
-        name
-        values
-      }
-    }
-  }
-`;
+import appStyles from "../styles/app.js";
+import queries from "../graphql/queries.js";
 
 function StorePage(props) {
+  console.log(appStyles);
+  console.log(queries);
   let gridItems = [];
   const [pageId, setPageId] = useState(0);
   const [filters, setFilters] = useState([]);
@@ -292,7 +21,7 @@ function StorePage(props) {
   const [filteredItems, setFilteredItems] = useState(null);
   const [filtersApplied, setFiltersApplied] = useState([]);
 
-  const { loading, error, data } = useQuery(GET_PAGE_INFO, {
+  const { loading, error, data } = useQuery(queries.GET_PAGE_INFO, {
     variables: { storeId: props.match.params.id ? props.match.params.id : 0 },
   });
 
@@ -365,7 +94,7 @@ function StorePage(props) {
             onFilterChange={filterChangeHandler}
             categories={data.page.categories}
             filters={filters}
-            styles={data.page.styles.searchFilter}
+            appStyles={appStyles.searchFilter}
           />
           <ItemsGrid
             items={filteredItems !== null ? filteredItems : data.storeGrid}
@@ -378,6 +107,7 @@ function StorePage(props) {
             inputRef={videoRef}
             video={data.page.video}
             styles={data.page.styles.video}
+            appStyles={appStyles.video}
           />
           <Slider
             id="events-scroll"
@@ -388,7 +118,11 @@ function StorePage(props) {
           />
         </Container>
       </main>
-      <Footer styles={data.page.styles.footer} content={data.page.footer} />
+      <Footer
+        appStyles={appStyles.footer}
+        styles={data.page.styles.footer}
+        content={data.page.footer}
+      />
     </div>
   );
 }

@@ -9,7 +9,7 @@ function SocialMedia(props) {
             key={"netw-" + index}
             src={`${process.env.PUBLIC_URL}/imgs/icons/${network}-icon.png`}
             alt={network}
-            style={props.styles}
+            className={props.styles}
           />
         ))}
     </div>

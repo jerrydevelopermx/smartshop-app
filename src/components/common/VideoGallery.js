@@ -2,15 +2,18 @@ import React, { useRef } from "react";
 import { Player } from "video-react";
 import "video-react/dist/video-react.css"; // import css
 import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 
 function VideoGallery(props) {
+  const useStyles = makeStyles((theme) => props.appStyles);
+  const classes = useStyles();
   return (
     <div
       id="tour-scroll"
       ref={props.inputRef}
-      style={props.styles.videoContainer}
+      className={classes.videoContainer}
     >
-      <div style={props.styles.videoPlayer}>
+      <div className={classes.videoPlayer}>
         <Typography variant="h3">Take a Tour!</Typography>
         {props.video ? (
           <Player

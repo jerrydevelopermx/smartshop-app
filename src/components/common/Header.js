@@ -94,11 +94,11 @@ xl extra-grande: 1920px
         //margin: "8px",
       },
       [theme.breakpoints.up("lg")]: {
-        height: "100px",
+        height: "90px",
         //margin: "10px",
       },
       [theme.breakpoints.up("xl")]: {
-        height: "130px",
+        height: "120px",
         //margin: "8px",
       },
     },

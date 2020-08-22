@@ -3,23 +3,17 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
-import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import Box from "@material-ui/core/Box";
+import { makeStyles } from "@material-ui/core/styles";
 
 function SearchFilter(props) {
+  const useStyles = makeStyles((theme) => props.appStyles);
+  const classes = useStyles();
   return (
-    <div
-      style={{
-        border: "1px solid #ccc",
-        zIndex: "1",
-        margin: "20px",
-        borderRadius: "8px",
-      }}
-    >
-      <Container style={{ padding: "15px" }}>
-        <FormControl variant="outlined" style={{ width: "100%" }}>
+    <div className={classes.main}>
+      <Container className={classes.container}>
+        <FormControl variant="outlined" className={classes.formControl}>
           <InputLabel id="demo-simple-select-outlined-label">
             Categories
           </InputLabel>
