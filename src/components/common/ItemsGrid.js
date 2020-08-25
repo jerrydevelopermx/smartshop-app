@@ -2,13 +2,10 @@ import React, { useState, useEffect } from "react";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import ProductDetails from "./ProductDetails";
 
 function ItemsGrid(props) {
-  const [product, setProduct] = useState({});
   const [details, setDetails] = useState({
     open: false,
     productId: "",
@@ -41,7 +38,7 @@ function ItemsGrid(props) {
           onClose={closeModal}
           styles={props.detailStyles}
           buttons={props.buttonsStyles}
-          gridStyles={props.styles}
+          gridStyles={props.appStyles}
         />
       ) : null}
 
@@ -65,7 +62,7 @@ function ItemsGrid(props) {
                   }}
                 >
                   <CardMedia
-                    style={props.styles.cardMedia}
+                    style={props.appStyles.cardMedia}
                     image={`${process.env.PUBLIC_URL}/imgs/${item.coverImage}`}
                     title={item.name}
                   />
@@ -107,7 +104,7 @@ function ItemsGrid(props) {
                 }}
               >
                 <CardMedia
-                  style={props.styles.cardMedia}
+                  style={props.appStyles.cardMedia}
                   image={`${process.env.PUBLIC_URL}/imgs/${item.coverImage}`}
                   title={item.name}
                 />

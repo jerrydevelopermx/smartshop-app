@@ -29,6 +29,7 @@ function StorePage(props) {
     const id = props.match.params.id ? props.match.params.id : 0;
     setPageId(id);
     setFilteredItems(null);
+    setFilters([]);
   }, [props.match.params.id]);
 
   if (loading) return <p>Still loading..</p>;
@@ -48,7 +49,6 @@ function StorePage(props) {
   }
 
   function filterChangeHandler(type, value) {
-    console.log(type, value);
     let filtered = categoryFilteredItems.filter((element) => {
       //console.log(filtersApplied);
       if (filtersApplied.length === 0) {
@@ -59,7 +59,6 @@ function StorePage(props) {
       return element[type.toLowerCase()] === value;
     });
     setFiltersApplied([{ type, value }, ...filtersApplied]);
-    console.log(filtered);
 
     setFilteredItems(filtered);
   }
@@ -96,9 +95,9 @@ function StorePage(props) {
           <ItemsGrid
             items={filteredItems !== null ? filteredItems : data.storeGrid}
             pageId={data.page.id}
-            styles={data.page.styles.grid}
+            appStyles={appStyles.grid}
             detailStyles={data.page.styles.detailsModal}
-            buttonsStyles={data.page.styles.buttons}
+            buttonsStyles={appStyles.buttons}
           />
 
           {filteredItems !== null && filteredItems.length === 0 ? (

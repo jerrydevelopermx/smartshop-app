@@ -25,9 +25,9 @@ function ProductDetails(props) {
 
   let styledCloseButton = {
     root: {
-      "&:hover": props.buttons.closeModal.root.hover,
-      color: props.buttons.closeModal.root.color,
-      backgroundColor: props.buttons.closeModal.root.backgroundColor,
+      "&:hover": props.styles.closeButton.root.hover,
+      color: props.styles.closeButton.root.color,
+      backgroundColor: props.styles.closeButton.root.backgroundColor,
     },
   };
 

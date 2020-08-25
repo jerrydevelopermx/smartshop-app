@@ -119,22 +119,6 @@ const queries = {
               color
             }
           }
-          grid {
-            cardGrid {
-              paddingTop
-              paddingBottom
-            }
-            card {
-              height
-              display
-            }
-            cardMedia {
-              paddingTop
-            }
-            cardContent {
-              flexGrow
-            }
-          }
           detailsModal {
             detailsHeader {
               background
@@ -143,45 +127,7 @@ const queries = {
             detailsBody {
               background
             }
-          }
-          buttons {
-            closeModal {
-              root {
-                color
-                backgroundColor
-                hover {
-                  backgroundColor
-                }
-              }
-            }
-            addToCart {
-              root {
-                color
-                backgroundColor
-                hover {
-                  backgroundColor
-                }
-              }
-            }
-            wishList {
-              root {
-                color
-                backgroundColor
-                hover {
-                  backgroundColor
-                }
-              }
-            }
-            checkout {
-              root {
-                color
-                backgroundColor
-                hover {
-                  backgroundColor
-                }
-              }
-            }
-            viewMore {
+            closeButton {
               root {
                 color
                 backgroundColor
