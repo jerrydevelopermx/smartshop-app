@@ -61,27 +61,12 @@ const queries = {
           header {
             topBar {
               background
-              height
-            }
-            toolbarSecondary {
-              justifyContent
-              overflowX
-              marginTop
-            }
-            toolbarLink {
-              width
-              padding
-              flexShrink
             }
             headerActive {
               color
             }
             headerMenu {
               color
-              fontSize
-              textDecoration
-              width
-              textAlign
             }
             styledMenu {
               paper {
@@ -94,6 +79,33 @@ const queries = {
                 hover {
                   backgroundColor
                 }
+              }
+            }
+            contentModal {
+              contentModalsHeader {
+                background
+                color
+              }
+              contentModalsBody {
+                background
+              }
+              closeButton {
+                root {
+                  color
+                  backgroundColor
+                  hover {
+                    backgroundColor
+                  }
+                }
+              }
+            }
+            mobileNavBar {
+              paper {
+                background
+                color
+              }
+              list {
+                width
               }
             }
           }
@@ -121,33 +133,6 @@ const queries = {
             }
             cardContent {
               flexGrow
-            }
-          }
-          contentModal {
-            contentModalsHeader {
-              background
-              color
-            }
-            contentModalsBody {
-              background
-            }
-            closeButton {
-              root {
-                color
-                backgroundColor
-                hover {
-                  backgroundColor
-                }
-              }
-            }
-          }
-          mobileNavBar {
-            paper {
-              background
-              color
-            }
-            list {
-              width
             }
           }
           detailsModal {
@@ -240,6 +225,35 @@ const queries = {
         title
         content {
           type
+          text
+        }
+      }
+    }
+  `,
+  GET_PRODUCT_BY_ID: gql`
+    query GetProduct($storeId: String!, $id: ID!) {
+      product(storeId: $storeId, id: $id) {
+        storeId
+        id
+        name
+        type
+        categoryId
+        color
+        size
+        style
+        material
+        name
+        coverImage
+        description
+        price
+        specifications
+        warranties
+        attributes {
+          name
+          values
+        }
+        gallery {
+          img
           text
         }
       }

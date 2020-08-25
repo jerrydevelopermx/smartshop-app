@@ -11,6 +11,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 
 function MobileNavBar(props) {
+  console.log(props.styles);
   const useStyles = makeStyles(props.styles);
   const classes = useStyles();
   const [state, setState] = useState(false);
@@ -54,7 +55,14 @@ function MobileNavBar(props) {
             {props.list &&
               props.list.map((element, index) =>
                 element.type === "link" ? (
-                  <ListItem button key={element.label}>
+                  <ListItem
+                    button
+                    key={element.label}
+                    onClick={() => {
+                      props.onClick(element.action);
+                      toggleDrawer(false);
+                    }}
+                  >
                     <ListItemText primary={element.label} />
                   </ListItem>
                 ) : element.type === "submenu" ? (

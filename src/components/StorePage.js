@@ -1,20 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import Container from "@material-ui/core/Container";
-import { makeStyles } from "@material-ui/core/styles";
 import ItemsGrid from "./common/ItemsGrid";
 import SearchFilter from "./common/SearchFilter";
 import VideoGallery from "./common/VideoGallery";
 import Header from "./common/Header";
 import Footer from "./common/Footer";
 import Slider from "./common/Slider";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import appStyles from "../styles/app.js";
 import queries from "../graphql/queries.js";
 import NoResults from "./common/NoResults";
 
 function StorePage(props) {
-  console.log(appStyles);
-  console.log(queries);
   let gridItems = [];
   const [pageId, setPageId] = useState(0);
   const [filters, setFilters] = useState([]);
@@ -66,10 +63,7 @@ function StorePage(props) {
 
     setFilteredItems(filtered);
   }
-  /*
-  const useStyles = makeStyles((theme) => page.classes);
-  const classes = useStyles();
-*/
+
   return (
     <div style={data.page.styles.body}>
       <Header
@@ -78,11 +72,11 @@ function StorePage(props) {
         pageId={data.page.id}
         inputRef={videoRef}
         styles={data.page.styles.header}
-        modalStyles={data.page.styles.contentModal}
-        mobileBarStyles={data.page.styles.mobileNavBar}
+        appStyles={appStyles.header}
       />
       <main>
         <Slider
+          id="home-scroll"
           autoplay={true}
           maxHeight="350px"
           slides={data.page.slides}

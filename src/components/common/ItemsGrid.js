@@ -6,7 +6,6 @@ import Button from "@material-ui/core/Button";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import ProductDetails from "./ProductDetails";
-import productStore from "../../stores/productStore";
 
 function ItemsGrid(props) {
   const [product, setProduct] = useState({});
@@ -17,21 +16,11 @@ function ItemsGrid(props) {
   });
   const [hovers, setHovers] = useState([]);
 
-  let viewMoreButton = {
-    root: {
-      color: "#fff",
-      backgroundColor: "red",
-      height: 28,
-    },
-  };
-  const ViewMoreButton = makeStyles((theme) => viewMoreButton)(Button);
-
   useEffect(() => {
     setHovers(props.items.map(() => false));
   }, [props.items]);
 
   function changeState(id, pageId) {
-    console.log(id, pageId);
     setDetails({ open: true, productId: id, pageId: pageId });
   }
 
@@ -51,7 +40,6 @@ function ItemsGrid(props) {
           open={details.open}
           onClose={closeModal}
           styles={props.detailStyles}
-          classes={props.classes}
           buttons={props.buttonsStyles}
           gridStyles={props.styles}
         />
@@ -59,7 +47,7 @@ function ItemsGrid(props) {
 
       {props.items.map((item, index) => (
         <Grid item key={item.id} xs={12} sm={6} md={4}>
-          <Card classes={props.styles.card}>
+          <Card>
             {item.type === "store" ? (
               <Link to={"/store/" + item.id}>
                 <div

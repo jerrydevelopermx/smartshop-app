@@ -14,18 +14,10 @@ import { useLazyQuery } from "@apollo/client";
 import queries from "../../graphql/queries.js";
 
 function Header(props) {
-  /*
-  xs extra-pequeño: 0px
-sm pequeño: 600px
-md, mediano: 960px
-lg, grande: 1280px
-xl extra-grande: 1920px
-
-  */
   const useStyles = makeStyles((theme) => ({
     header: {
       [theme.breakpoints.only("xs")]: {
-        // 600-959
+        // 0-599
         height: "70px",
       },
       [theme.breakpoints.up("sm")]: {
@@ -67,6 +59,8 @@ xl extra-grande: 1920px
         fontSize: "23px",
         width: "150px",
       },
+      textAlign: "center",
+      textDecoration: "none",
       "&:hover": {
         textDecoration: "underline !important",
         cursor: "pointer",
@@ -94,6 +88,7 @@ xl extra-grande: 1920px
         //margin: "8px",
       },
     },
+    toolbarSecondary: props.appStyles.toolbarSecondary,
   }));
   const classes = useStyles();
   const [getContent, { loading, data }] = useLazyQuery(
@@ -136,6 +131,8 @@ xl extra-grande: 1920px
     storeId: props.pageId,
   });
 
+  const [modalPageStatus, setModalPageStatus] = useState({ open: false });
+
   const handleClick = (event) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
@@ -156,32 +153,45 @@ xl extra-grande: 1920px
   };
 
   const mobileMenuClickHandler = (action) => {
-    getContent({
-      variables: {
-        storeId: props.pageId,
-        sectionId: action,
-      },
-    });
-    setModalStatus({ ...modalStatus, ...{ open: true, sectionId: action } });
+    if (action !== "login") {
+      getContent({
+        variables: {
+          storeId: props.pageId,
+          sectionId: action,
+        },
+      });
+      setModalStatus({ ...modalStatus, ...{ open: true, sectionId: action } });
+    } else {
+      setModalPageStatus({ open: true });
+    }
   };
 
   const menuClickHandler = (action, event) => {
     event.preventDefault();
-    getContent({
-      variables: {
-        storeId: props.pageId,
-        sectionId: action,
-      },
-    });
-    setModalStatus({ ...modalStatus, ...{ open: true, sectionId: action } });
+    if (action !== "login") {
+      getContent({
+        variables: {
+          storeId: props.pageId,
+          sectionId: action,
+        },
+      });
+      setModalStatus({ ...modalStatus, ...{ open: true, sectionId: action } });
+    } else {
+      setModalPageStatus({ open: true });
+    }
   };
 
   function handleSubMenuScroll(action) {
-    //console.log(props.inputRef.current);
     var element = document.getElementById(action + "-scroll");
-    //props.inputRef.current.scrollIntoView({ block: "end", behavior: "smooth" });
     element.scrollIntoView({ block: "end", behavior: "smooth" });
     //setAnchorEl(null);
+  }
+
+  function menuClickScroll(action, event) {
+    console.log("el otro");
+    event.preventDefault();
+    var element = document.getElementById(action + "-scroll");
+    element.scrollIntoView({ block: "end", behavior: "smooth" });
   }
 
   function closeModal() {
@@ -191,12 +201,16 @@ xl extra-grande: 1920px
     });
   }
 
+  function closeModalPage() {
+    setModalPageStatus({ open: false });
+  }
+
   return (
     <>
       {data && data.content ? (
         <ModalContent
           open={modalStatus.open}
-          styles={props.modalStyles}
+          styles={props.styles.contentModal}
           status={modalStatus}
           onClose={closeModal}
           content={data.content}
@@ -204,10 +218,10 @@ xl extra-grande: 1920px
       ) : null}
 
       <ModalPage
-        open={modalStatus.open}
-        styles={props.modalStyles}
+        open={modalPageStatus.open}
+        styles={props.styles.contentModal}
         status={modalStatus}
-        onClose={closeModal}
+        onClose={closeModalPage}
       ></ModalPage>
 
       <AppBar
@@ -218,13 +232,13 @@ xl extra-grande: 1920px
         <Toolbar
           component="nav"
           variant="dense"
-          style={props.styles.toolbarSecondary}
+          className={classes.toolbarSecondary}
         >
           <Hidden only={["sm", "md", "lg", "xl"]}>
             <MobileNavBar
               list={props.menu}
               classes={props.classes}
-              styles={props.mobileBarStyles}
+              styles={props.styles.mobileNavBar}
               onClick={mobileMenuClickHandler}
             />
           </Hidden>
@@ -241,7 +255,11 @@ xl extra-grande: 1920px
                         style={props.styles.headerMenu}
                         to={item.url}
                         onClick={(e) =>
-                          item.action ? menuClickHandler(item.action, e) : null
+                          item.action
+                            ? item.action !== "home" || item.action !== "events"
+                              ? menuClickHandler(item.action, e)
+                              : menuClickScroll(item.action, e)
+                            : null
                         }
                         exact
                       >
@@ -276,7 +294,8 @@ xl extra-grande: 1920px
                             key={submenu.action}
                             onClick={() =>
                               submenu.action === "events" ||
-                              submenu.action === "tour"
+                              submenu.action === "tour" ||
+                              submenu.action === "home"
                                 ? handleSubMenuScroll(submenu.action)
                                 : handleSubMenuClick(submenu.action)
                             }

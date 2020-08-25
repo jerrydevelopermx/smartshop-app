@@ -18,36 +18,7 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "./Slider";
-
-const GET_PRODUCT_BY_ID = gql`
-  query GetProduct($storeId: String!, $id: ID!) {
-    product(storeId: $storeId, id: $id) {
-      storeId
-      id
-      name
-      type
-      categoryId
-      color
-      size
-      style
-      material
-      name
-      coverImage
-      description
-      price
-      specifications
-      warranties
-      attributes {
-        name
-        values
-      }
-      gallery {
-        img
-        text
-      }
-    }
-  }
-`;
+import queries from "../../graphql/queries.js";
 
 function ProductDetails(props) {
   console.log(props);
@@ -79,7 +50,7 @@ function ProductDetails(props) {
   const CartButton = withStyles((theme) => styledCartButton)(Button);
   const WishListButton = withStyles((theme) => styledWishButton)(Button);
 
-  const { loading, error, data } = useQuery(GET_PRODUCT_BY_ID, {
+  const { loading, error, data } = useQuery(queries.GET_PRODUCT_BY_ID, {
     variables: {
       storeId: props.params.pageId,
       id: props.params.productId,
@@ -87,7 +58,6 @@ function ProductDetails(props) {
   });
   if (loading) return <p></p>;
   if (error) return <p>There is an error!</p>;
-  console.log("Rendering: MenuContainer");
 
   return data.product ? (
     <Dialog

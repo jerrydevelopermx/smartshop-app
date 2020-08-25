@@ -3,16 +3,26 @@ const styles = {
     background: "#fff",
     fontFamily: "Verdana",
   },
+
   header: {
-    topBar: { background: "#590F10" },
     toolbarSecondary: {
       justifyContent: "space-between",
       overflowX: "auto",
     },
+    headerMenu: {
+      textAlign: "center",
+      textDecoration: "none",
+      "&:hover": {
+        textDecoration: "underline",
+        cursor: "pointer",
+      },
+    },
   },
+
   container: {
-    border: "1px solid",
     width: "95%",
+    marginTop: "15px",
+    marginBottom: "15px",
   },
   noResults: {
     container: {
@@ -71,6 +81,10 @@ const styles = {
       width: "26px",
       margin: "0 3px",
     },
+  },
+
+  buttons: {
+    loginButton: {},
   },
 };
 
