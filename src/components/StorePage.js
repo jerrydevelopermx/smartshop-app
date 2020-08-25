@@ -10,6 +10,7 @@ import Slider from "./common/Slider";
 import { useQuery, gql } from "@apollo/client";
 import appStyles from "../styles/app.js";
 import queries from "../graphql/queries.js";
+import NoResults from "./common/NoResults";
 
 function StorePage(props) {
   console.log(appStyles);
@@ -83,12 +84,13 @@ function StorePage(props) {
       <main>
         <Slider
           autoplay={true}
-          maxHeight="300px"
+          maxHeight="350px"
           slides={data.page.slides}
           styles={data.page.styles.slider}
+          appStyles={appStyles.slider}
         />
 
-        <Container style={{ border: "1px solid" }}>
+        <Container style={appStyles.container} maxWidth={false}>
           <SearchFilter
             onCategoryChange={categoryChangeHandler}
             onFilterChange={filterChangeHandler}
@@ -96,6 +98,7 @@ function StorePage(props) {
             filters={filters}
             appStyles={appStyles.searchFilter}
           />
+
           <ItemsGrid
             items={filteredItems !== null ? filteredItems : data.storeGrid}
             pageId={data.page.id}
@@ -103,6 +106,11 @@ function StorePage(props) {
             detailStyles={data.page.styles.detailsModal}
             buttonsStyles={data.page.styles.buttons}
           />
+
+          {filteredItems !== null && filteredItems.length === 0 ? (
+            <NoResults appStyles={appStyles.noResults} />
+          ) : null}
+
           <VideoGallery
             inputRef={videoRef}
             video={data.page.video}
@@ -115,6 +123,7 @@ function StorePage(props) {
             autoplay={true}
             slides={data.page.offers}
             styles={data.page.styles.slider}
+            appStyles={appStyles.slider}
           />
         </Container>
       </main>

@@ -107,10 +107,6 @@ const queries = {
               color
             }
           }
-          slider {
-            marginTop
-            textAlign
-          }
           grid {
             cardGrid {
               paddingTop
@@ -232,6 +228,19 @@ const queries = {
         attributes {
           name
           values
+        }
+      }
+    }
+  `,
+  GET_CONTENT_BY_SECTION: gql`
+    query GetContent($storeId: ID!, $sectionId: String) {
+      content(storeId: $storeId, sectionId: $sectionId) {
+        pageId
+        sectionId
+        title
+        content {
+          type
+          text
         }
       }
     }

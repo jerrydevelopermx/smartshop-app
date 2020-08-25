@@ -12,7 +12,7 @@ function SearchFilter(props) {
   const classes = useStyles();
   return (
     <div className={classes.main}>
-      <Container className={classes.container}>
+      <Container className={classes.container} maxWidth={false}>
         <FormControl variant="outlined" className={classes.formControl}>
           <InputLabel id="demo-simple-select-outlined-label">
             Categories
@@ -36,18 +36,17 @@ function SearchFilter(props) {
           </Select>
         </FormControl>
       </Container>
-      <Grid container>
-        <Grid item xs={12} sm={12} md={12}>
-          <Grid container spacing={1}>
-            {props.filters &&
-              props.filters.length > 0 &&
-              props.filters.map((item) => (
-                <Grid item key={item.id} xs={6} sm={4} md={3}>
+      {props.filters && props.filters.length > 0 ? (
+        <Grid container style={{ padding: "15px" }}>
+          <Grid item xs={12} sm={12} md={12}>
+            <Grid container spacing={1}>
+              {props.filters.map((item) => (
+                <Grid item key={item.id} xs={6} sm={4} md={3} lg={3} xl={3}>
                   <FormControl
                     key={item.name}
                     variant="outlined"
                     style={{
-                      width: "90%",
+                      width: "100%",
                     }}
                   >
                     <InputLabel id="demo-simple-select-outlined-label">
@@ -75,9 +74,10 @@ function SearchFilter(props) {
                   </FormControl>
                 </Grid>
               ))}
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      ) : null}
     </div>
   );
 }

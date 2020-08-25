@@ -8,22 +8,10 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import ModalContent from "./ModalContent";
+import ModalPage from "./ModalPage";
 import { NavHashLink as NavLink } from "react-router-hash-link";
-import { useLazyQuery, gql } from "@apollo/client";
-
-const GET_CONTENT_BY_SECTION = gql`
-  query GetContent($storeId: ID!, $sectionId: String) {
-    content(storeId: $storeId, sectionId: $sectionId) {
-      pageId
-      sectionId
-      title
-      content {
-        type
-        text
-      }
-    }
-  }
-`;
+import { useLazyQuery } from "@apollo/client";
+import queries from "../../graphql/queries.js";
 
 function Header(props) {
   /*
@@ -79,6 +67,10 @@ xl extra-grande: 1920px
         fontSize: "23px",
         width: "150px",
       },
+      "&:hover": {
+        textDecoration: "underline !important",
+        cursor: "pointer",
+      },
     },
     logo: {
       [theme.breakpoints.only("xs")]: {
@@ -104,7 +96,9 @@ xl extra-grande: 1920px
     },
   }));
   const classes = useStyles();
-  const [getContent, { loading, data }] = useLazyQuery(GET_CONTENT_BY_SECTION);
+  const [getContent, { loading, data }] = useLazyQuery(
+    queries.GET_CONTENT_BY_SECTION
+  );
 
   const StyledMenu = withStyles(props.styles.styledMenu)((props) => (
     <Menu
@@ -208,6 +202,14 @@ xl extra-grande: 1920px
           content={data.content}
         />
       ) : null}
+
+      <ModalPage
+        open={modalStatus.open}
+        styles={props.modalStyles}
+        status={modalStatus}
+        onClose={closeModal}
+      ></ModalPage>
+
       <AppBar
         position="fixed"
         style={props.styles.topBar}

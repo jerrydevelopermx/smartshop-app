@@ -10,7 +10,23 @@ const styles = {
       overflowX: "auto",
     },
   },
-
+  container: {
+    border: "1px solid",
+    width: "95%",
+  },
+  noResults: {
+    container: {
+      marginTop: "20px",
+      width: "100%",
+      textAlign: "center",
+    },
+    text: {
+      fontSize: "25px",
+    },
+  },
+  slider: {
+    textAlign: "center",
+  },
   searchFilter: {
     main: {
       border: "1px solid #ccc",
@@ -38,15 +54,9 @@ const styles = {
     bottomBar: {
       padding: "30px",
     },
-    footerColumn: {
-      width: "100%",
-      margin: "auto",
-      textAlign: "left",
-    },
     footerUlList: {
       listStyleType: "circle",
       padding: "5% 15%",
-      width: "100%",
       margin: "auto",
       textAlign: "left",
     },

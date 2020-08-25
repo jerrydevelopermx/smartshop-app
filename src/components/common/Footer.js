@@ -16,7 +16,7 @@ function Footer(props) {
             <Grid item key={column.id} xs={6} sm={6} md={3}>
               <div className={classes.centeredContent}>
                 {column.title}
-                <div className={classes.footerLinks}>
+                <div>
                   <ul className={classes.footerUlList}>
                     {column.options.map((option, index) => (
                       <li key={"footOpt" + index}>
