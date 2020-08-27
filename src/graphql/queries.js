@@ -137,6 +137,24 @@ const queries = {
               }
             }
           }
+          modalStyles {
+            header {
+              background
+              color
+            }
+            body {
+              background
+            }
+            closeButton {
+              root {
+                color
+                backgroundColor
+                hover {
+                  backgroundColor
+                }
+              }
+            }
+          }
         }
       }
 

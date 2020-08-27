@@ -119,12 +119,6 @@ function Header(props) {
   const StyledMenuItem = withStyles((theme) => styledMenuItem)(MenuItem);
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const [content, setContent] = useState({});
-  const [modalContent, setModalContent] = useState({
-    open: false,
-    sectionId: "mission",
-    content: {},
-  });
   const [modalStatus, setModalStatus] = useState({
     open: false,
     sectionId: "",

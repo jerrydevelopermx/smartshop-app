@@ -4,12 +4,20 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import ProductDetails from "./ProductDetails";
+import ShoppingCartPage from "../ShoppingCartPage";
+import CheckoutPage from "../CheckoutPage";
+import ReviewPage from "../ReviewPage";
 
 function ItemsGrid(props) {
   const [details, setDetails] = useState({
     open: false,
     productId: "",
     pageId: "",
+  });
+  const [modalsStatus, setModalsStatus] = useState({
+    shoppingCart: false,
+    checkout: false,
+    review: false,
   });
   const [hovers, setHovers] = useState([]);
 
@@ -20,15 +28,18 @@ function ItemsGrid(props) {
   function changeState(id, pageId) {
     setDetails({ open: true, productId: id, pageId: pageId });
   }
-
   function closeModal() {
     setDetails({ open: false, productId: "", pageId: "" });
   }
-
   function toggleHover(id, flag) {
     setHovers(hovers.map((hover, index) => (index === id ? flag : hover)));
   }
 
+  function setModals(id, action) {
+    let page = {};
+    page[id] = action;
+    setModalsStatus({ ...modalsStatus, ...page });
+  }
   return (
     <Grid container spacing={4}>
       {props.pageId !== "0" && details.productId !== "" ? (
@@ -36,11 +47,26 @@ function ItemsGrid(props) {
           params={details}
           open={details.open}
           onClose={closeModal}
-          styles={props.detailStyles}
-          buttons={props.buttonsStyles}
-          gridStyles={props.appStyles}
+          styles={props.modalStyles}
+          buttons={props.appStyles.buttons}
         />
       ) : null}
+
+      <ShoppingCartPage
+        open={modalsStatus.shoppingCart}
+        styles={props.modalStyles}
+        onClose={() => setModals("shoppingCart", false)}
+      />
+      <CheckoutPage
+        open={modalsStatus.checkout}
+        styles={props.modalStyles}
+        onClose={() => setModals("checkout", false)}
+      />
+      <ReviewPage
+        open={modalsStatus.review}
+        styles={props.modalStyles}
+        onClose={() => setModals("review", false)}
+      />
 
       {props.items.map((item, index) => (
         <Grid item key={item.id} xs={12} sm={6} md={4}>
@@ -62,7 +88,7 @@ function ItemsGrid(props) {
                   }}
                 >
                   <CardMedia
-                    style={props.appStyles.cardMedia}
+                    style={props.appStyles.grid.cardMedia}
                     image={`${process.env.PUBLIC_URL}/imgs/${item.coverImage}`}
                     title={item.name}
                   />
@@ -104,7 +130,7 @@ function ItemsGrid(props) {
                 }}
               >
                 <CardMedia
-                  style={props.appStyles.cardMedia}
+                  style={props.appStyles.grid.cardMedia}
                   image={`${process.env.PUBLIC_URL}/imgs/${item.coverImage}`}
                   title={item.name}
                 />
@@ -137,6 +163,10 @@ function ItemsGrid(props) {
                           padding: "5px",
                           margin: "5px",
                         }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setModals("shoppingCart", true);
+                        }}
                       >
                         Add to cart
                       </Link>
@@ -151,6 +181,10 @@ function ItemsGrid(props) {
                           textDecoration: "none",
                           padding: "5px",
                           margin: "5px",
+                        }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setModals("checkout", true);
                         }}
                       >
                         Checkout

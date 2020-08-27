@@ -4,9 +4,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -21,8 +18,6 @@ import Slider from "./Slider";
 import queries from "../../graphql/queries.js";
 
 function ProductDetails(props) {
-  console.log(props);
-
   let styledCloseButton = {
     root: {
       "&:hover": props.styles.closeButton.root.hover,
@@ -66,10 +61,7 @@ function ProductDetails(props) {
       open={props.open}
       aria-labelledby="max-width-dialog-title"
     >
-      <DialogTitle
-        style={props.styles.detailsHeader}
-        id="max-width-dialog-title"
-      >
+      <DialogTitle style={props.styles.header} id="max-width-dialog-title">
         Product detail
         <IconButton
           aria-label="close"
@@ -84,7 +76,7 @@ function ProductDetails(props) {
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-      <DialogContent style={props.styles.detailsBody}>
+      <DialogContent style={props.styles.body}>
         <Grid container spacing={3}>
           <Grid item key={props.params.productId} xs={12} sm={6} md={6}>
             <Slider

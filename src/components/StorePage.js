@@ -11,6 +11,14 @@ import appStyles from "../styles/app.js";
 import queries from "../graphql/queries.js";
 import NoResults from "./common/NoResults";
 
+/*
+  xs extra-pequeño: 0px
+sm pequeño: 600px
+md, mediano: 960px
+lg, grande: 1280px
+xl extra-grande: 1920px
+
+  */
 function StorePage(props) {
   let gridItems = [];
   const [pageId, setPageId] = useState(0);
@@ -59,7 +67,6 @@ function StorePage(props) {
       return element[type.toLowerCase()] === value;
     });
     setFiltersApplied([{ type, value }, ...filtersApplied]);
-
     setFilteredItems(filtered);
   }
 
@@ -95,9 +102,8 @@ function StorePage(props) {
           <ItemsGrid
             items={filteredItems !== null ? filteredItems : data.storeGrid}
             pageId={data.page.id}
-            appStyles={appStyles.grid}
-            detailStyles={data.page.styles.detailsModal}
-            buttonsStyles={appStyles.buttons}
+            appStyles={appStyles}
+            modalStyles={data.page.styles.modalStyles}
           />
 
           {filteredItems !== null && filteredItems.length === 0 ? (
