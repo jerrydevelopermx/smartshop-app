@@ -23,9 +23,6 @@ function SearchFilter(props) {
             label="Categories"
             onChange={props.onCategoryChange}
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
             {props.categories &&
               props.categories.length > 0 &&
               props.categories.map((option) => (

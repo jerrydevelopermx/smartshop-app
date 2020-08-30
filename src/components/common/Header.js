@@ -149,16 +149,22 @@ function Header(props) {
   };
 
   const mobileMenuClickHandler = (action) => {
-    if (action !== "login") {
-      getContent({
-        variables: {
-          storeId: props.pageId,
-          sectionId: action,
-        },
-      });
-      setModalStatus({ ...modalStatus, ...{ open: true, sectionId: action } });
-    } else {
-      setModalPageStatus({ open: true });
+    console.log(action);
+    if (action !== null) {
+      if (action !== "login") {
+        getContent({
+          variables: {
+            storeId: props.pageId,
+            sectionId: action,
+          },
+        });
+        setModalStatus({
+          ...modalStatus,
+          ...{ open: true, sectionId: action },
+        });
+      } else {
+        setModalPageStatus({ open: true });
+      }
     }
   };
 
@@ -178,7 +184,7 @@ function Header(props) {
   };
 
   function handleSubMenuScroll(action) {
-    setAnchorEl(null);
+    //setAnchorEl(null);
     var element = document.getElementById(action + "-scroll");
     element.scrollIntoView({ block: "end", behavior: "smooth" });
   }
