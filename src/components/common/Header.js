@@ -80,11 +80,13 @@ function Header(props) {
         //margin: "8px",
       },
       [theme.breakpoints.up("lg")]: {
-        height: "90px",
+        marginTop: "2px",
+        height: "95px",
         //margin: "10px",
       },
       [theme.breakpoints.up("xl")]: {
-        height: "120px",
+        marginTop: "2px",
+        height: "125px",
         //margin: "8px",
       },
     },

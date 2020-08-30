@@ -8,8 +8,53 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
+import { makeStyles } from "@material-ui/core/styles";
 
 function ModalContent(props) {
+  const useStyles = makeStyles((theme) => ({
+    modal: {
+      [theme.breakpoints.only("xs")]: {
+        // 0-599
+        top: "70px !important",
+      },
+      [theme.breakpoints.up("sm")]: {
+        // 600-959
+        top: "70px !important",
+      },
+      [theme.breakpoints.up("md")]: {
+        //960 - 1279
+        top: "70px !important",
+      },
+
+      [theme.breakpoints.up("lg")]: {
+        //1280 - 1919
+        top: "75px !important",
+      },
+      [theme.breakpoints.up("xl")]: {
+        //>= 1920
+        top: "130px !important",
+      },
+    },
+    arrow: {
+      border: "2px solid red",
+      "&:after": {
+        height: "4px",
+        background: "black",
+        position: "absolute",
+        content: "",
+        bottom: "-10px",
+        right: "0",
+        width: "4px",
+        height: "0",
+        border: "4px solid",
+        borderTop: "10px solid transparent",
+        borderBottom: "10px solid transparent",
+        borderLeft: "10px solid black",
+      },
+    },
+  }));
+  const classes = useStyles();
+
   let styledCLoseButton = {
     root: {
       "&:hover": props.styles.closeButton.root.hover,
@@ -19,15 +64,17 @@ function ModalContent(props) {
   };
 
   const CloseButton = withStyles((theme) => styledCLoseButton)(Button);
-
+  console.log(classes);
   return (
     <Dialog
+      className={classes.modal}
       fullWidth={true}
-      maxWidth="md"
+      maxWidth="lg"
       open={props.open}
       aria-labelledby="max-width-dialog-title"
     >
       <DialogTitle
+        className={classes.arrow}
         style={props.styles.contentModalsHeader}
         id="max-width-dialog-title"
       >
