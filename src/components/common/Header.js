@@ -178,9 +178,9 @@ function Header(props) {
   };
 
   function handleSubMenuScroll(action) {
+    setAnchorEl(null);
     var element = document.getElementById(action + "-scroll");
     element.scrollIntoView({ block: "end", behavior: "smooth" });
-    //setAnchorEl(null);
   }
 
   function menuClickScroll(action, event) {
@@ -240,7 +240,6 @@ function Header(props) {
           </Hidden>
           {props.menu &&
             props.menu.map((item) => {
-              console.log(item);
               switch (item.type) {
                 case "link":
                   return (

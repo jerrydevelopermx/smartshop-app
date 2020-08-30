@@ -14,7 +14,7 @@ function VideoGallery(props) {
       className={classes.videoContainer}
     >
       <div className={classes.videoPlayer}>
-        <Typography variant="h3">Take a Tour!</Typography>
+        <Typography variant="h4">Take a Tour!</Typography>
         {props.video ? (
           <Player
             poster={`${process.env.PUBLIC_URL}/imgs/${props.video.poster}}`}

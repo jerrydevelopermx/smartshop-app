@@ -32,7 +32,6 @@ function ModalPage(props) {
   const CloseButton = withStyles((theme) => loginButton)(Button);
   const classes = useStyles();
 
-  console.log(props);
   return (
     <Dialog
       fullWidth={true}

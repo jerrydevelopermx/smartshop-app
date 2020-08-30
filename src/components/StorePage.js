@@ -53,7 +53,6 @@ function StorePage(props) {
     setCategoryFilteredItems(gridItems);
     setFilteredItems(gridItems);
     setFilters(category.filters);
-    //setCategoryId(target.value);
   }
 
   function filterChangeHandler(type, value) {
@@ -84,6 +83,7 @@ function StorePage(props) {
         <Slider
           id="home-scroll"
           autoplay={true}
+          type="topSlider"
           maxHeight="350px"
           slides={data.page.slides}
           styles={data.page.styles.slider}

@@ -70,8 +70,9 @@ function ShoppingCartPage(props) {
         </IconButton>
       </DialogTitle>
       <DialogContent style={props.styles.body}>
-        {cartItems.map((item) => (
+        {cartItems.map((item, index) => (
           <Grid
+            key={"grid-" + index}
             container
             spacing={3}
             style={{ borderBottom: "1px solid #ccc " }}
@@ -93,8 +94,6 @@ function ShoppingCartPage(props) {
               xs={4}
               sm={4}
               md={4}
-              alignContent="center"
-              direction="row"
             >
               <div>{item.store}</div>
               <div>{item.description}</div>
@@ -118,8 +117,6 @@ function ShoppingCartPage(props) {
               xs={4}
               sm={4}
               md={4}
-              alignContent="center"
-              direction="row"
             >
               <div>
                 {item.price}

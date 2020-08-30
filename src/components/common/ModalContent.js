@@ -11,7 +11,12 @@ import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 
 function ModalContent(props) {
+  console.log(props);
   const useStyles = makeStyles((theme) => ({
+    modalPaper: {
+      minHeight: "80vh",
+      maxHeight: "80vh",
+    },
     modal: {
       [theme.breakpoints.only("xs")]: {
         // 0-599
@@ -19,37 +24,46 @@ function ModalContent(props) {
       },
       [theme.breakpoints.up("sm")]: {
         // 600-959
-        top: "70px !important",
+        //top: "70px !important",
       },
-      [theme.breakpoints.up("md")]: {
+      [theme.breakpoints.only("md")]: {
         //960 - 1279
         top: "70px !important",
       },
 
-      [theme.breakpoints.up("lg")]: {
+      [theme.breakpoints.only("lg")]: {
         //1280 - 1919
-        top: "75px !important",
+        top: "80px !important",
+        "&:after": {
+          position: "absolute",
+          content: `''`,
+          left: getLeftPosition(props.status.sectionId),
+          top: "12px",
+          width: "0",
+          height: "0",
+          //borderTop: "10px solid black",
+          borderBottom:
+            "15px solid " + props.styles.contentModalsHeader.background,
+          borderRight: "15px solid transparent",
+          borderLeft: "15px solid transparent",
+        },
       },
       [theme.breakpoints.up("xl")]: {
         //>= 1920
-        top: "130px !important",
-      },
-    },
-    arrow: {
-      border: "2px solid red",
-      "&:after": {
-        height: "4px",
-        background: "black",
-        position: "absolute",
-        content: "",
-        bottom: "-10px",
-        right: "0",
-        width: "4px",
-        height: "0",
-        border: "4px solid",
-        borderTop: "10px solid transparent",
-        borderBottom: "10px solid transparent",
-        borderLeft: "10px solid black",
+        top: "80px !important",
+        "&:after": {
+          position: "absolute",
+          content: `''`,
+          left: getLeftPosition(props.status.sectionId),
+          top: "53px",
+          width: "0",
+          height: "0",
+          //borderTop: "10px solid black",
+          borderBottom:
+            "15px solid " + props.styles.contentModalsHeader.background,
+          borderRight: "15px solid transparent",
+          borderLeft: "15px solid transparent",
+        },
       },
     },
   }));
@@ -64,17 +78,30 @@ function ModalContent(props) {
   };
 
   const CloseButton = withStyles((theme) => styledCLoseButton)(Button);
-  console.log(classes);
+
+  function getLeftPosition(action) {
+    let ourServices = ["mission", "who", "board", "features", "membership"];
+
+    if (action === "contact") {
+      return "33.5%";
+    }
+    if (action === "blog") {
+      return "78%";
+    }
+    if (ourServices.indexOf(action) !== -1) {
+      return "19%";
+    }
+  }
   return (
     <Dialog
+      classes={{ paper: classes.modalPaper }}
       className={classes.modal}
       fullWidth={true}
-      maxWidth="lg"
+      maxWidth="xl"
       open={props.open}
       aria-labelledby="max-width-dialog-title"
     >
       <DialogTitle
-        className={classes.arrow}
         style={props.styles.contentModalsHeader}
         id="max-width-dialog-title"
       >

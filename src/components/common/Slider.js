@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 function Slider(props) {
   const useStyles = makeStyles((theme) => ({
-    main: {
+    margin: {
       [theme.breakpoints.only("xs")]: {
         // 600-959
         marginTop: "70px",
@@ -28,15 +28,21 @@ function Slider(props) {
         //>= 1920
         marginTop: "130px",
       },
+    },
+    align: {
       textAlign: "center",
     },
   }));
   const classes = useStyles();
 
   return (
-    <div id={props.id} className={classes.main} style={props.styles}>
+    <div
+      id={props.id}
+      className={props.type === "topSlider" ? classes.margin : classes.align}
+      style={props.styles}
+    >
       {props.id === "events-scroll" ? (
-        <Typography variant="h3">Hot Sales, Promos and Events</Typography>
+        <Typography variant="h4">Hot Sales, Promos and Events</Typography>
       ) : null}
       <Carousel
         showArrows={true}
@@ -59,7 +65,7 @@ function Slider(props) {
                 src={`${process.env.PUBLIC_URL}/imgs/${item.img}`}
                 alt="1"
               />
-              {item.text ? <p className="legend">Legend 3</p> : null}
+              {item.text ? <p className="legend">{item.text}</p> : null}
             </div>
           ))}
       </Carousel>
