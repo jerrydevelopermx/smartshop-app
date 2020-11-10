@@ -28,7 +28,7 @@ function StorePage(props) {
   const [filtersApplied, setFiltersApplied] = useState([]);
 
   const { loading, error, data } = useQuery(queries.GET_PAGE_INFO, {
-    variables: { storeId: props.match.params.id ? props.match.params.id : 0 },
+    variables: { storeId: props.match.params.id ? props.match.params.id : 0 }
   });
 
   const videoRef = useRef();
@@ -45,10 +45,10 @@ function StorePage(props) {
 
   function categoryChangeHandler({ target }) {
     gridItems = data.storeGrid.filter(
-      (store) => store.categoryId === target.value
+      store => store.categoryId === target.value
     );
     let category = data.page.categories.find(
-      (category) => category.id === target.value
+      category => category.id === target.value
     );
     setCategoryFilteredItems(gridItems);
     setFilteredItems(gridItems);
@@ -56,7 +56,7 @@ function StorePage(props) {
   }
 
   function filterChangeHandler(type, value) {
-    let filtered = categoryFilteredItems.filter((element) => {
+    let filtered = categoryFilteredItems.filter(element => {
       //console.log(filtersApplied);
       if (filtersApplied.length === 0) {
         console.log("solo un filtro");
