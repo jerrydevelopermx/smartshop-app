@@ -21,6 +21,18 @@ function ReviewPage(props) {
     },
   };
 
+  function getHoverColor(mainColor) {
+    console.log(mainColor);
+    var arr = mainColor
+      .substring(mainColor.indexOf("(") + 1, mainColor.indexOf(")"))
+      .split(",")
+      .map(function (num) {
+        console.log(num);
+        return Number(num) - 30 > 0 ? Number(num) - 30 : 0;
+      });
+    console.log("rgb(" + arr.toString() + ")");
+    return "rgb(" + arr.toString() + ")";
+  }
   const CloseButton = withStyles((theme) => styledCLoseButton)(Button);
 
   return (
@@ -30,10 +42,7 @@ function ReviewPage(props) {
       open={props.open}
       aria-labelledby="max-width-dialog-title"
     >
-      <DialogTitle
-        style={props.styles.contentModalsHeader}
-        id="max-width-dialog-title"
-      >
+      <DialogTitle style={props.styles.header} id="max-width-dialog-title">
         Review and Confirm
         <IconButton
           aria-label="close"
@@ -48,9 +57,7 @@ function ReviewPage(props) {
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-      <DialogContent style={props.styles.contentModalsBody}>
-        REVIEW PRODUCTS
-      </DialogContent>
+      <DialogContent style={props.styles.body}>REVIEW PRODUCTS</DialogContent>
       <DialogActions>
         <Button variant="contained" color="primary" onClick={props.onClose}>
           Close

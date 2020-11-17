@@ -9,6 +9,7 @@ import Slider from "./common/Slider";
 import { useQuery } from "@apollo/client";
 import appStyles from "../styles/app.js";
 import queries from "../graphql/queries.js";
+import js from "../js/components.js";
 import NoResults from "./common/NoResults";
 
 /*
@@ -28,7 +29,7 @@ function StorePage(props) {
   const [filtersApplied, setFiltersApplied] = useState([]);
 
   const { loading, error, data } = useQuery(queries.GET_PAGE_INFO, {
-    variables: { storeId: props.match.params.id ? props.match.params.id : 0 }
+    variables: { storeId: props.match.params.id ? props.match.params.id : 0 },
   });
 
   const videoRef = useRef();
@@ -45,18 +46,20 @@ function StorePage(props) {
 
   function categoryChangeHandler({ target }) {
     gridItems = data.storeGrid.filter(
-      store => store.categoryId === target.value
+      (store) => store.categoryId === target.value
     );
     let category = data.page.categories.find(
-      category => category.id === target.value
+      (category) => category.id === target.value
     );
     setCategoryFilteredItems(gridItems);
     setFilteredItems(gridItems);
+    console.log(category.filters);
     setFilters(category.filters);
   }
 
   function filterChangeHandler(type, value) {
-    let filtered = categoryFilteredItems.filter(element => {
+    console.log(type, value);
+    let filtered = categoryFilteredItems.filter((element) => {
       //console.log(filtersApplied);
       if (filtersApplied.length === 0) {
         console.log("solo un filtro");
@@ -73,10 +76,12 @@ function StorePage(props) {
     <div style={data.page.styles.body}>
       <Header
         logo={data.page.logo}
-        menu={data.page.headerMenu}
+        blogLink={data.page.blogLink}
+        menu={js.header}
         pageId={data.page.id}
         inputRef={videoRef}
         styles={data.page.styles.header}
+        modalStyles={data.page.styles.modalStyles}
         appStyles={appStyles.header}
       />
       <main>
@@ -127,9 +132,12 @@ function StorePage(props) {
         </Container>
       </main>
       <Footer
+        pageId={data.page.id}
         appStyles={appStyles.footer}
         styles={data.page.styles.footer}
-        content={data.page.footer}
+        modalStyles={data.page.styles.modalStyles}
+        content={js.footer}
+        socialMedia={data.page.footer}
       />
     </div>
   );

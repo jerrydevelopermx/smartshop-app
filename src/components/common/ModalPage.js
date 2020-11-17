@@ -21,14 +21,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ModalPage(props) {
+  console.log(props);
   let loginButton = {
     root: {
-      "&:hover": props.styles.closeButton.root.hover,
+      "&:hover": {
+        backgroundColor: getHoverColor(
+          props.styles.closeButton.root.backgroundColor
+        ),
+      },
       color: props.styles.closeButton.root.color,
       backgroundColor: props.styles.closeButton.root.backgroundColor,
     },
   };
 
+  function getHoverColor(mainColor) {
+    console.log(mainColor);
+    var arr = mainColor
+      .substring(mainColor.indexOf("(") + 1, mainColor.indexOf(")"))
+      .split(",")
+      .map(function (num) {
+        console.log(num);
+        return Number(num) - 30 > 0 ? Number(num) - 30 : 0;
+      });
+    console.log("rgb(" + arr.toString() + ")");
+    return "rgb(" + arr.toString() + ")";
+  }
   const CloseButton = withStyles((theme) => loginButton)(Button);
   const classes = useStyles();
 
@@ -39,10 +56,7 @@ function ModalPage(props) {
       open={props.open}
       aria-labelledby="max-width-dialog-title"
     >
-      <DialogTitle
-        style={props.styles.contentModalsHeader}
-        id="max-width-dialog-title"
-      >
+      <DialogTitle style={props.styles.header} id="max-width-dialog-title">
         Login
         <IconButton
           aria-label="close"
@@ -57,7 +71,7 @@ function ModalPage(props) {
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-      <DialogContent style={props.styles.contentModalsBody}>
+      <DialogContent style={props.styles.body}>
         <div>
           <Typography variant="h6">Login - Existing Members</Typography>
         </div>

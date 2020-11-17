@@ -51,7 +51,7 @@ function MobileNavBar(props) {
         onClose={toggleDrawer(false)}
       >
         <div role="presentation">
-          <List className={classes.list}>
+          <List style={props.appStyles.list}>
             {props.list &&
               props.list.map((element, index) =>
                 element.type === "link" ? (

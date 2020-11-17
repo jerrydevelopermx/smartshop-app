@@ -65,7 +65,6 @@ function Slider(props) {
                 src={`${process.env.PUBLIC_URL}/imgs/${item.img}`}
                 alt="1"
               />
-              {item.text ? <p className="legend">{item.text}</p> : null}
             </div>
           ))}
       </Carousel>

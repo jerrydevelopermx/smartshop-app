@@ -16,100 +16,100 @@ import queries from "../../graphql/queries.js";
 
 function Header(props) {
   console.log(props);
-  const useStyles = makeStyles(theme => ({
+  const useStyles = makeStyles((theme) => ({
     header: {
       [theme.breakpoints.only("xs")]: {
         // 0-599
-        height: "70px"
+        height: "70px",
       },
       [theme.breakpoints.up("sm")]: {
         // 600-959
-        height: "70px"
+        height: "70px",
       },
       [theme.breakpoints.up("md")]: {
         //960 - 1279
-        height: "80px"
+        height: "80px",
       },
 
       [theme.breakpoints.up("lg")]: {
         //1280 - 1919
-        height: "100px"
+        height: "100px",
       },
       [theme.breakpoints.up("xl")]: {
         //>= 1920
-        height: "130px"
-      }
+        height: "130px",
+      },
     },
     headerMenu: {
       [theme.breakpoints.up("sm")]: {
         // 600-959
         fontSize: "13px",
-        width: "85px"
+        width: "85px",
       },
       [theme.breakpoints.up("md")]: {
         // 600-959
         fontSize: "15px",
-        width: "110px"
+        width: "110px",
       },
       [theme.breakpoints.up("lg")]: {
         // 600-959
         fontSize: "18px",
-        width: "130px"
+        width: "130px",
       },
       [theme.breakpoints.up("xl")]: {
         // 600-959
         fontSize: "23px",
-        width: "150px"
+        width: "150px",
       },
       textAlign: "center",
       textDecoration: "none",
       "&:hover": {
         textDecoration: "underline !important",
-        cursor: "pointer"
-      }
+        cursor: "pointer",
+      },
     },
     logo: {
       [theme.breakpoints.only("xs")]: {
-        height: "68px"
+        height: "68px",
         //margin: "8px",
       },
       [theme.breakpoints.up("sm")]: {
-        height: "70px"
+        height: "70px",
         //margin: "8px",
       },
       [theme.breakpoints.up("md")]: {
-        height: "80px"
+        height: "80px",
         //margin: "8px",
       },
       [theme.breakpoints.up("lg")]: {
         marginTop: "2px",
-        height: "95px"
+        height: "95px",
         //margin: "10px",
       },
       [theme.breakpoints.up("xl")]: {
         marginTop: "2px",
-        height: "125px"
+        height: "125px",
         //margin: "8px",
-      }
+      },
     },
-    toolbarSecondary: props.appStyles.toolbarSecondary
+    toolbarSecondary: props.appStyles.toolbarSecondary,
   }));
   const classes = useStyles();
   const [getContent, { loading, data }] = useLazyQuery(
     queries.GET_CONTENT_BY_SECTION
   );
 
-  const StyledMenu = withStyles(props.styles.styledMenu)(props => (
+  const StyledMenu = withStyles(props.styles.styledMenu)((props) => (
     <Menu
       elevation={0}
       getContentAnchorEl={null}
       anchorOrigin={{
         vertical: "bottom",
-        horizontal: "center"
+        horizontal: "center",
       }}
       transformOrigin={{
         vertical: "top",
-        horizontal: "center"
+        horizontal: "center",
       }}
       {...props}
     />
@@ -117,21 +117,36 @@ function Header(props) {
 
   let styledMenuItem = {
     root: {
-      "&:hover": props.styles.styledMenuItem.root.hover
-    }
+      "&:hover": {
+        backgroundColor: getHoverColor(
+          props.styles.styledMenu.paper.backgroundColor
+        ),
+      },
+    },
   };
-  const StyledMenuItem = withStyles(theme => styledMenuItem)(MenuItem);
+  function getHoverColor(mainColor) {
+    var arr = mainColor
+      .substring(mainColor.indexOf("(") + 1, mainColor.indexOf(")"))
+      .split(",")
+      .map(function (num) {
+        console.log(num);
+        return Number(num) - 30 > 0 ? Number(num) - 30 : 0;
+      });
+
+    return "rgb(" + arr.toString() + ")";
+  }
+  const StyledMenuItem = withStyles((theme) => styledMenuItem)(MenuItem);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [modalStatus, setModalStatus] = useState({
     open: false,
     sectionId: "",
-    storeId: props.pageId
+    storeId: props.pageId,
   });
 
   const [modalPageStatus, setModalPageStatus] = useState({ open: false });
 
-  const handleClick = event => {
+  const handleClick = (event) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
   };
@@ -139,30 +154,29 @@ function Header(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleSubMenuClick = action => {
+  const handleSubMenuClick = (action) => {
     getContent({
       variables: {
         storeId: props.pageId,
-        sectionId: action
-      }
+        sectionId: action,
+      },
     });
     setAnchorEl(null);
     setModalStatus({ ...modalStatus, ...{ open: true, sectionId: action } });
   };
 
-  const mobileMenuClickHandler = action => {
-    console.log(action);
+  const mobileMenuClickHandler = (action) => {
     if (action !== null) {
       if (action !== "login") {
         getContent({
           variables: {
             storeId: props.pageId,
-            sectionId: action
-          }
+            sectionId: action,
+          },
         });
         setModalStatus({
           ...modalStatus,
-          ...{ open: true, sectionId: action }
+          ...{ open: true, sectionId: action },
         });
       } else {
         setModalPageStatus({ open: true });
@@ -176,8 +190,8 @@ function Header(props) {
       getContent({
         variables: {
           storeId: props.pageId,
-          sectionId: action
-        }
+          sectionId: action,
+        },
       });
       setModalStatus({ ...modalStatus, ...{ open: true, sectionId: action } });
     } else {
@@ -201,7 +215,7 @@ function Header(props) {
   function closeModal() {
     setModalStatus({
       ...modalStatus,
-      ...{ open: false }
+      ...{ open: false },
     });
   }
 
@@ -214,7 +228,7 @@ function Header(props) {
       {data && data.content ? (
         <ModalContent
           open={modalStatus.open}
-          styles={props.styles.contentModal}
+          styles={props.modalStyles}
           status={modalStatus}
           onClose={closeModal}
           content={data.content}
@@ -223,7 +237,7 @@ function Header(props) {
 
       <ModalPage
         open={modalPageStatus.open}
-        styles={props.styles.contentModal}
+        styles={props.modalStyles}
         status={modalStatus}
         onClose={closeModalPage}
       ></ModalPage>
@@ -245,31 +259,84 @@ function Header(props) {
               list={props.menu}
               classes={props.classes}
               styles={props.styles.mobileNavBar}
+              appStyles={props.appStyles.modalMenu}
               onClick={mobileMenuClickHandler}
             />
           </Hidden>
           {props.menu &&
-            props.menu.map(item => {
+            props.menu.map((item) => {
+              console.log(props.blogLink.indexOf("http"));
               switch (item.type) {
                 case "link":
                   return (
                     <Hidden key={item.label} only={["xs"]}>
-                      <NavLink
-                        activeStyle={props.styles.headerActive}
-                        className={classes.headerMenu}
-                        style={props.styles.headerMenu}
-                        to={item.url}
-                        onClick={e =>
-                          item.action
-                            ? item.action !== "home" || item.action !== "events"
-                              ? menuClickHandler(item.action, e)
-                              : menuClickScroll(item.action, e)
-                            : null
-                        }
-                        exact
-                      >
-                        {item.label}
-                      </NavLink>
+                      {item.label === "Blog" &&
+                      props.blogLink.indexOf("http") !== -1 ? (
+                        <a
+                          target="_new"
+                          className={classes.headerMenu}
+                          style={props.styles.headerMenu}
+                          href={props.blogLink}
+                        >
+                          {item.label}
+                        </a>
+                      ) : (
+                        <NavLink
+                          className={classes.headerMenu}
+                          style={props.styles.headerMenu}
+                          to={
+                            item.label !== "Blog"
+                              ? item.url
+                              : props.blogLink !== ""
+                              ? props.blogLink
+                              : false
+                          }
+                          onClick={(e) =>
+                            item.label !== "Blog" && item.action
+                              ? item.action !== "home" ||
+                                item.action !== "events"
+                                ? menuClickHandler(item.action, e)
+                                : menuClickScroll(item.action, e)
+                              : null
+                          }
+                          exact
+                        >
+                          {item.label}
+                        </NavLink>
+                      )}
+                      {/*props.blogLink.indexOf("http") === -1 ? (
+                        <NavLink
+                          className={classes.headerMenu}
+                          style={props.styles.headerMenu}
+                          to={
+                            item.label !== "Blog"
+                              ? item.url
+                              : props.blogLink !== ""
+                              ? props.blogLink
+                              : false
+                          }
+                          onClick={(e) =>
+                            item.label !== "Blog" && item.action
+                              ? item.action !== "home" ||
+                                item.action !== "events"
+                                ? menuClickHandler(item.action, e)
+                                : menuClickScroll(item.action, e)
+                              : null
+                          }
+                          exact
+                        >
+                          {item.label}
+                        </NavLink>
+                      ) : (
+                        <a
+                          target="_new"
+                          className={classes.headerMenu}
+                          style={props.styles.headerMenu}
+                          href={props.blogLink}
+                        >
+                          {item.label}
+                        </a>
+                      )*/}
                     </Hidden>
                   );
                 case "submenu":
@@ -278,7 +345,6 @@ function Header(props) {
                       <NavLink
                         id={item.id}
                         onClick={handleClick}
-                        activeStyle={props.styles.headerActive}
                         className={classes.headerMenu}
                         style={props.styles.headerMenu}
                         exact
@@ -294,7 +360,7 @@ function Header(props) {
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                       >
-                        {item.items.map(submenu => (
+                        {item.items.map((submenu) => (
                           <StyledMenuItem
                             key={submenu.action}
                             onClick={() =>

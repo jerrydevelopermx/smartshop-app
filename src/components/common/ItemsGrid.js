@@ -3,7 +3,6 @@ import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
-import ProductDetails from "./ProductDetails";
 import ShoppingCartPage from "../ShoppingCartPage";
 import CheckoutPage from "../CheckoutPage";
 import ReviewPage from "../ReviewPage";
@@ -42,16 +41,6 @@ function ItemsGrid(props) {
   }
   return (
     <Grid container spacing={4}>
-      {props.pageId !== "0" && details.productId !== "" ? (
-        <ProductDetails
-          params={details}
-          open={details.open}
-          onClose={closeModal}
-          styles={props.modalStyles}
-          buttons={props.appStyles.buttons}
-        />
-      ) : null}
-
       <ShoppingCartPage
         open={modalsStatus.shoppingCart}
         styles={props.modalStyles}
@@ -190,7 +179,7 @@ function ItemsGrid(props) {
                         Checkout
                       </Link>
                       <Link
-                        to=""
+                        to={"/store/" + props.pageId + "/product/" + item.id}
                         style={{
                           height: "35px",
                           backgroundColor: "red",
@@ -200,10 +189,6 @@ function ItemsGrid(props) {
                           textDecoration: "none",
                           padding: "5px",
                           margin: "5px",
-                        }}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          changeState(item.id, props.pageId);
                         }}
                       >
                         View more

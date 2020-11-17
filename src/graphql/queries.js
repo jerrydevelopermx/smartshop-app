@@ -4,24 +4,13 @@ const queries = {
   GET_PAGE_INFO: gql`
     query GetPageInfo($storeId: ID!) {
       page(id: $storeId) {
-        name
         id
+        name
         logo
-        coverImage
         description
-        headerMenu {
-          type
-          label
-          url
-          action
-          items {
-            text
-            action
-          }
-        }
+        blogLink
         slides {
           img
-          text
         }
         categories {
           id
@@ -29,42 +18,35 @@ const queries = {
           filters {
             id
             name
-            values
+            values {
+              id
+              name
+            }
           }
         }
         offers {
           img
-          text
         }
         video {
-          autoPlay
-          poster
           src
         }
         footer {
-          columns {
-            id
-            title
-            options {
-              text
-              url
-            }
-            social
-          }
           copyright
+          social {
+            link
+          }
         }
         styles {
           body {
             background
             fontFamily
+            color
           }
           header {
             topBar {
               background
             }
-            headerActive {
-              color
-            }
+
             headerMenu {
               color
             }
@@ -74,67 +56,20 @@ const queries = {
                 color
               }
             }
-            styledMenuItem {
-              root {
-                hover {
-                  backgroundColor
-                }
-              }
-            }
-            contentModal {
-              contentModalsHeader {
-                background
-                color
-              }
-              contentModalsBody {
-                background
-              }
-              closeButton {
-                root {
-                  color
-                  backgroundColor
-                  hover {
-                    backgroundColor
-                  }
-                }
-              }
-            }
             mobileNavBar {
               paper {
                 background
                 color
               }
-              list {
-                width
-              }
             }
-          }
+          } # end header styles
           footer {
             bottomBar {
               background
-              fontSize
               color
             }
             footerLinks {
               color
-            }
-          }
-          detailsModal {
-            detailsHeader {
-              background
-              color
-            }
-            detailsBody {
-              background
-            }
-            closeButton {
-              root {
-                color
-                backgroundColor
-                hover {
-                  backgroundColor
-                }
-              }
             }
           }
           modalStyles {
@@ -149,9 +84,6 @@ const queries = {
               root {
                 color
                 backgroundColor
-                hover {
-                  backgroundColor
-                }
               }
             }
           }
@@ -181,6 +113,85 @@ const queries = {
       }
     }
   `,
+  GET_BLOG_PAGE_INFO: gql`
+    query Blog($storeId: ID!, $sectionId: String) {
+      page(id: $storeId) {
+        id
+        name
+        logo
+        description
+        blogLink
+
+        footer {
+          copyright
+          social {
+            link
+          }
+        }
+        styles {
+          body {
+            background
+            fontFamily
+            color
+          }
+          header {
+            topBar {
+              background
+            }
+
+            headerMenu {
+              color
+            }
+            styledMenu {
+              paper {
+                backgroundColor
+                color
+              }
+            }
+            mobileNavBar {
+              paper {
+                background
+                color
+              }
+            }
+          } # end header styles
+          footer {
+            bottomBar {
+              background
+              color
+            }
+            footerLinks {
+              color
+            }
+          }
+          modalStyles {
+            header {
+              background
+              color
+            }
+            body {
+              background
+            }
+            closeButton {
+              root {
+                color
+                backgroundColor
+              }
+            }
+          }
+        }
+      }
+      content(storeId: $storeId, sectionId: $sectionId) {
+        pageId
+        sectionId
+        title
+        content {
+          type
+          text
+        }
+      }
+    }
+  `,
   GET_CONTENT_BY_SECTION: gql`
     query GetContent($storeId: ID!, $sectionId: String) {
       content(storeId: $storeId, sectionId: $sectionId) {
@@ -195,8 +206,75 @@ const queries = {
     }
   `,
   GET_PRODUCT_BY_ID: gql`
-    query GetProduct($storeId: String!, $id: ID!) {
-      product(storeId: $storeId, id: $id) {
+    query GetProduct($productId: ID!, $storeId: ID!) {
+      page(id: $storeId) {
+        id
+        name
+        logo
+        description
+        blogLink
+
+        footer {
+          copyright
+          social {
+            link
+          }
+        }
+        styles {
+          body {
+            background
+            fontFamily
+            color
+          }
+          header {
+            topBar {
+              background
+            }
+
+            headerMenu {
+              color
+            }
+            styledMenu {
+              paper {
+                backgroundColor
+                color
+              }
+            }
+            mobileNavBar {
+              paper {
+                background
+                color
+              }
+            }
+          } # end header styles
+          footer {
+            bottomBar {
+              background
+              color
+            }
+            footerLinks {
+              color
+            }
+          }
+          modalStyles {
+            header {
+              background
+              color
+            }
+            body {
+              background
+            }
+            closeButton {
+              root {
+                color
+                backgroundColor
+              }
+            }
+          }
+        }
+      }
+
+      product(id: $productId) {
         storeId
         id
         name

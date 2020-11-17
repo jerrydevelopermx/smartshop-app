@@ -42,8 +42,7 @@ function ModalContent(props) {
           width: "0",
           height: "0",
           //borderTop: "10px solid black",
-          borderBottom:
-            "15px solid " + props.styles.contentModalsHeader.background,
+          borderBottom: "15px solid " + props.styles.header.background,
           borderRight: "15px solid transparent",
           borderLeft: "15px solid transparent",
         },
@@ -59,8 +58,7 @@ function ModalContent(props) {
           width: "0",
           height: "0",
           //borderTop: "10px solid black",
-          borderBottom:
-            "15px solid " + props.styles.contentModalsHeader.background,
+          borderBottom: "15px solid " + props.styles.header.background,
           borderRight: "15px solid transparent",
           borderLeft: "15px solid transparent",
         },
@@ -71,11 +69,28 @@ function ModalContent(props) {
 
   let styledCLoseButton = {
     root: {
-      "&:hover": props.styles.closeButton.root.hover,
+      "&:hover": {
+        backgroundColor: getHoverColor(
+          props.styles.closeButton.root.backgroundColor
+        ),
+      },
       color: props.styles.closeButton.root.color,
       backgroundColor: props.styles.closeButton.root.backgroundColor,
     },
   };
+
+  function getHoverColor(mainColor) {
+    console.log(mainColor);
+    var arr = mainColor
+      .substring(mainColor.indexOf("(") + 1, mainColor.indexOf(")"))
+      .split(",")
+      .map(function (num) {
+        console.log(num);
+        return Number(num) - 30 > 0 ? Number(num) - 30 : 0;
+      });
+    console.log("rgb(" + arr.toString() + ")");
+    return "rgb(" + arr.toString() + ")";
+  }
 
   const CloseButton = withStyles((theme) => styledCLoseButton)(Button);
 
@@ -101,10 +116,7 @@ function ModalContent(props) {
       open={props.open}
       aria-labelledby="max-width-dialog-title"
     >
-      <DialogTitle
-        style={props.styles.contentModalsHeader}
-        id="max-width-dialog-title"
-      >
+      <DialogTitle style={props.styles.header} id="max-width-dialog-title">
         {props.content.title}
         <IconButton
           aria-label="close"
@@ -119,7 +131,7 @@ function ModalContent(props) {
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-      <DialogContent style={props.styles.contentModalsBody}>
+      <DialogContent style={props.styles.body}>
         {props.content.content &&
           props.content.content.length > 0 &&
           props.content.content.map((paragraph, index) => (

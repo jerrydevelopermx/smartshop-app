@@ -16,12 +16,7 @@ function VideoGallery(props) {
       <div className={classes.videoPlayer}>
         <Typography variant="h4">Take a Tour!</Typography>
         {props.video ? (
-          <Player
-            poster={`${process.env.PUBLIC_URL}/imgs/${props.video.poster}}`}
-            fluid={true}
-            autoPlay={props.video.autoPlay}
-            src={props.video.src}
-          />
+          <Player fluid={true} autoPlay={false} src={props.video.src} />
         ) : null}
       </div>
     </div>
