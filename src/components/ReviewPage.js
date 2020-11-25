@@ -21,18 +21,6 @@ function ReviewPage(props) {
     },
   };
 
-  function getHoverColor(mainColor) {
-    console.log(mainColor);
-    var arr = mainColor
-      .substring(mainColor.indexOf("(") + 1, mainColor.indexOf(")"))
-      .split(",")
-      .map(function (num) {
-        console.log(num);
-        return Number(num) - 30 > 0 ? Number(num) - 30 : 0;
-      });
-    console.log("rgb(" + arr.toString() + ")");
-    return "rgb(" + arr.toString() + ")";
-  }
   const CloseButton = withStyles((theme) => styledCLoseButton)(Button);
 
   return (

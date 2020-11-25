@@ -205,6 +205,76 @@ const queries = {
       }
     }
   `,
+  GET_FULL_PAGE: gql`
+    query GetFullPage($storeId: ID!) {
+      page(id: $storeId) {
+        id
+        name
+        logo
+        description
+        blogLink
+
+        footer {
+          copyright
+          social {
+            link
+          }
+        }
+        styles {
+          body {
+            background
+            fontFamily
+            color
+          }
+          header {
+            topBar {
+              background
+            }
+
+            headerMenu {
+              color
+            }
+            styledMenu {
+              paper {
+                backgroundColor
+                color
+              }
+            }
+            mobileNavBar {
+              paper {
+                background
+                color
+              }
+            }
+          } # end header styles
+          footer {
+            bottomBar {
+              background
+              color
+            }
+            footerLinks {
+              color
+            }
+          }
+          modalStyles {
+            header {
+              background
+              color
+            }
+            body {
+              background
+            }
+            closeButton {
+              root {
+                color
+                backgroundColor
+              }
+            }
+          }
+        }
+      }
+    }
+  `,
   GET_PRODUCT_BY_ID: gql`
     query GetProduct($productId: ID!, $storeId: ID!) {
       page(id: $storeId) {

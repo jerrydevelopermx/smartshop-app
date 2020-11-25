@@ -13,9 +13,9 @@ import BackHome from "./BackHome";
 import { NavHashLink as NavLink } from "react-router-hash-link";
 import { useLazyQuery } from "@apollo/client";
 import queries from "../../graphql/queries.js";
+import appFunctions from "../../js/functions";
 
 function Header(props) {
-  console.log(props);
   const useStyles = makeStyles((theme) => ({
     header: {
       [theme.breakpoints.only("xs")]: {
@@ -95,9 +95,7 @@ function Header(props) {
     toolbarSecondary: props.appStyles.toolbarSecondary,
   }));
   const classes = useStyles();
-  const [getContent, { loading, data }] = useLazyQuery(
-    queries.GET_CONTENT_BY_SECTION
-  );
+  const [getContent, { data }] = useLazyQuery(queries.GET_CONTENT_BY_SECTION);
 
   const StyledMenu = withStyles(props.styles.styledMenu)((props) => (
     <Menu
@@ -118,23 +116,29 @@ function Header(props) {
   let styledMenuItem = {
     root: {
       "&:hover": {
-        backgroundColor: getHoverColor(
+        backgroundColor: appFunctions.getHoverColor(
           props.styles.styledMenu.paper.backgroundColor
         ),
       },
     },
   };
-  function getHoverColor(mainColor) {
-    var arr = mainColor
-      .substring(mainColor.indexOf("(") + 1, mainColor.indexOf(")"))
-      .split(",")
-      .map(function (num) {
-        console.log(num);
-        return Number(num) - 30 > 0 ? Number(num) - 30 : 0;
-      });
 
-    return "rgb(" + arr.toString() + ")";
+  function getMenuLinks(item) {
+    if (item.label === "Blog") {
+      return props.blogLink !== "" ? props.blogLink : false;
+    } else {
+      return item.label !== "Home"
+        ? item.label !== "Login"
+          ? item.url
+          : props.pageId != 0
+          ? "/store/" + props.pageId + "/login"
+          : item.url
+        : props.pageId != 0
+        ? "/store/" + props.pageId + "/"
+        : item.url;
+    }
   }
+
   const StyledMenuItem = withStyles((theme) => styledMenuItem)(MenuItem);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -265,7 +269,6 @@ function Header(props) {
           </Hidden>
           {props.menu &&
             props.menu.map((item) => {
-              console.log(props.blogLink.indexOf("http"));
               switch (item.type) {
                 case "link":
                   return (
@@ -284,17 +287,10 @@ function Header(props) {
                         <NavLink
                           className={classes.headerMenu}
                           style={props.styles.headerMenu}
-                          to={
-                            item.label !== "Blog"
-                              ? item.url
-                              : props.blogLink !== ""
-                              ? props.blogLink
-                              : false
-                          }
+                          to={getMenuLinks(item)}
                           onClick={(e) =>
                             item.label !== "Blog" && item.action
-                              ? item.action !== "home" ||
-                                item.action !== "events"
+                              ? item.action !== "events"
                                 ? menuClickHandler(item.action, e)
                                 : menuClickScroll(item.action, e)
                               : null
@@ -304,39 +300,6 @@ function Header(props) {
                           {item.label}
                         </NavLink>
                       )}
-                      {/*props.blogLink.indexOf("http") === -1 ? (
-                        <NavLink
-                          className={classes.headerMenu}
-                          style={props.styles.headerMenu}
-                          to={
-                            item.label !== "Blog"
-                              ? item.url
-                              : props.blogLink !== ""
-                              ? props.blogLink
-                              : false
-                          }
-                          onClick={(e) =>
-                            item.label !== "Blog" && item.action
-                              ? item.action !== "home" ||
-                                item.action !== "events"
-                                ? menuClickHandler(item.action, e)
-                                : menuClickScroll(item.action, e)
-                              : null
-                          }
-                          exact
-                        >
-                          {item.label}
-                        </NavLink>
-                      ) : (
-                        <a
-                          target="_new"
-                          className={classes.headerMenu}
-                          style={props.styles.headerMenu}
-                          href={props.blogLink}
-                        >
-                          {item.label}
-                        </a>
-                      )*/}
                     </Hidden>
                   );
                 case "submenu":

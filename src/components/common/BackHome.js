@@ -4,14 +4,22 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 
 function BackHome(props) {
-  const useStyles = makeStyles(theme => ({
+  const useStyles = makeStyles((theme) => ({
     backDiv: props.appStyles.backHome.div,
-    backImg: props.appStyles.backHome.img
+    left: {
+      [theme.breakpoints.only("xs")]: {
+        left: "40%",
+      },
+      [theme.breakpoints.up("sm")]: {
+        left: "5px",
+      },
+    },
+    backImg: props.appStyles.backHome.img,
   }));
   const classes = useStyles();
 
   return (
-    <div className={classes.backDiv}>
+    <div className={classes.backDiv + "  " + classes.left}>
       <Link to="/">
         <Tooltip title="Go to Smart Shop" aria-label="Go SmartShop">
           <img

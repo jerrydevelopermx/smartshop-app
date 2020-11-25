@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
+import appFunctions from "../../js/functions";
 
 function ModalContent(props) {
   console.log(props);
@@ -70,7 +71,7 @@ function ModalContent(props) {
   let styledCLoseButton = {
     root: {
       "&:hover": {
-        backgroundColor: getHoverColor(
+        backgroundColor: appFunctions.getHoverColor(
           props.styles.closeButton.root.backgroundColor
         ),
       },
@@ -78,19 +79,6 @@ function ModalContent(props) {
       backgroundColor: props.styles.closeButton.root.backgroundColor,
     },
   };
-
-  function getHoverColor(mainColor) {
-    console.log(mainColor);
-    var arr = mainColor
-      .substring(mainColor.indexOf("(") + 1, mainColor.indexOf(")"))
-      .split(",")
-      .map(function (num) {
-        console.log(num);
-        return Number(num) - 30 > 0 ? Number(num) - 30 : 0;
-      });
-    console.log("rgb(" + arr.toString() + ")");
-    return "rgb(" + arr.toString() + ")";
-  }
 
   const CloseButton = withStyles((theme) => styledCLoseButton)(Button);
 

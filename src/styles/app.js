@@ -98,8 +98,11 @@ const styles = {
   },
   footer: {
     bottomBar: {
-      padding: "30px",
+      padding: "25px",
       fontSize: "13px",
+      /*width: "100%",
+      position: "absolute",
+      */ bottom: "0px",
     },
     footerUlList: {
       listStyleType: "circle",

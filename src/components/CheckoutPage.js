@@ -1,19 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
 import DeleteIcon from "@material-ui/icons/Delete";
-import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
+import appFunctions from "../js/functions";
 
 function CheckoutPage(props) {
   let cartItems = [
@@ -39,7 +35,7 @@ function CheckoutPage(props) {
   let styledCLoseButton = {
     root: {
       "&:hover": {
-        backgroundColor: getHoverColor(
+        backgroundColor: appFunctions.getHoverColor(
           props.styles.closeButton.root.backgroundColor
         ),
       },
@@ -47,19 +43,6 @@ function CheckoutPage(props) {
       backgroundColor: props.styles.closeButton.root.backgroundColor,
     },
   };
-
-  function getHoverColor(mainColor) {
-    console.log(mainColor);
-    var arr = mainColor
-      .substring(mainColor.indexOf("(") + 1, mainColor.indexOf(")"))
-      .split(",")
-      .map(function (num) {
-        console.log(num);
-        return Number(num) - 30 > 0 ? Number(num) - 30 : 0;
-      });
-    console.log("rgb(" + arr.toString() + ")");
-    return "rgb(" + arr.toString() + ")";
-  }
 
   const CloseButton = withStyles((theme) => styledCLoseButton)(Button);
 

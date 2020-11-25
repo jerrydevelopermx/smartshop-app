@@ -10,6 +10,7 @@ import { withStyles, makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
+import appFunctions from "../../js/functions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,11 +22,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ModalPage(props) {
-  console.log(props);
   let loginButton = {
     root: {
       "&:hover": {
-        backgroundColor: getHoverColor(
+        backgroundColor: appFunctions.getHoverColor(
           props.styles.closeButton.root.backgroundColor
         ),
       },
@@ -34,18 +34,6 @@ function ModalPage(props) {
     },
   };
 
-  function getHoverColor(mainColor) {
-    console.log(mainColor);
-    var arr = mainColor
-      .substring(mainColor.indexOf("(") + 1, mainColor.indexOf(")"))
-      .split(",")
-      .map(function (num) {
-        console.log(num);
-        return Number(num) - 30 > 0 ? Number(num) - 30 : 0;
-      });
-    console.log("rgb(" + arr.toString() + ")");
-    return "rgb(" + arr.toString() + ")";
-  }
   const CloseButton = withStyles((theme) => loginButton)(Button);
   const classes = useStyles();
 

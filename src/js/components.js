@@ -3,8 +3,8 @@ const components = {
     {
       type: "link",
       label: "Home",
-      url: "/#home-scroll",
-      action: "home",
+      url: "/",
+      action: "",
       items: null,
     },
     {
@@ -50,14 +50,14 @@ const components = {
       type: "link",
       label: "Blog",
       url: "",
-      action: "blog",
+      action: "",
       items: null,
     },
     {
       type: "link",
       label: "Login",
-      url: "",
-      action: "login",
+      url: "/login",
+      action: "",
       items: null,
     },
   ],
