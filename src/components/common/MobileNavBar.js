@@ -36,15 +36,7 @@ function MobileNavBar(props) {
     if (item.label === "Blog") {
       return props.blogLink !== "" ? props.blogLink : false;
     } else {
-      return item.label !== "Home"
-        ? item.label !== "Login"
-          ? item.url
-          : props.pageId != 0
-          ? "/store/" + props.pageId + "/login"
-          : item.url
-        : props.pageId != 0
-        ? "/store/" + props.pageId + "/"
-        : item.url;
+      return props.pageId != 0 ? "/store/" + props.pageId + item.url : item.url;
     }
   }
   function ListItemLink(props) {

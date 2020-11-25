@@ -30,7 +30,7 @@ function BlogPage(props) {
         modalStyles={data.page.styles.modalStyles}
         appStyles={appStyles.header}
       />
-      <main style={{ margin: "120px" }}>
+      <main style={{ marginTop: "120px" }}>
         <h2>Blog page</h2>
 
         <div>
