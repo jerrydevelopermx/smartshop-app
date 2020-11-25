@@ -52,23 +52,34 @@ function Footer(props) {
           props.content.columns.length > 0 &&
           props.content.columns.map((column, index) => (
             <Grid item key={column.id} xs={6} sm={6} md={3}>
-              <div className={classes.centeredContent}>
+              <div
+                className={classes.centeredContent}
+                style={{ border: "1px solid red" }}
+              >
                 {column.title}
-                <div>
-                  <ul className={classes.footerUlList}>
-                    {column.options.map((option, index) => (
-                      <li key={"footOpt" + index}>
-                        <NavLink
-                          style={props.styles.footerLinks}
-                          className={classes.footerLinks}
-                          to=""
-                          onClick={(e) => menuClickHandler(option.action, e)}
-                        >
-                          {option.text}
-                        </NavLink>
-                      </li>
-                    ))}
-                  </ul>
+                <div style={{ border: "2px solid green" }}>
+                  <div
+                    style={{
+                      width: "70%",
+                      margin: "0 auto",
+                      border: "2px solid pink",
+                    }}
+                  >
+                    <ul className={classes.footerUlList}>
+                      {column.options.map((option, index) => (
+                        <li key={"footOpt" + index}>
+                          <NavLink
+                            style={props.styles.footerLinks}
+                            className={classes.footerLinks}
+                            to=""
+                            onClick={(e) => menuClickHandler(option.action, e)}
+                          >
+                            {option.text}
+                          </NavLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                   {index === 3 ? (
                     <div className={classes.centeredContent}>
                       <SocialMedia

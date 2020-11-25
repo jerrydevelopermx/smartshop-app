@@ -98,15 +98,15 @@ const styles = {
   },
   footer: {
     bottomBar: {
-      //padding: "25px",
-      fontSize: "13px",
+      padding: "25px",
+      fontSize: "11px",
       /*width: "100%",
       position: "absolute",
       */ bottom: "0px",
     },
     footerUlList: {
       listStyleType: "circle",
-      //padding: "5% 15%",
+      padding: "5% 15%",
       margin: "auto",
       textAlign: "left",
     },
