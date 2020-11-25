@@ -98,7 +98,7 @@ const styles = {
   },
   footer: {
     bottomBar: {
-      padding: "25px",
+      //padding: "25px",
       fontSize: "13px",
       /*width: "100%",
       position: "absolute",
@@ -106,7 +106,7 @@ const styles = {
     },
     footerUlList: {
       listStyleType: "circle",
-      padding: "5% 15%",
+      //padding: "5% 15%",
       margin: "auto",
       textAlign: "left",
     },
