@@ -170,21 +170,22 @@ function Header(props) {
   };
 
   const mobileMenuClickHandler = (action) => {
-    if (action !== null) {
-      if (action !== "login") {
-        getContent({
-          variables: {
-            storeId: props.pageId,
-            sectionId: action,
-          },
-        });
-        setModalStatus({
-          ...modalStatus,
-          ...{ open: true, sectionId: action },
-        });
-      } else {
+    console.log(action);
+    if (action !== "" && action !== null) {
+      //if (action !== "login") {
+      getContent({
+        variables: {
+          storeId: props.pageId,
+          sectionId: action,
+        },
+      });
+      setModalStatus({
+        ...modalStatus,
+        ...{ open: true, sectionId: action },
+      });
+      /* } else {
         setModalPageStatus({ open: true });
-      }
+      }*/
     }
   };
 
@@ -261,6 +262,8 @@ function Header(props) {
           <Hidden only={["sm", "md", "lg", "xl"]}>
             <MobileNavBar
               list={props.menu}
+              pageId={props.pageId}
+              blogLink={props.blogLink}
               classes={props.classes}
               styles={props.styles.mobileNavBar}
               appStyles={props.appStyles.modalMenu}

@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Collapse from "@material-ui/core/Collapse";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
+import { Link } from "react-router-dom";
 
 function MobileNavBar(props) {
   console.log(props.styles);
@@ -31,6 +32,24 @@ function MobileNavBar(props) {
     setSubmenuOpen(!submenuOpen);
   };
 
+  function getMenuLinks(item) {
+    if (item.label === "Blog") {
+      return props.blogLink !== "" ? props.blogLink : false;
+    } else {
+      return item.label !== "Home"
+        ? item.label !== "Login"
+          ? item.url
+          : props.pageId != 0
+          ? "/store/" + props.pageId + "/login"
+          : item.url
+        : props.pageId != 0
+        ? "/store/" + props.pageId + "/"
+        : item.url;
+    }
+  }
+  function ListItemLink(props) {
+    return <ListItem button component="a" {...props} />;
+  }
   return (
     <div>
       <IconButton
@@ -55,16 +74,25 @@ function MobileNavBar(props) {
             {props.list &&
               props.list.map((element, index) =>
                 element.type === "link" ? (
-                  <ListItem
-                    button
-                    key={element.label}
-                    onClick={() => {
-                      props.onClick(element.action);
-                      toggleDrawer(false);
-                    }}
-                  >
-                    <ListItemText primary={element.label} />
-                  </ListItem>
+                  element.label === "Blog" &&
+                  props.blogLink.indexOf("http") !== -1 ? (
+                    <ListItemLink href={props.blogLink} key={element.label}>
+                      <ListItemText primary={element.label} />
+                    </ListItemLink>
+                  ) : (
+                    <ListItem
+                      button
+                      component={Link}
+                      to={getMenuLinks(element)}
+                      key={element.label}
+                      onClick={() => {
+                        props.onClick(element.action);
+                        toggleDrawer(false);
+                      }}
+                    >
+                      <ListItemText primary={element.label} />
+                    </ListItem>
+                  )
                 ) : element.type === "submenu" ? (
                   <div key={"f" + index}>
                     <ListItem key={"s" + index} button onClick={handleClick}>
