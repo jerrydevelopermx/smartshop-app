@@ -8,6 +8,7 @@ import queries from "../graphql/queries.js";
 import js from "../js/components.js";
 import LoginForm from "../components/common/LoginForm";
 import RegisterForm from "../components/common/RegisterForm";
+import ResetPasswordForm from "./common/ResetPasswordForm";
 
 function FullPage(props) {
   let { id, section } = useParams();
@@ -33,8 +34,13 @@ function FullPage(props) {
       <main style={{ marginTop: "120px" }}>
         {section === "login" ? (
           <LoginForm styles={data.page.styles.header} pageId={data.page.id} />
-        ) : (
+        ) : section === "register" ? (
           <RegisterForm styles={data.page.styles.header} />
+        ) : (
+          <ResetPasswordForm
+            styles={data.page.styles.header}
+            pageId={data.page.id}
+          />
         )}
       </main>
       <Footer

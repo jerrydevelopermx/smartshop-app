@@ -28,7 +28,7 @@ function Copyright() {
     </Typography>
   );
 }
-function LoginForm(props) {
+function ResetPasswordForm(props) {
   const useStyles = makeStyles((theme) => ({
     paper: {
       marginTop: theme.spacing(8),
@@ -99,14 +99,14 @@ function LoginForm(props) {
   })(Checkbox);
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="md">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Log in
+          Reset Password
         </Typography>
         <form className={classes.form} noValidate>
           <CssTextField
@@ -120,21 +120,10 @@ function LoginForm(props) {
             autoComplete="email"
             autoFocus
           />
-          <CssTextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<CssCheckbox value="remember" color="primary" />}
-            label="Remember me"
-          />
+          <div>
+            Type in your email address, we will send you directions on how to
+            reset your password
+          </div>
           <Grid
             container
             spacing={1}
@@ -144,7 +133,7 @@ function LoginForm(props) {
             }}
           >
             <Grid item xs={12} sm={12} md={12}>
-              <SubmitButton>Login</SubmitButton>
+              <SubmitButton>Submit</SubmitButton>
             </Grid>
           </Grid>
           <Grid container>
@@ -152,26 +141,12 @@ function LoginForm(props) {
               <NavLink
                 to={
                   props.pageId > 0
-                    ? "/store/" + props.pageId + "/resetpassword"
-                    : "/resetpassword"
+                    ? "/store/" + props.pageId + "/login"
+                    : "/login"
                 }
                 className={classes.links}
-                variant="body2"
               >
-                Forgot password?
-              </NavLink>
-            </Grid>
-            <Grid item>
-              <NavLink
-                className={classes.links}
-                to={
-                  props.pageId > 0
-                    ? "/store/" + props.pageId + "/register"
-                    : "/register"
-                }
-                variant="body2"
-              >
-                {"Not a member? Join Now!"}
+                Back to Login
               </NavLink>
             </Grid>
           </Grid>
@@ -184,4 +159,4 @@ function LoginForm(props) {
   );
 }
 
-export default LoginForm;
+export default ResetPasswordForm;

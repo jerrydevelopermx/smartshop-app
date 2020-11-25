@@ -7,6 +7,7 @@ import { useQuery } from "@apollo/client";
 import appStyles from "../styles/app.js";
 import queries from "../graphql/queries.js";
 import js from "../js/components.js";
+import Container from "@material-ui/core/Container";
 
 function BlogPage(props) {
   let { id, productId } = useParams();
@@ -30,9 +31,8 @@ function BlogPage(props) {
         modalStyles={data.page.styles.modalStyles}
         appStyles={appStyles.header}
       />
-      <main style={{ marginTop: "120px" }}>
+      <Container component="main" style={{ marginTop: "120px" }} maxWidth="lg">
         <h2>Blog page</h2>
-
         <div>
           {data.content.content &&
             data.content.content.length > 0 &&
@@ -42,7 +42,7 @@ function BlogPage(props) {
               </Typography>
             ))}
         </div>
-      </main>
+      </Container>
       <Footer
         appStyles={appStyles.footer}
         styles={data.page.styles.footer}
