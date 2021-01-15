@@ -1,21 +1,56 @@
-import React, { useState } from "react";
-import MobileNavBar from "./MobileNavBar";
+import React, { useState, useRef, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { useLazyQuery } from "@apollo/client";
+import { NavHashLink as NavLink } from "react-router-hash-link";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import ListItemText from "@material-ui/core/ListItemText";
-import Hidden from "@material-ui/core/Hidden";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { Hidden } from "@material-ui/core/";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Grow from "@material-ui/core/Grow";
+import Paper from "@material-ui/core/Paper";
+import Popper from "@material-ui/core/Popper";
+import MenuList from "@material-ui/core/MenuList";
+import ButtonBase from "@material-ui/core/ButtonBase";
 import ModalContent from "./ModalContent";
 import ModalPage from "./ModalPage";
 import BackHome from "./BackHome";
-import { NavHashLink as NavLink } from "react-router-hash-link";
-import { useLazyQuery } from "@apollo/client";
+import MobileNavBar from "./MobileNavBar";
 import queries from "../../graphql/queries.js";
 import appFunctions from "../../js/functions";
+import "../../styles/app";
 
 function Header(props) {
+  let history = useHistory();
+  let user = JSON.parse(localStorage.getItem("user"));
+
+  const [open, setOpen] = useState(false);
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = useRef(open);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [loggedMenuEl, setLoggedMenuEl] = useState(null);
+
+  const [modalStatus, setModalStatus] = useState({
+    open: false,
+    sectionId: "",
+    storeId: props.pageId,
+  });
+  const [modalPageStatus, setModalPageStatus] = useState({ open: false });
+  const anchorRef = useRef(null);
+  const [getContent, { data }] = useLazyQuery(queries.GET_CONTENT_BY_SECTION);
+
+  useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = open;
+  }, [open]);
+
   const useStyles = makeStyles((theme) => ({
     header: {
       [theme.breakpoints.only("xs")]: {
@@ -95,10 +130,25 @@ function Header(props) {
     toolbarSecondary: props.appStyles.toolbarSecondary,
   }));
   const classes = useStyles();
-  const [getContent, { data }] = useLazyQuery(queries.GET_CONTENT_BY_SECTION);
 
   const StyledMenu = withStyles(props.styles.styledMenu)((props) => (
     <Menu
+      elevation={0}
+      getContentAnchorEl={null}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "center",
+      }}
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "center",
+      }}
+      {...props}
+    />
+  ));
+  const StyledlLoggedMenu = withStyles(props.styles.styledMenu)((props) => (
+    <Menu
+      style={{ marginTop: "40px" }}
       elevation={0}
       getContentAnchorEl={null}
       anchorOrigin={{
@@ -123,30 +173,21 @@ function Header(props) {
     },
   };
 
+  const StyledMenuItem = withStyles(styledMenuItem)(MenuItem);
+
   function getMenuLinks(item) {
     if (item.label === "Blog") {
-      return props.blogLink !== "" ? props.blogLink : false;
+      return props.blogLink !== "" ? props.blogLink : "";
     } else {
-      return props.pageId != 0 ? "/store/" + props.pageId + item.url : item.url;
+      return props.pageId !== 0
+        ? "/store/" + props.pageId + item.url
+        : item.url;
     }
   }
-
-  const StyledMenuItem = withStyles((theme) => styledMenuItem)(MenuItem);
-
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [modalStatus, setModalStatus] = useState({
-    open: false,
-    sectionId: "",
-    storeId: props.pageId,
-  });
-
-  const [modalPageStatus, setModalPageStatus] = useState({ open: false });
-
   const handleClick = (event) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -160,7 +201,6 @@ function Header(props) {
     setAnchorEl(null);
     setModalStatus({ ...modalStatus, ...{ open: true, sectionId: action } });
   };
-
   const mobileMenuClickHandler = (action) => {
     console.log(action);
     if (action !== "" && action !== null) {
@@ -180,7 +220,6 @@ function Header(props) {
       }*/
     }
   };
-
   const menuClickHandler = (action, event) => {
     event.preventDefault();
     if (action !== "login") {
@@ -195,7 +234,6 @@ function Header(props) {
       setModalPageStatus({ open: true });
     }
   };
-
   function handleSubMenuScroll(action) {
     //setAnchorEl(null);
     var element = document.getElementById(action + "-scroll");
@@ -215,6 +253,27 @@ function Header(props) {
       ...{ open: false },
     });
   }
+  const handleToggle = (event) => {
+    event.preventDefault();
+    console.log(event.currentTarget);
+    setLoggedMenuEl(event.currentTarget);
+    //setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleCloseMenu = (event) => {
+    setLoggedMenuEl(null);
+  };
+
+  const handleLogout = (event) => {
+    history.push(
+      (props.pageId !== undefined && props.pageId !== "0"
+        ? "/store/" + props.pageId
+        : "") + "/login"
+    );
+
+    localStorage.clear();
+    setLoggedMenuEl(null);
+  };
 
   function closeModalPage() {
     setModalPageStatus({ open: false });
@@ -279,21 +338,78 @@ function Header(props) {
                           {item.label}
                         </a>
                       ) : (
-                        <NavLink
-                          className={classes.headerMenu}
-                          style={props.styles.headerMenu}
-                          to={getMenuLinks(item)}
-                          onClick={(e) =>
-                            item.label !== "Blog" && item.action
-                              ? item.action !== "events"
-                                ? menuClickHandler(item.action, e)
-                                : menuClickScroll(item.action, e)
-                              : null
-                          }
-                          exact
-                        >
-                          {item.label}
-                        </NavLink>
+                        <>
+                          {item.label === "Login" &&
+                          user &&
+                          user.userName !== undefined ? (
+                            <>
+                              <ButtonBase
+                                ref={anchorRef}
+                                aria-controls={
+                                  open ? "menu-list-grow" : undefined
+                                }
+                                aria-haspopup="true"
+                                onClick={handleToggle}
+                              >
+                                <img
+                                  src={`${process.env.PUBLIC_URL}/imgs/Bart_Simpson.png`}
+                                  style={{
+                                    height: "60px",
+                                    position: "absolute",
+                                    background: "#FFF",
+                                    borderRadius: "80px",
+                                  }}
+                                  alt=""
+                                />
+                                <span
+                                  style={{ top: "40px", position: "relative" }}
+                                >
+                                  {user.userName !== undefined
+                                    ? user.userName
+                                    : ""}
+                                </span>
+                              </ButtonBase>
+                              <StyledlLoggedMenu
+                                id="customized-menu2"
+                                anchorEl={loggedMenuEl}
+                                keepMounted
+                                open={Boolean(loggedMenuEl)}
+                                onClose={handleCloseMenu}
+                              >
+                                <StyledMenuItem>
+                                  <ListItemText primary={"My Profile"} />
+                                </StyledMenuItem>
+                                <StyledMenuItem>
+                                  <ListItemText primary={"My Pending Tasks"} />
+                                </StyledMenuItem>
+                                <StyledMenuItem>
+                                  <ListItemText
+                                    primary={"My Completed Tasks"}
+                                  />
+                                </StyledMenuItem>
+                                <StyledMenuItem onClick={handleLogout}>
+                                  <ListItemText primary={"Logout"} />
+                                </StyledMenuItem>
+                              </StyledlLoggedMenu>
+                            </>
+                          ) : (
+                            <NavLink
+                              className={classes.headerMenu}
+                              style={props.styles.headerMenu}
+                              to={getMenuLinks(item)}
+                              onClick={(e) =>
+                                item.label !== "Blog" && item.action
+                                  ? item.action !== "events"
+                                    ? menuClickHandler(item.action, e)
+                                    : menuClickScroll(item.action, e)
+                                  : null
+                              }
+                              exact
+                            >
+                              {item.label}
+                            </NavLink>
+                          )}
+                        </>
                       )}
                     </Hidden>
                   );

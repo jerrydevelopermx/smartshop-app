@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -15,6 +16,8 @@ import Container from "@material-ui/core/Container";
 import { NavHashLink as NavLink } from "react-router-hash-link";
 import appFunctions from "../../js/functions";
 import { withStyles } from "@material-ui/core/styles";
+import { useMutation } from "@apollo/client";
+import mutations from "../../graphql/mutations";
 
 function Copyright() {
   return (
@@ -29,6 +32,14 @@ function Copyright() {
   );
 }
 function LoginForm(props) {
+  let { id } = useParams();
+  let history = useHistory();
+  let loginForm = {
+    email: "",
+    password: "",
+  };
+  const [loginError, setLoginError] = useState("");
+  const [login, { loading, error }] = useMutation(mutations.USER_LOGIN);
   const useStyles = makeStyles((theme) => ({
     paper: {
       marginTop: theme.spacing(8),
@@ -98,6 +109,30 @@ function LoginForm(props) {
     checked: {},
   })(Checkbox);
 
+  function handleLoginResponse(response) {
+    if (response.data.login.userName !== null) {
+      localStorage.setItem("user", JSON.stringify(response.data.login));
+      history.push((id !== undefined ? "/store/" + id : "") + "/admin");
+    } else {
+      setLoginError("Login failed, try again.");
+    }
+  }
+
+  function loginSubmit() {
+    login({
+      variables: {
+        username: loginForm.email.value,
+        password: loginForm.password.value,
+        store: id !== undefined ? parseInt(id) : 0,
+      },
+    }).then(
+      (res) => handleLoginResponse(res),
+      (err) => console.log(err)
+    );
+  }
+
+  if (loading) return <p></p>;
+  if (error) return <p>There is an error!</p>;
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -117,8 +152,9 @@ function LoginForm(props) {
             id="email"
             label="Email Address"
             name="email"
-            autoComplete="email"
-            autoFocus
+            inputRef={(node) => {
+              loginForm.email = node;
+            }}
           />
           <CssTextField
             variant="outlined"
@@ -130,6 +166,9 @@ function LoginForm(props) {
             type="password"
             id="password"
             autoComplete="current-password"
+            inputRef={(node) => {
+              loginForm.password = node;
+            }}
           />
           <FormControlLabel
             control={<CssCheckbox value="remember" color="primary" />}
@@ -144,7 +183,25 @@ function LoginForm(props) {
             }}
           >
             <Grid item xs={12} sm={12} md={12}>
-              <SubmitButton>Login</SubmitButton>
+              <SubmitButton onClick={loginSubmit}>Login</SubmitButton>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            spacing={1}
+            style={{
+              margin: "20px 0",
+              textAlign: "center",
+            }}
+          >
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={12}
+              style={{ color: "red", fontWeight: "bolder" }}
+            >
+              {loginError}
             </Grid>
           </Grid>
           <Grid container>

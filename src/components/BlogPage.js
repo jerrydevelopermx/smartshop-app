@@ -8,13 +8,24 @@ import appStyles from "../styles/app.js";
 import queries from "../graphql/queries.js";
 import js from "../js/components.js";
 import Container from "@material-ui/core/Container";
+import ReactHtmlParser, {
+  processNodes,
+  convertNodeToElement,
+  htmlparser2,
+} from "react-html-parser";
 
 function BlogPage(props) {
   let { id, productId } = useParams();
-  const { loading, error, data } = useQuery(queries.GET_BLOG_PAGE_INFO, {
+  /*const { loading, error, data } = useQuery(queries.GET_BLOG_PAGE_INFO, {
     variables: {
       storeId: id !== undefined ? id : 0,
       section: "blog",
+    },
+  });*/
+  const { loading, error, data } = useQuery(queries.GET_CONTENT_BY_ID, {
+    variables: {
+      id: 42,
+      storeId: id !== undefined ? id : 0,
     },
   });
   if (loading) return <p></p>;
@@ -32,16 +43,7 @@ function BlogPage(props) {
         appStyles={appStyles.header}
       />
       <Container component="main" style={{ marginTop: "120px" }} maxWidth="lg">
-        <h2>Blog page</h2>
-        <div>
-          {data.content.content &&
-            data.content.content.length > 0 &&
-            data.content.content.map((paragraph, index) => (
-              <Typography variant="body2" key={"pr" + index} paragraph={true}>
-                {paragraph.text}
-              </Typography>
-            ))}
-        </div>
+        <div>{data.newContent && ReactHtmlParser(data.newContent.content)}</div>
       </Container>
       <Footer
         appStyles={appStyles.footer}

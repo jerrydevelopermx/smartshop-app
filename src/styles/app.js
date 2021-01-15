@@ -100,9 +100,10 @@ const styles = {
     bottomBar: {
       padding: "25px",
       fontSize: "11px",
+      width: "100%",
       /*width: "100%",
       position: "absolute",
-      */ bottom: "0px",
+      */
     },
     footerUlList: {
       listStyleType: "circle",
@@ -127,6 +128,25 @@ const styles = {
   },
 
   buttons: {
+    add: {
+      root: {
+        color: "#fff",
+        backgroundColor: "#228b22",
+        hover: {
+          backgroundColor: "#1b6f1b",
+        },
+      },
+    },
+    delete: {
+      root: {
+        color: "#fff",
+        backgroundColor: "#CC0000",
+        hover: {
+          backgroundColor: "#7A0000",
+        },
+      },
+    },
+
     closeModal: {
       root: {
         color: "#fff",
@@ -145,6 +165,7 @@ const styles = {
         },
       },
     },
+
     wishList: {
       root: {
         color: "#fff",
@@ -171,6 +192,50 @@ const styles = {
           backgroundColor: "#cc8400",
         },
       },
+    },
+    change: {
+      root: {
+        color: "#fff",
+        backgroundColor: "#ffa500",
+        hover: {
+          backgroundColor: "#cc8400",
+        },
+      },
+    },
+    cms: {
+      root: {
+        color: "#fff",
+        backgroundColor: "#BB11DD",
+        hover: {
+          backgroundColor: "#700A84",
+        },
+      },
+    },
+    campaigns: {
+      root: {
+        color: "#fff",
+        backgroundColor: "#B86342",
+        hover: {
+          backgroundColor: "#6E3B27",
+        },
+      },
+    },
+    inventory: {
+      root: {
+        color: "#fff",
+        backgroundColor: "#1AB1CD",
+        hover: {
+          backgroundColor: "#0F6A7B",
+        },
+      },
+    },
+  },
+
+  admin: {
+    colorPickerDiv: {
+      width: "35px",
+      height: "35px",
+      border: "3px solid #aaa",
     },
   },
 };

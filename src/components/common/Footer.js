@@ -10,9 +10,7 @@ import ModalContent from "./ModalContent";
 function Footer(props) {
   const useStyles = makeStyles((theme) => props.appStyles);
   const classes = useStyles();
-  const [getContent, { loading, data }] = useLazyQuery(
-    queries.GET_CONTENT_BY_SECTION
-  );
+  const [getContent, { data }] = useLazyQuery(queries.GET_CONTENT_BY_SECTION);
   const [modalStatus, setModalStatus] = useState({
     open: false,
     sectionId: "",
@@ -52,17 +50,13 @@ function Footer(props) {
           props.content.columns.length > 0 &&
           props.content.columns.map((column, index) => (
             <Grid item key={column.id} xs={6} sm={6} md={3}>
-              <div
-                className={classes.centeredContent}
-                style={{ border: "1px solid red" }}
-              >
+              <div className={classes.centeredContent}>
                 {column.title}
-                <div style={{ border: "2px solid green" }}>
+                <div>
                   <div
                     style={{
                       width: "70%",
                       margin: "0 auto",
-                      border: "2px solid pink",
                     }}
                   >
                     <ul className={classes.footerUlList}>

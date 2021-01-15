@@ -7,6 +7,7 @@ import StorePage from "./StorePage";
 import FullPage from "./FullPage";
 import ProductPage from "./ProductPage";
 import BlogPage from "./BlogPage";
+import AdminPage from "./AdminPage";
 
 function App() {
   return (
@@ -20,6 +21,38 @@ function App() {
         <Route exact path="/blog" component={BlogPage} />
         <Route exact path="/store/:id/blog" component={BlogPage} />
 
+        <Route exact path="/admin" component={AdminPage} />
+        <Route
+          exact
+          path="/admin/departments/:departmentId/:deptSection"
+          component={AdminPage}
+        />
+        <Route exact path="/admin/:section" component={AdminPage} />
+        <Route exact path="/admin/:section/:action" component={AdminPage} />
+
+        <Route
+          exact
+          path="/admin/:section/:action/:resourceId"
+          component={AdminPage}
+        />
+        <Route exact path="/store/:id/admin" component={AdminPage} />
+        <Route exact path="/store/:id/admin/:section" component={AdminPage} />
+        <Route
+          exact
+          path="/store/:id/admin/:section/:action"
+          component={AdminPage}
+        />
+        <Route
+          exact
+          path="/store/:id/admin/:section/:action/:resourceId"
+          component={AdminPage}
+        />
+
+        {/*
+        /admin/departments/ID/campaigns
+/admin/departments/ID/cms 
+/admin/departments/ID/inventory
+        */}
         <Route
           exact
           path="/store/:id/product/:productId"
