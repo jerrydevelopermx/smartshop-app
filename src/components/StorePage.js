@@ -11,7 +11,6 @@ import appStyles from "../styles/app.js";
 import queries from "../graphql/queries.js";
 import js from "../js/components.js";
 import NoResults from "./common/NoResults";
-import Tooltip from "@material-ui/core/Tooltip";
 
 function StorePage(props) {
   let gridItems = [];
@@ -69,37 +68,12 @@ function StorePage(props) {
     setFilteredItems(filtered);
   }
 
-  function scrollToTop() {
-    window.scrollTo(0, 0);
-  }
-
   return (
     <div style={data.page.styles.body}>
-      <div
-        style={{
-          display: linkTop,
-          position: "fixed",
-          bottom: "20px",
-          right: "30px",
-          zIndex: "99",
-          border: "none",
-          outline: "none",
-          backgroundColor: data.page.styles.header.topBar.background,
-          opacity: 0.7,
-          color: "white",
-          cursor: "pointer",
-          borderRadius: "10px",
-        }}
-        onClick={scrollToTop}
-      >
-        <Tooltip title="Back to Top" aria-label="Back to Top">
-          <img
-            src={`${process.env.PUBLIC_URL}/imgs/up-512.png`}
-            style={{ height: "70px" }}
-            alt=""
-          />
-        </Tooltip>
-      </div>
+      <BackToTop
+        backgroundColor={data.page.styles.header.topBar.background}
+        display={linkTop}
+      />
       <Header
         logo={data.page.logo}
         blogLink={data.page.blogLink}
