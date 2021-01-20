@@ -11,6 +11,7 @@ import appStyles from "../styles/app.js";
 import queries from "../graphql/queries.js";
 import js from "../js/components.js";
 import NoResults from "./common/NoResults";
+import BackToTop from "./common/BackToTop";
 
 function StorePage(props) {
   let gridItems = [];
