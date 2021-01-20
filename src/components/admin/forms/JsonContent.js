@@ -17,7 +17,7 @@ import mutations from "../../../graphql/mutations";
 function JsonContent(props) {
   const { loading, error, data } = useQuery(queries.GET_CONTENT_BY_ID, {
     variables: {
-      id: 42,
+      id: 51,
       storeId: 0,
     },
   });
@@ -44,7 +44,7 @@ function JsonContent(props) {
   function saveContent() {
     addEdit({
       variables: {
-        id: 42,
+        id: 51,
         content: {
           content: content,
         },

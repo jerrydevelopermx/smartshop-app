@@ -11,15 +11,8 @@ import appStyles from "../styles/app.js";
 import queries from "../graphql/queries.js";
 import js from "../js/components.js";
 import NoResults from "./common/NoResults";
+import Tooltip from "@material-ui/core/Tooltip";
 
-/*
-  xs extra-pequeño: 0px
-sm pequeño: 600px
-md, mediano: 960px
-lg, grande: 1280px
-xl extra-grande: 1920px
-
-  */
 function StorePage(props) {
   let gridItems = [];
   const [pageId, setPageId] = useState(0);
@@ -27,6 +20,7 @@ function StorePage(props) {
   const [categoryFilteredItems, setCategoryFilteredItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState(null);
   const [filtersApplied, setFiltersApplied] = useState([]);
+  const [linkTop, settLinkTop] = useState("none");
 
   const { loading, error, data } = useQuery(queries.GET_PAGE_INFO, {
     variables: { storeId: props.match.params.id ? props.match.params.id : 0 },
@@ -39,6 +33,9 @@ function StorePage(props) {
     setPageId(id);
     setFilteredItems(null);
     setFilters([]);
+    window.onscroll = () => {
+      settLinkTop(window.pageYOffset > 250 ? "block" : "none");
+    };
   }, [props.match.params.id]);
 
   if (loading) return <p>Still loading..</p>;
@@ -72,8 +69,37 @@ function StorePage(props) {
     setFilteredItems(filtered);
   }
 
+  function scrollToTop() {
+    window.scrollTo(0, 0);
+  }
+
   return (
     <div style={data.page.styles.body}>
+      <div
+        style={{
+          display: linkTop,
+          position: "fixed",
+          bottom: "20px",
+          right: "30px",
+          zIndex: "99",
+          border: "none",
+          outline: "none",
+          backgroundColor: data.page.styles.header.topBar.background,
+          opacity: 0.7,
+          color: "white",
+          cursor: "pointer",
+          borderRadius: "10px",
+        }}
+        onClick={scrollToTop}
+      >
+        <Tooltip title="Back to Top" aria-label="Back to Top">
+          <img
+            src={`${process.env.PUBLIC_URL}/imgs/up-512.png`}
+            style={{ height: "70px" }}
+            alt=""
+          />
+        </Tooltip>
+      </div>
       <Header
         logo={data.page.logo}
         blogLink={data.page.blogLink}

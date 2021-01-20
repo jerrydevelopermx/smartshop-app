@@ -24,7 +24,7 @@ function BlogPage(props) {
   });*/
   const { loading, error, data } = useQuery(queries.GET_CONTENT_BY_ID, {
     variables: {
-      id: 42,
+      id: 51,
       storeId: id !== undefined ? id : 0,
     },
   });

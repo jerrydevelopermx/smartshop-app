@@ -1,19 +1,21 @@
 import React from "react";
 import { useParams } from "react-router";
+import { useQuery } from "@apollo/client";
+import Grid from "@material-ui/core/Grid";
+import Hidden from "@material-ui/core/Hidden";
+
 import Header from "./common/Header";
 import Footer from "./common/Footer";
-import { useQuery } from "@apollo/client";
 import appStyles from "../styles/app.js";
 import queries from "../graphql/queries.js";
 import js from "../js/components.js";
-import Grid from "@material-ui/core/Grid";
 
 import LeftNavBar from "./admin/LeftNavBar";
 import Users from "./admin/Users";
 import Departments from "./admin/Departments";
 import Campaigns from "./admin/Campaigns";
 import ContentManager from "./admin/ContenManager";
-import Hidden from "@material-ui/core/Hidden";
+
 import Inventory from "./admin/Inventory";
 import UserQueries from "./admin/UserQueries";
 import UserEvents from "./admin/UserEvents";

@@ -8,7 +8,7 @@ import DataTable from "../common/DataTable";
 import UserEditForm from "./forms/UserEditForm";
 import queries from "../../graphql/queries";
 
-import { CellParams, GridApi } from "@material-ui/data-grid";
+import { CellParams } from "@material-ui/data-grid";
 
 function Users(props) {
   const { loading, error, data } = useQuery(queries.GET_USERS_DATA);

@@ -10,6 +10,7 @@ import { withStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import appFunctions from "../../js/functions";
+import ContactForm from "./ContactForm";
 
 function ModalContent(props) {
   console.log(props);
@@ -127,6 +128,13 @@ function ModalContent(props) {
               {paragraph.text}
             </Typography>
           ))}
+        {/* styles={data.page.styles.header} pageId={data.page.id} */}
+        {props.status.sectionId === "contact" ? (
+          <ContactForm
+            styles={props.styles.header}
+            pageId={props.status.storeId}
+          />
+        ) : null}
       </DialogContent>
       <DialogActions>
         <CloseButton

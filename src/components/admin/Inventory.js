@@ -13,7 +13,7 @@ import ProductEditForm from "./forms/ProductEditForm";
 import DataTable from "../common/DataTable";
 import queries from "../../graphql/queries";
 
-import { CellParams, GridApi } from "@material-ui/data-grid";
+import { CellParams } from "@material-ui/data-grid";
 import ReplenishmentOrder from "./forms/ReplenishmentOrder";
 
 function TabPanel(props) {

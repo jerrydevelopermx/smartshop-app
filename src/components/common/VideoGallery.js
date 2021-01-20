@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Player } from "video-react";
 import "video-react/dist/video-react.css"; // import css
 import Typography from "@material-ui/core/Typography";
