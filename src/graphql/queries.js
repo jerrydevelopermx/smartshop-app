@@ -8,7 +8,7 @@ const queries = {
         name
         logo
         description
-        blogLink
+        bloglink
         slides {
           img
         }
@@ -39,7 +39,7 @@ const queries = {
         styles {
           body {
             background
-            fontFamily
+            fontfamily
             color
           }
           header {
@@ -94,22 +94,11 @@ const queries = {
         id
         name
         type
-        categoryId
-        color
-        size
-        style
-        material
+        categoryid
         name
-        coverImage
-        hoverImage
+        coverimage
+        hoverimage
         description
-        price
-        specifications
-        warranties
-        attributes {
-          name
-          values
-        }
       }
     }
   `,
@@ -120,7 +109,7 @@ const queries = {
         name
         logo
         description
-        blogLink
+        bloglink
 
         footer {
           copyright
@@ -131,7 +120,7 @@ const queries = {
         styles {
           body {
             background
-            fontFamily
+            fontfamily
             color
           }
           header {
@@ -212,7 +201,7 @@ const queries = {
         name
         logo
         description
-        blogLink
+        bloglink
 
         footer {
           copyright
@@ -223,7 +212,7 @@ const queries = {
         styles {
           body {
             background
-            fontFamily
+            fontfamily
             color
           }
           header {
@@ -282,7 +271,7 @@ const queries = {
         name
         logo
         description
-        blogLink
+        bloglink
 
         footer {
           copyright
@@ -293,7 +282,7 @@ const queries = {
         styles {
           body {
             background
-            fontFamily
+            fontfamily
             color
           }
           header {
@@ -349,13 +338,13 @@ const queries = {
         id
         name
         type
-        categoryId
+        categoryid
         color
         size
         style
         material
         name
-        coverImage
+        coverimage
         description
         price
         specifications
@@ -835,7 +824,7 @@ const queries = {
         event2DefaultLink
         event3DefaultLink
         contactUsJson
-        blogLink
+        bloglink
         slide1DefaultLink
         slide2DefaultLink
         slide3DefaultLink
@@ -868,7 +857,7 @@ const queries = {
         name
         logo
         description
-        blogLink
+        bloglink
 
         footer {
           copyright
@@ -879,7 +868,7 @@ const queries = {
         styles {
           body {
             background
-            fontFamily
+            fontfamily
             color
           }
           header {
@@ -942,7 +931,7 @@ const queries = {
         name
         logo
         description
-        blogLink
+        bloglink
 
         footer {
           copyright
@@ -953,7 +942,7 @@ const queries = {
         styles {
           body {
             background
-            fontFamily
+            fontfamily
             color
           }
           header {

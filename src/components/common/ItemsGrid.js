@@ -78,7 +78,7 @@ function ItemsGrid(props) {
                 >
                   <CardMedia
                     style={props.appStyles.grid.cardMedia}
-                    image={`${process.env.PUBLIC_URL}/imgs/${item.coverImage}`}
+                    image={`${process.env.PUBLIC_URL}/imgs/${item.coverimage}`}
                     title={item.name}
                   />
                   <div
@@ -99,7 +99,7 @@ function ItemsGrid(props) {
                       <div>
                         <img
                           style={{ maxHeight: "120px" }}
-                          src={`${process.env.PUBLIC_URL}/imgs/${item.hoverImage}`}
+                          src={`${process.env.PUBLIC_URL}/imgs/${item.hoverimage}`}
                           alt=""
                         />
                       </div>
@@ -120,7 +120,7 @@ function ItemsGrid(props) {
               >
                 <CardMedia
                   style={props.appStyles.grid.cardMedia}
-                  image={`${process.env.PUBLIC_URL}/imgs/${item.coverImage}`}
+                  image={`${process.env.PUBLIC_URL}/imgs/${item.coverimage}`}
                   title={item.name}
                 />
                 <div

@@ -70,7 +70,12 @@ function StorePage(props) {
   }
 
   return (
-    <div style={data.page.styles.body}>
+    <div
+      style={{
+        background: data.page.styles.body.background,
+        fontFamily: data.page.styles.body.fontfamily,
+      }}
+    >
       <BackToTop
         backgroundColor={data.page.styles.header.topBar.background}
         display={linkTop}
