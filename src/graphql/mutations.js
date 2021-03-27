@@ -1,17 +1,28 @@
 import { gql } from "@apollo/client";
 
 const mutations = {
-  UPDATE_CONTENT: gql`
-    mutation UpdateContent($id: ID, $content: ContentInput) {
-      updateContent(id: $id, content: $content) {
+  UPDATE_HTML_CONTENT: gql`
+    mutation UpdateContent(
+      $id: ID
+      $sectionId: String
+      $content: ContentInput
+    ) {
+      updateContent(id: $id, sectionId: $sectionId, content: $content) {
         id
         content
       }
     }
   `,
-  UPDATE_APPEARANCE: gql`
+  UPDATE_SITE_APPEARANCE: gql`
     mutation UpdateAppearance($id: ID, $appearance: AppearanceInput) {
       updateAppearance(id: $id, appearance: $appearance) {
+        id
+      }
+    }
+  `,
+  UPDATE_SITE_CONTENT: gql`
+    mutation UpdateSiteContent($id: ID, $content: SiteContentInput) {
+      updateSiteContent(id: $id, content: $content) {
         id
       }
     }

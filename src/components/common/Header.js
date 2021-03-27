@@ -11,7 +11,6 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import ModalContent from "./ModalContent";
-import ModalPage from "./ModalPage";
 import BackHome from "./BackHome";
 import MobileNavBar from "./MobileNavBar";
 import queries from "../../graphql/queries.js";
@@ -34,17 +33,11 @@ function Header(props) {
     sectionId: "",
     storeId: props.pageId,
   });
-  const [modalPageStatus, setModalPageStatus] = useState({ open: false });
+  //const [modalPageStatus, setModalPageStatus] = useState({ open: false });
   const anchorRef = useRef(null);
-  const [getContent, { data }] = useLazyQuery(queries.GET_CONTENT_BY_SECTION);
-
-  useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
-    }
-
-    prevOpen.current = open;
-  }, [open]);
+  const [getContent, { data }] = useLazyQuery(
+    queries.GET_HTML_CONTENT_BY_ID_SECTION
+  );
 
   const useStyles = makeStyles((theme) => ({
     header: {
@@ -189,7 +182,7 @@ function Header(props) {
   const handleSubMenuClick = (action) => {
     getContent({
       variables: {
-        storeId: props.pageId,
+        id: props.pageId,
         sectionId: action,
       },
     });
@@ -199,10 +192,9 @@ function Header(props) {
   const mobileMenuClickHandler = (action) => {
     console.log(action);
     if (action !== "" && action !== null) {
-      //if (action !== "login") {
       getContent({
         variables: {
-          storeId: props.pageId,
+          id: props.pageId,
           sectionId: action,
         },
       });
@@ -210,24 +202,18 @@ function Header(props) {
         ...modalStatus,
         ...{ open: true, sectionId: action },
       });
-      /* } else {
-        setModalPageStatus({ open: true });
-      }*/
     }
   };
   const menuClickHandler = (action, event) => {
     event.preventDefault();
-    if (action !== "login") {
-      getContent({
-        variables: {
-          storeId: props.pageId,
-          sectionId: action,
-        },
-      });
-      setModalStatus({ ...modalStatus, ...{ open: true, sectionId: action } });
-    } else {
-      setModalPageStatus({ open: true });
-    }
+
+    getContent({
+      variables: {
+        storeId: props.pageId,
+        sectionId: action,
+      },
+    });
+    setModalStatus({ ...modalStatus, ...{ open: true, sectionId: action } });
   };
   function handleSubMenuScroll(action) {
     //setAnchorEl(null);
@@ -250,9 +236,7 @@ function Header(props) {
   }
   const handleToggle = (event) => {
     event.preventDefault();
-    console.log(event.currentTarget);
     setLoggedMenuEl(event.currentTarget);
-    //setOpen((prevOpen) => !prevOpen);
   };
 
   const handleCloseMenu = (event) => {
@@ -270,28 +254,26 @@ function Header(props) {
     setLoggedMenuEl(null);
   };
 
-  function closeModalPage() {
-    setModalPageStatus({ open: false });
+  function goToAdmin() {
+    history.push(
+      (props.pageId !== undefined && props.pageId !== "0"
+        ? "/store/" + props.pageId
+        : "") + "/admin"
+    );
   }
 
   return (
     <>
-      {data && data.content ? (
+      {data && data.siteHtmlContent ? (
         <ModalContent
           open={modalStatus.open}
           styles={props.modalStyles}
           status={modalStatus}
           onClose={closeModal}
-          content={data.content}
+          content={data.siteHtmlContent}
         />
       ) : null}
 
-      <ModalPage
-        open={modalPageStatus.open}
-        styles={props.modalStyles}
-        status={modalStatus}
-        onClose={closeModalPage}
-      ></ModalPage>
       <AppBar
         position="fixed"
         style={props.styles.topBar}
@@ -340,9 +322,6 @@ function Header(props) {
                             <>
                               <ButtonBase
                                 ref={anchorRef}
-                                aria-controls={
-                                  open ? "menu-list-grow" : undefined
-                                }
                                 aria-haspopup="true"
                                 onClick={handleToggle}
                               >
@@ -371,6 +350,9 @@ function Header(props) {
                                 open={Boolean(loggedMenuEl)}
                                 onClose={handleCloseMenu}
                               >
+                                <StyledMenuItem onClick={goToAdmin}>
+                                  <ListItemText primary={"Admin"} />
+                                </StyledMenuItem>
                                 <StyledMenuItem>
                                   <ListItemText primary={"My Profile"} />
                                 </StyledMenuItem>
@@ -395,7 +377,9 @@ function Header(props) {
                               onClick={(e) =>
                                 item.label !== "Blog" && item.action
                                   ? item.action !== "events"
-                                    ? menuClickHandler(item.action, e)
+                                    ? item.action === "contactUs"
+                                      ? handleSubMenuClick(item.action)
+                                      : menuClickHandler(item.action, e)
                                     : menuClickScroll(item.action, e)
                                   : null
                               }

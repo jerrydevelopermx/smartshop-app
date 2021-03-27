@@ -100,10 +100,6 @@ const styles = {
     bottomBar: {
       padding: "25px",
       fontSize: "11px",
-      width: "100%",
-      /*width: "100%",
-      position: "absolute",
-      */
     },
     footerUlList: {
       listStyleType: "circle",
@@ -238,6 +234,32 @@ const styles = {
       border: "3px solid #aaa",
     },
   },
+  //Admin - Color picker
+  colorPicker: {
+    container: {
+      padding: "5px",
+      width: "40px",
+      background: "#ccc",
+      borderRadius: "1px",
+      boxShadow: "0 0 0 1px rgba(0,0,0,.1)",
+      display: "block",
+      cursor: "pointer",
+    },
+    activeDiv: {
+      position: "absolute",
+      zIndex: "2",
+    },
+    pickerContainer: {
+      position: "fixed",
+      top: "0px",
+      right: "0px",
+      bottom: "0px",
+      left: "0px",
+    },
+  },
+
+  cmsSlidesPreview: { height: "90px", padding: "5px" },
+  cmsSubmitButton: { padding: "30px", textAlign: "center" },
 };
 
 export default styles;

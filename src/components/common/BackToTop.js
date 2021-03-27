@@ -25,7 +25,7 @@ function BackToTop(props) {
     >
       <Tooltip title="Back to Top" aria-label="Back to Top">
         <img
-          src={`${process.env.PUBLIC_URL}/imgs/up-512.png`}
+          src={`${process.env.PUBLIC_URL}/imgs/up-arrow.png`}
           style={{ height: "70px" }}
           alt=""
         />

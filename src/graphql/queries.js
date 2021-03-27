@@ -661,8 +661,89 @@ const queries = {
       }
     }
   `,
+  GET_PRODUCT_DATA_BY_ID: gql`
+    query GetProduct($id: ID!, $departmentID: ID!) {
+      producto(id: $id) {
+        id
+        productNumber
+        departmentID
+        productSKU
+        productEAN
+        productShortName
+        productDescription
+        prodCategoryCode
+        prodSubcategoryCode
+        brandCode
+        modelCode
+        yearCode
+        styleCode
+        genderCode
+        packagingCode
+        materialCode
+        colorCode
+        sizeCode
+        flavorCode
+        attribMask
+        attributeMapCode
+        prodUOMCode
+        prodUnitsInStockNumber
+        inventoryCostMethod
+        prodUnitCostAmount
+        prodMSRPAmount
+        prodUnitPriceAmount
+        prodCurrencyType
+        prodDiscountType
+        prodDiscountCondition
+        prodDiscountNumber
+        prodPriceCorrectionFactor
+        prodUnitsOnOrder
+        prodReplenishType
+        prodUISThresholdNumber
+        pendReplenOrderNumber
+        prodRankingType
+        prodStatus
+        prodLocation1Text
+        prodLocation2Text
+        prodSpecifications
+        prodNotes
+        prodDefaultContentLink
+        prodDefaultHoverLink
+        supplier1ID
+        supplier1ProdID
+        supplier2ID
+        supplier2ProdID
+        campaigning
+        campaignID
+        gridPromotedPositionIndex
+        gridDefaulPositiontIndex
+        prodPriorityNumber
+      }
 
-  GET_DEPARTMENTS_DATA_BY_ID: gql`
+      prodCategories {
+        prodCategoryCode
+        prodCategoryName
+        prodCategoryText
+        prodCategoryStatus
+      }
+
+      campaigns(departmentID: $departmentID) {
+        id
+        campaignNumber
+      }
+    }
+  `,
+
+  GET_SUBCATEGORIES_BY_CATEGORY_ID: gql`
+    query GetSubcategories($categoryCode: ID!) {
+      prodSubcategories(categoryCode: $categoryCode) {
+        prodSubcategoryCode
+        prodSubcategoryName
+        prodSubcategoryText
+        prodSubcategoryStatus
+      }
+    }
+  `,
+  GET_DEPARTMENT_DATA_BY_ID: gql`
     query GetDepartment($deptId: ID!) {
       department(id: $deptId) {
         id
@@ -708,6 +789,35 @@ const queries = {
       }
     }
   `,
+  GET_REPLENISHMENT_DATA_BY_ID: gql`
+    query GetReplenishment($id: ID!) {
+      replenishment(id: $id) {
+        id
+        replenishmentOrderNr
+        departmentID
+        supplierID
+        repGenDatime
+        repPlacedDatime
+        repOrderStatus
+        repLineItemNr
+        productID
+        supplierProductID
+        quantityOrdered
+        quantityReceived
+        estimatedUnitCost
+        actualUnitCost
+        dateFulfilled
+        repLIStatus
+      }
+    }
+  `,
+  GET_HTML_CONTENT_BY_ID_SECTION: gql`
+    query GetSiteHTML($id: ID!, $sectionId: String) {
+      siteHtmlContent(id: $id, sectionId: $sectionId) {
+        content
+      }
+    }
+  `,
   GET_CMS_BY_ID: gql`
     query GetSiteCMS($siteId: ID!) {
       siteCMS(id: $siteId) {
@@ -745,7 +855,83 @@ const queries = {
         siteTwitterLink
         siteInstagramLink
         sitePinterestLink
-        siteCopyrights
+        siteCopyright
+      }
+    }
+  `,
+
+  //
+  GET_CONTENT_BY_SECTION_AND_PAGE: gql`
+    query getContent($sectionId: String, $storeId: ID!) {
+      page(id: $storeId) {
+        id
+        name
+        logo
+        description
+        blogLink
+
+        footer {
+          copyright
+          social {
+            link
+          }
+        }
+        styles {
+          body {
+            background
+            fontFamily
+            color
+          }
+          header {
+            topBar {
+              background
+            }
+
+            headerMenu {
+              color
+            }
+            styledMenu {
+              paper {
+                backgroundColor
+                color
+              }
+            }
+            mobileNavBar {
+              paper {
+                background
+                color
+              }
+            }
+          } # end header styles
+          footer {
+            bottomBar {
+              background
+              color
+            }
+            footerLinks {
+              color
+            }
+          }
+          modalStyles {
+            header {
+              background
+              color
+            }
+            body {
+              background
+            }
+            closeButton {
+              root {
+                color
+                backgroundColor
+              }
+            }
+          }
+        }
+      }
+
+      siteHtmlContent(id: $storeId, sectionId: $sectionId) {
+        content
       }
     }
   `,

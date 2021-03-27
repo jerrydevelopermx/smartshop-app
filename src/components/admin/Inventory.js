@@ -1,43 +1,30 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Button from "@material-ui/core/Button";
-import ProductEditForm from "./forms/ProductEditForm";
-import DataTable from "../common/DataTable";
-import queries from "../../graphql/queries";
-
 import { CellParams } from "@material-ui/data-grid";
+import { Container, Paper, Tabs, Tab, Button } from "@material-ui/core";
+import DataTable from "../common/DataTable";
 import ReplenishmentOrder from "./forms/ReplenishmentOrder";
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
+import EditForms from "../EditForms";
+import TabPanel from "./TabPanel";
+import GraphqlLoading from "../common/GraphqlLoading";
+import GraphqlError from "../common/GraphqlError";
+import queries from "../../graphql/queries";
+import computedStyles from "../../styles/computedStyles";
 
 function Inventory(props) {
-  const [orderPageOpen, setOrderPageOpen] = useState(false);
+  let changeButtonCSS = computedStyles.changeButton(props);
+  let deleteButtonCSS = computedStyles.deleteButton(props);
+  let addButtonCSS = computedStyles.addButton(props);
+  let activeTabCSS = computedStyles.activeTab(props);
+
+  const [orderPageModal, setOrderPageModal] = useState({
+    open: false,
+    action: "",
+    id: 0,
+  });
+  const [activeTab, setActiveTab] = React.useState(0);
+
   const { loading, error, data } = useQuery(
     queries.GET_INVENTORY_DATA_BY_DEPT,
     {
@@ -46,52 +33,12 @@ function Inventory(props) {
       },
     }
   );
-  const useStyles = makeStyles((theme) => ({
-    indicator: {
-      backgroundColor: props.styles.topBar.background,
-    },
-  }));
-  const classes = useStyles();
 
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleTabChange = (event, newValue) => {
+    setActiveTab(newValue);
   };
-  if (loading) return <p></p>;
-  if (error) return <p>There is an error!</p>;
-
-  let addButton = {
-    root: {
-      "&:hover": {
-        backgroundColor: props.buttons.add.root.hover.backgroundColor,
-      },
-      color: props.buttons.add.root.color,
-      backgroundColor: props.buttons.add.root.backgroundColor,
-    },
-  };
-  let editButton = {
-    root: {
-      "&:hover": {
-        backgroundColor: props.buttons.change.root.hover.backgroundColor,
-      },
-      color: props.buttons.change.root.color,
-      backgroundColor: props.buttons.change.root.backgroundColor,
-    },
-  };
-  let deleteButton = {
-    root: {
-      "&:hover": {
-        backgroundColor: props.buttons.delete.root.hover.backgroundColor,
-      },
-      color: props.buttons.delete.root.color,
-      backgroundColor: props.buttons.delete.root.backgroundColor,
-    },
-  };
-
-  const AddButton = withStyles((theme) => addButton)(Button);
-  const EditButton = withStyles((theme) => editButton)(Button);
-  const DeleteButton = withStyles((theme) => deleteButton)(Button);
+  if (loading) return <GraphqlLoading />;
+  if (error) return <GraphqlError />;
 
   function a11yProps(index) {
     return {
@@ -126,62 +73,34 @@ function Inventory(props) {
 
     {
       field: "",
-      headerName: "",
+      headerName: "Actions",
       sortable: false,
-      width: 90,
+      width: 200,
       disableClickEventBubbling: true,
       renderCell: (params: CellParams) => {
         return (
-          <EditButton
-            component={NavLink}
-            to={
-              props.pageId === "0"
-                ? `/admin/inventory/edit/${params.getValue("id")}`
-                : `/store/${
-                    props.pageId
-                  }/admin/inventory/edit/${params.getValue("id")}`
-            }
-          >
-            Edit
-          </EditButton>
+          <>
+            <Button
+              className={changeButtonCSS.root}
+              style={{ margin: "10px" }}
+              component={NavLink}
+              to={
+                props.pageId === "0"
+                  ? `/admin/inventory/edit/${params.getValue("id")}`
+                  : `/store/${
+                      props.pageId
+                    }/admin/inventory/edit/${params.getValue("id")}`
+              }
+            >
+              Edit
+            </Button>
+            <Button className={deleteButtonCSS.root} style={{ margin: "10px" }}>
+              Delete
+            </Button>
+          </>
         );
       },
     },
-    {
-      field: "",
-      headerName: "",
-      sortable: false,
-      width: 90,
-      disableClickEventBubbling: true,
-      renderCell: (params: CellParams) => {
-        return <DeleteButton>Delete</DeleteButton>;
-      },
-    },
-    /*{
-      field: "",
-      headerName: "",
-      sortable: false,
-      width: 100,
-      disableClickEventBubbling: true,
-      renderCell: (params: CellParams) => {
-        const onClick = () => {
-          const api: GridApi = params.api;
-          const fields = api
-            .getAllColumns()
-            .map((c) => c.field)
-            .filter((c) => c !== "__check__" && !!c);
-          const thisRow = {};
-
-          fields.forEach((f) => {
-            thisRow[f] = params.getValue(f);
-          });
-
-          return alert(JSON.stringify(thisRow, null, 4));
-        };
-
-        return <Button onClick={onClick}>Click</Button>;
-      },
-    },*/
   ];
 
   const replenishmentsColumns = [
@@ -196,44 +115,42 @@ function Inventory(props) {
     { field: "productID", headerName: "SKU", width: 90 },
     {
       field: "",
-      headerName: "",
+      headerName: "Actions",
       sortable: false,
-      width: 90,
+      width: 250,
       disableClickEventBubbling: true,
       renderCell: (params: CellParams) => {
         return (
-          <EditButton
-            component={NavLink}
-            to={
-              props.pageId === "0"
-                ? `/admin/inventory/edit/${params.getValue("id")}`
-                : `/store/${
-                    props.pageId
-                  }/admin/inventory/edit/${params.getValue("id")}`
-            }
-          >
-            Edit
-          </EditButton>
+          <>
+            <Button
+              className={changeButtonCSS.root}
+              style={{ margin: "10px" }}
+              onClick={() => openOrderPage("edit", params.getValue("id"))}
+            >
+              Edit
+            </Button>
+            <Button className={deleteButtonCSS.root} style={{ margin: "10px" }}>
+              Delete
+            </Button>
+          </>
         );
-      },
-    },
-    {
-      field: "",
-      headerName: "",
-      sortable: false,
-      width: 90,
-      disableClickEventBubbling: true,
-      renderCell: (params: CellParams) => {
-        return <DeleteButton>Delete</DeleteButton>;
       },
     },
   ];
   function closeOrderPage() {
-    setOrderPageOpen(false);
+    setOrderPageModal({
+      ...orderPageModal,
+      open: false,
+    });
   }
 
-  function openOrderPage() {
-    setOrderPageOpen(true);
+  function openOrderPage(action, id) {
+    setOrderPageModal({
+      ...orderPageModal,
+      open: true,
+      action: action,
+      id: id,
+    });
   }
   return (
     <Container component="main" maxWidth="lg">
@@ -241,19 +158,20 @@ function Inventory(props) {
         <h3>Inventory Management</h3>
         <Paper square>
           <Tabs
-            TabIndicatorProps={{ className: classes.indicator }}
-            value={value}
-            onChange={handleChange}
-            aria-label="simple tabs example"
+            TabIndicatorProps={{ className: activeTabCSS.indicator }}
+            value={activeTab}
+            onChange={handleTabChange}
+            aria-label="Inventory tabs"
           >
             <Tab label="Product Maintenance" {...a11yProps(0)} />
             <Tab label="Product Replenishment" {...a11yProps(1)} />
           </Tabs>
         </Paper>
-        <TabPanel value={value} index={0}>
+        <TabPanel value={activeTab} index={0}>
           {props.action === undefined ? (
             <>
-              <AddButton
+              <Button
+                className={addButtonCSS.root}
                 component={NavLink}
                 to={
                   props.pageId === "0"
@@ -262,25 +180,37 @@ function Inventory(props) {
                 }
               >
                 New Product
-              </AddButton>
+              </Button>
 
               <DataTable columns={columns} rows={data.productos} />
             </>
           ) : (
-            <ProductEditForm appButtons={props.buttons} styles={props.styles} />
+            <EditForms
+              type="PRODUCT"
+              action="add"
+              styles={props.styles}
+              appButtons={props.appButtons}
+            />
           )}
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        <TabPanel value={activeTab} index={1}>
           <>
-            <AddButton onClick={openOrderPage}>New Order</AddButton>
+            <Button
+              className={addButtonCSS.root}
+              onClick={() => openOrderPage("add", undefined)}
+            >
+              New Order
+            </Button>
             <DataTable
               columns={replenishmentsColumns}
               rows={data.replenishments}
             />{" "}
           </>
           <ReplenishmentOrder
-            open={orderPageOpen}
-            styles={props.modalStyles}
+            appButtons={props.buttons}
+            open={orderPageModal.open}
+            params={orderPageModal}
+            styles={props.styles}
             onClose={closeOrderPage}
           />
         </TabPanel>

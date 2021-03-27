@@ -8,6 +8,7 @@ import DataTable from "../common/DataTable";
 import { CellParams } from "@material-ui/data-grid";
 import CampaignEditForm from "./forms/CampaignEditForm";
 import queries from "../../graphql/queries";
+import EditForms from "../EditForms";
 
 function Campaigns(props) {
   const { loading, error, data } = useQuery(
@@ -71,35 +72,29 @@ function Campaigns(props) {
       field: "",
       headerName: "",
       sortable: false,
-      width: 90,
+      width: 200,
       disableClickEventBubbling: true,
       renderCell: (params: CellParams) => {
         return (
-          <EditButton
-            component={NavLink}
-            to={
-              props.pageId === "0"
-                ? `/admin/campaigns/edit/${params.getValue("id")}`
-                : `/store/${
-                    props.pageId
-                  }/admin/campaigns/edit/${params.getValue("id")}`
-            }
-          >
-            Edit
-          </EditButton>
+          <>
+            <EditButton
+              component={NavLink}
+              to={
+                props.pageId === "0"
+                  ? `/admin/campaigns/edit/${params.getValue("id")}`
+                  : `/store/${
+                      props.pageId
+                    }/admin/campaigns/edit/${params.getValue("id")}`
+              }
+            >
+              Edit
+            </EditButton>
+            <DeleteButton>Delete</DeleteButton>
+          </>
         );
       },
     },
-    {
-      field: "",
-      headerName: "",
-      sortable: false,
-      width: 90,
-      disableClickEventBubbling: true,
-      renderCell: (params: CellParams) => {
-        return <DeleteButton>Delete</DeleteButton>;
-      },
-    },
+
     /*{
       field: "",
       headerName: "",
@@ -150,9 +145,7 @@ function Campaigns(props) {
             rowkey="campaignID"
           />
         </>
-      ) : (
-        <CampaignEditForm styles={props.styles} />
-      )}
+      ) : null}
     </Container>
   );
 }

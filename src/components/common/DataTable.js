@@ -3,7 +3,7 @@ import { DataGrid } from "@material-ui/data-grid";
 
 function DataTable(props) {
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ height: 500, width: "100%" }}>
       <DataGrid
         rows={props.rows}
         columns={props.columns}

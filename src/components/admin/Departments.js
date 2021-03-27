@@ -9,6 +9,7 @@ import DataTable from "../common/DataTable";
 import queries from "../../graphql/queries";
 
 import { CellParams } from "@material-ui/data-grid";
+import EditForms from "../EditForms";
 
 function Departments(props) {
   const { loading, error, data } = useQuery(queries.GET_DEPARTMENTS_DATA, {
@@ -107,10 +108,12 @@ function Departments(props) {
             component={NavLink}
             to={
               props.pageId === "0"
-                ? `/admin/departments/edit/${params.getValue("id")}`
-                : `/store/${
-                    props.pageId
-                  }/admin/departments/edit/${params.getValue("id")}`
+                ? `/admin/departments/${params.getValue(
+                    "departmentID"
+                  )}/edit/${params.getValue("id")}`
+                : `/store/${props.pageId}/admin/departments/${params.getValue(
+                    "id"
+                  )}/edit`
             }
           >
             Edit
@@ -230,9 +233,14 @@ function Departments(props) {
           <DataTable columns={columns} rows={data.departments} />
         </>
       ) : (
-        <DepartmentEditForm styles={props.styles} />
+        <>
+          <EditForms type="DEPARTMENT" action="add" styles={props.styles} />
+        </>
       )}
     </Container>
   );
 }
 export default Departments;
+//id,        section,     action,    departmentId,  deptSection
+//undefined  "campaigns"  undefined     undefined      undefined
+//undefined  undefined    undefined        "1"         "campaigns"

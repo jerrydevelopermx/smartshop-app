@@ -15,15 +15,16 @@ import Users from "./admin/Users";
 import Departments from "./admin/Departments";
 import Campaigns from "./admin/Campaigns";
 import ContentManager from "./admin/ContenManager";
-
 import Inventory from "./admin/Inventory";
 import UserQueries from "./admin/UserQueries";
 import UserEvents from "./admin/UserEvents";
 import IncidentManager from "./admin/IncidentManager";
+import { ToastContainer } from "react-toastify";
+import EditForms from "./EditForms";
 
 function AdminPage(props) {
   let user = JSON.parse(localStorage.getItem("user"));
-  let { id, section, action, departmentId, deptSection } = useParams();
+  let { id, section, action, departmentId, deptSection, itemId } = useParams();
   console.log(id, section, action, departmentId, deptSection);
   const { loading, error, data } = useQuery(queries.GET_FULL_PAGE, {
     variables: {
@@ -35,9 +36,19 @@ function AdminPage(props) {
 
   return (
     <div style={data.page.styles.body}>
+      <ToastContainer
+        position="top-right"
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Header
         logo={data.page.logo}
-        blogLink={data.page.blogLink}
+        blogLink={data.page.bloglink}
         menu={js.header}
         pageId={data.page.id}
         styles={data.page.styles.header}
@@ -68,6 +79,7 @@ function AdminPage(props) {
             {
               {
                 undefined: {
+                  // Non specific "Section" -- Admin's Department List sections
                   undefined: (
                     <div>
                       <h1>Welcome to SmartShop Admin Page!</h1>
@@ -82,6 +94,7 @@ function AdminPage(props) {
                       styles={data.page.styles.header}
                       pageId={departmentId}
                       appButtons={appStyles.buttons}
+                      appStyles={appStyles}
                     />
                   ),
                   campaigns: (
@@ -101,7 +114,15 @@ function AdminPage(props) {
                       modalStyles={data.page.styles.modalStyles}
                     />
                   ),
-                }[deptSection],
+                  edit: (
+                    <EditForms
+                      type="DEPARTMENT"
+                      action="edit"
+                      styles={data.page.styles.header}
+                    />
+                  ),
+                }[deptSection], // Admin's Department List sections
+
                 users: (
                   <Users
                     action={action}
@@ -121,18 +142,34 @@ function AdminPage(props) {
                     pageId={data.page.id}
                   />
                 ),
-                campaigns: (
-                  <Campaigns
-                    action={action}
-                    buttons={appStyles.buttons}
-                    styles={data.page.styles.header}
-                    pageId={data.page.id}
-                  />
-                ),
+                campaigns: {
+                  undefined: (
+                    <Campaigns
+                      action={action}
+                      buttons={appStyles.buttons}
+                      styles={data.page.styles.header}
+                      pageId={data.page.id}
+                    />
+                  ),
+                  edit: (
+                    <EditForms
+                      type="CAMPAIGN"
+                      action="edit"
+                      styles={data.page.styles.header}
+                    />
+                  ),
+                  add: (
+                    <EditForms
+                      type="CAMPAIGN"
+                      action="add"
+                      styles={data.page.styles.header}
+                    />
+                  ),
+                }[action],
                 inventory: (
                   <Inventory
                     action={action}
-                    buttons={appStyles.buttons}
+                    appButtons={appStyles.buttons}
                     styles={data.page.styles.header}
                     pageId={data.page.id}
                     modalStyles={data.page.styles.modalStyles}
@@ -144,6 +181,7 @@ function AdminPage(props) {
                     styles={data.page.styles.header}
                     pageId={data.page.id}
                     appButtons={appStyles.buttons}
+                    appStyles={appStyles}
                   />
                 ),
               }[section]

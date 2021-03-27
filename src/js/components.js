@@ -13,8 +13,8 @@ const components = {
       url: "/",
       action: null,
       items: [
-        { text: "Our Mission", action: "mission" },
-        { text: "Who We Are", action: "who" },
+        { text: "Our Mission", action: "ourMission" },
+        { text: "Who We Are", action: "whoWeAre" },
         { text: "Our Board & Staff", action: "board" },
         { text: "Site's Features", action: "features" },
         {
@@ -29,7 +29,7 @@ const components = {
       type: "link",
       label: "Contact Us",
       url: "",
-      action: "contact",
+      action: "contactUs",
       items: null,
     },
     {
@@ -70,7 +70,7 @@ const components = {
           {
             text: "Who we are",
             url: "",
-            action: "who",
+            action: "whoWeAre",
           },
           {
             text: "History",
@@ -80,7 +80,7 @@ const components = {
           {
             text: "Contact",
             url: "",
-            action: "contact",
+            action: "contactUs",
           },
         ],
       },
@@ -101,7 +101,7 @@ const components = {
           {
             text: "Customers Policies",
             url: "",
-            action: "customerPolicies",
+            action: "customersPolicies",
           },
           {
             text: "Visitors Policies",
@@ -138,6 +138,29 @@ const components = {
     ],
     copyright: "Copyright. 2020 | HLProductions ",
     socialNetworks: ["facebook", "twitter", "instagram", "youtube"],
+  },
+  toastifyConfig: {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: false,
+  },
+
+  modalTitles: {
+    ourMission: "Mission",
+    history: "History",
+    contactUs: "Contact us",
+    whoWeAre: "Who we are",
+    board: "Board",
+    features: "Features",
+    membership: "Membership",
+    sitePolicies: "Site Policies",
+    membershipPolicies: "Membership Policies",
+    customersPolicies: "Customer Policies",
+    visitorsPolicies: "Visitors Policies",
   },
 };
 

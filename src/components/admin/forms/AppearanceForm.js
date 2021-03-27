@@ -1,18 +1,24 @@
 import React, { useState } from "react";
-import { SketchPicker } from "react-color";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import Container from "@material-ui/core/Container";
-import { withStyles } from "@material-ui/core/styles";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
 import { useMutation } from "@apollo/client";
-import appFunctions from "../../../js/functions";
+import {
+  Button,
+  TextField,
+  Grid,
+  Container,
+  FormControl,
+  Select,
+  InputLabel,
+} from "@material-ui/core";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import components from "../../../js/components";
 import mutations from "../../../graphql/mutations";
+import ColorPicker from "../../common/ColorPicker";
+import computedStyles from "../../../styles/computedStyles";
 
 function AppearanceForm(props) {
+  const [updateAppearance] = useMutation(mutations.UPDATE_SITE_APPEARANCE);
+
   const [appearance, setAppearance] = useState({
     siteBodyColorRGB: props.data.siteBodyColorRGB,
     siteBodyFontColorText: props.data.siteBodyFontColorText,
@@ -26,48 +32,8 @@ function AppearanceForm(props) {
     mainColor: false,
     mainFontColor: false,
   });
-  const [updateAppearance] = useMutation(mutations.UPDATE_APPEARANCE);
-
-  let styledButton = {
-    root: {
-      "&:hover": {
-        backgroundColor: appFunctions.getHoverColor(
-          props.styles.mobileNavBar.paper.background
-        ),
-      },
-      color: props.styles.mobileNavBar.paper.color,
-      backgroundColor: props.styles.topBar.background,
-    },
-  };
-
-  let changeButton = {
-    root: {
-      "&:hover": {
-        backgroundColor: props.appButtons.change.root.hover.backgroundColor,
-      },
-      color: props.appButtons.change.root.color,
-      backgroundColor: props.appButtons.change.root.backgroundColor,
-    },
-  };
-
-  const SubmitButton = withStyles((theme) => styledButton)(Button);
-  const ChangeButton = withStyles((theme) => changeButton)(Button);
-
-  const CssTextField = withStyles({
-    root: {
-      "& label.Mui-focused": {
-        color: props.styles.mobileNavBar.paper.background,
-      },
-      "& .MuiInput-underline:after": {
-        borderBottomColor: props.styles.mobileNavBar.paper.background,
-      },
-      "& .MuiOutlinedInput-root": {
-        "&.Mui-focused fieldset": {
-          borderColor: props.styles.mobileNavBar.paper.background,
-        },
-      },
-    },
-  })(TextField);
+  let submitButtonCSS = computedStyles.submitButton(props);
+  let changeButtonCSS = computedStyles.changeButton(props);
 
   function handleClick(type) {
     setColorPickersStatus({ ...colorPickersStatus, ...{ [type]: true } });
@@ -80,6 +46,10 @@ function AppearanceForm(props) {
         siteMainFontColorText: `rgb(${color.rgb.r}, ${color.rgb.g},${color.rgb.b})`,
       },
     });
+    setColorPickersStatus({
+      ...colorPickersStatus,
+      ...{ mainFontColor: false },
+    });
   }
 
   function handleMainChange(color) {
@@ -89,6 +59,7 @@ function AppearanceForm(props) {
         siteMainColorRGB: `rgb(${color.rgb.r}, ${color.rgb.g},${color.rgb.b})`,
       },
     });
+    setColorPickersStatus({ ...colorPickersStatus, ...{ mainColor: false } });
   }
 
   function handleBodyFontChange(color) {
@@ -97,6 +68,10 @@ function AppearanceForm(props) {
       ...{
         siteBodyFontColorText: `rgb(${color.rgb.r}, ${color.rgb.g},${color.rgb.b})`,
       },
+    });
+    setColorPickersStatus({
+      ...colorPickersStatus,
+      ...{ bodyFontColor: false },
     });
   }
 
@@ -107,6 +82,7 @@ function AppearanceForm(props) {
         siteBodyColorRGB: `rgb(${color.rgb.r}, ${color.rgb.g},${color.rgb.b})`,
       },
     });
+    setColorPickersStatus({ ...colorPickersStatus, ...{ bodyColor: false } });
   }
 
   function handleSelectChange(event) {
@@ -124,9 +100,15 @@ function AppearanceForm(props) {
         id: props.pageId,
         appearance: appearance,
       },
-
-      onCompleted: () => console.log("done"),
-    });
+    }).then(
+      (res) => {
+        toast.success(
+          "Appearance updated succesfully!",
+          components.toastifyConfig
+        );
+      },
+      (err) => console.log(err)
+    );
   }
   function handleClose(type) {
     setColorPickersStatus({ ...colorPickersStatus, ...{ [type]: false } });
@@ -153,7 +135,8 @@ function AppearanceForm(props) {
             />
           </Grid>
           <Grid item xs={4} sm={6} md={9}>
-            <CssTextField
+            <TextField
+              disabled
               variant="outlined"
               margin="normal"
               required
@@ -175,12 +158,13 @@ function AppearanceForm(props) {
             sm={3}
             md={1}
           >
-            <ChangeButton>Change</ChangeButton>
+            <Button className={changeButtonCSS.root}>Change</Button>
           </Grid>
         </Grid>
         <Grid container spacing={1}>
           <Grid item xs={12} sm={6} md={3}>
-            <CssTextField
+            <TextField
+              disabled
               variant="outlined"
               margin="normal"
               required
@@ -201,55 +185,17 @@ function AppearanceForm(props) {
             sm={3}
             md={1}
           >
-            <div>
-              <div
-                style={{
-                  padding: "5px",
-                  background: "#ccc",
-                  borderRadius: "1px",
-                  boxShadow: "0 0 0 1px rgba(0,0,0,.1)",
-                  display: "inline-block",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleClick("bodyColor")}
-              >
-                <div
-                  style={{
-                    width: "36px",
-                    height: "36px",
-                    borderRadius: "2px",
-                    color: "#ccc",
-                    background: appearance.siteBodyColorRGB,
-                  }}
-                />
-              </div>
-              {colorPickersStatus.bodyColor ? (
-                <div
-                  style={{
-                    position: "absolute",
-                    zIndex: "2",
-                  }}
-                >
-                  <div
-                    style={{
-                      position: "fixed",
-                      top: "0px",
-                      right: "0px",
-                      bottom: "0px",
-                      left: "0px",
-                    }}
-                    onClick={() => handleClose("bodyColor")}
-                  />
-                  <SketchPicker
-                    color={appearance.siteBodyColorRGB}
-                    onChangeComplete={handleBodyChange}
-                  />
-                </div>
-              ) : null}
-            </div>
+            <ColorPicker
+              color={appearance.siteBodyColorRGB}
+              onClick={() => handleClick("bodyColor")}
+              onClose={() => handleClose("bodyColor")}
+              active={colorPickersStatus.bodyColor}
+              onChangeComplete={handleBodyChange}
+            />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <CssTextField
+            <TextField
+              disabled
               variant="outlined"
               margin="normal"
               required
@@ -270,52 +216,13 @@ function AppearanceForm(props) {
             sm={3}
             md={1}
           >
-            <div>
-              <div
-                style={{
-                  padding: "5px",
-                  background: "#ccc",
-                  borderRadius: "1px",
-                  boxShadow: "0 0 0 1px rgba(0,0,0,.1)",
-                  display: "inline-block",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleClick("bodyFontColor")}
-              >
-                <div
-                  style={{
-                    width: "36px",
-                    height: "36px",
-                    borderRadius: "2px",
-                    color: "#ccc",
-                    background: appearance.siteBodyFontColorText,
-                  }}
-                />
-              </div>
-              {colorPickersStatus.bodyFontColor ? (
-                <div
-                  style={{
-                    position: "absolute",
-                    zIndex: "2",
-                  }}
-                >
-                  <div
-                    style={{
-                      position: "fixed",
-                      top: "0px",
-                      right: "0px",
-                      bottom: "0px",
-                      left: "0px",
-                    }}
-                    onClick={() => handleClose("bodyFontColor")}
-                  />
-                  <SketchPicker
-                    color={appearance.siteBodyFontColorText}
-                    onChangeComplete={handleBodyFontChange}
-                  />
-                </div>
-              ) : null}
-            </div>
+            <ColorPicker
+              color={appearance.siteBodyFontColorText}
+              onClick={() => handleClick("bodyFontColor")}
+              onClose={() => handleClose("bodyFontColor")}
+              active={colorPickersStatus.bodyFontColor}
+              onChangeComplete={handleBodyFontChange}
+            />
           </Grid>
           <Grid
             container
@@ -349,7 +256,8 @@ function AppearanceForm(props) {
         </Grid>
         <Grid container spacing={1}>
           <Grid item xs={12} sm={6} md={4}>
-            <CssTextField
+            <TextField
+              disabled
               variant="outlined"
               margin="normal"
               required
@@ -370,55 +278,17 @@ function AppearanceForm(props) {
             sm={3}
             md={2}
           >
-            <div>
-              <div
-                style={{
-                  padding: "5px",
-                  background: "#ccc",
-                  borderRadius: "1px",
-                  boxShadow: "0 0 0 1px rgba(0,0,0,.1)",
-                  display: "inline-block",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleClick("mainColor")}
-              >
-                <div
-                  style={{
-                    width: "36px",
-                    height: "36px",
-                    borderRadius: "2px",
-                    color: "#ccc",
-                    background: appearance.siteMainColorRGB,
-                  }}
-                />
-              </div>
-              {colorPickersStatus.mainColor ? (
-                <div
-                  style={{
-                    position: "absolute",
-                    zIndex: "2",
-                  }}
-                >
-                  <div
-                    style={{
-                      position: "fixed",
-                      top: "0px",
-                      right: "0px",
-                      bottom: "0px",
-                      left: "0px",
-                    }}
-                    onClick={() => handleClose("mainColor")}
-                  />
-                  <SketchPicker
-                    color={appearance.siteMainColorRGB}
-                    onChangeComplete={handleMainChange}
-                  />
-                </div>
-              ) : null}
-            </div>
+            <ColorPicker
+              color={appearance.siteMainColorRGB}
+              onClick={() => handleClick("mainColor")}
+              onClose={() => handleClose("mainColor")}
+              active={colorPickersStatus.mainColor}
+              onChangeComplete={handleMainChange}
+            />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <CssTextField
+            <TextField
+              disabled
               variant="outlined"
               margin="normal"
               required
@@ -439,52 +309,13 @@ function AppearanceForm(props) {
             sm={3}
             md={2}
           >
-            <div>
-              <div
-                style={{
-                  padding: "5px",
-                  background: "#ccc",
-                  borderRadius: "1px",
-                  boxShadow: "0 0 0 1px rgba(0,0,0,.1)",
-                  display: "inline-block",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleClick("mainFontColor")}
-              >
-                <div
-                  style={{
-                    width: "36px",
-                    height: "36px",
-                    borderRadius: "2px",
-                    color: "#ccc",
-                    background: appearance.siteMainFontColorText,
-                  }}
-                />
-              </div>
-              {colorPickersStatus.mainFontColor ? (
-                <div
-                  style={{
-                    position: "absolute",
-                    zIndex: "2",
-                  }}
-                >
-                  <div
-                    style={{
-                      position: "fixed",
-                      top: "0px",
-                      right: "0px",
-                      bottom: "0px",
-                      left: "0px",
-                    }}
-                    onClick={() => handleClose("mainFontColor")}
-                  />
-                  <SketchPicker
-                    color={appearance.siteMainFontColorText}
-                    onChangeComplete={handleMainFontChange}
-                  />
-                </div>
-              ) : null}
-            </div>
+            <ColorPicker
+              color={appearance.siteMainFontColorText}
+              onClick={() => handleClick("mainFontColor")}
+              onClose={() => handleClose("mainFontColor")}
+              active={colorPickersStatus.mainFontColor}
+              onChangeComplete={handleMainFontChange}
+            />
           </Grid>
           <Grid
             item
@@ -493,7 +324,9 @@ function AppearanceForm(props) {
             md={12}
             style={{ padding: "30px", textAlign: "center" }}
           >
-            <SubmitButton onClick={handleSave}>Submit </SubmitButton>
+            <Button className={submitButtonCSS.root} onClick={handleSave}>
+              Submit
+            </Button>
           </Grid>
         </Grid>
       </Container>

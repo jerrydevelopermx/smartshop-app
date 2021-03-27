@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { withStyles } from "@material-ui/core/styles";
 import { useParams } from "react-router";
@@ -8,38 +8,404 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
 import appFunctions from "../../../js/functions";
 import queries from "../../../graphql/queries";
 import mutations from "../../../graphql/mutations";
+import FormFieldsGroup from "./FormFieldsGroup";
+import computedStyles from "../../../styles/computedStyles";
+import styles from "../../../styles/app";
 
 function UserEditForm(props) {
+  console.log(props);
   let { id, section, action, resourceId } = useParams();
-  let user = JSON.parse(localStorage.getItem("user"));
+  //let user = JSON.parse(localStorage.getItem("user"));
+  let textFieldCSS = computedStyles.textField(props);
+  let checkboxCSS = computedStyles.checkbox(props);
+  let radioCSS = computedStyles.radio(props);
+  let submitButtonCSS = computedStyles.submitButton(props);
 
   let userData = {
     lastName: "",
     firstName: "",
     isStore: false,
     isSupplier: false,
+
     isShipper: false,
     isPymntChannel: false,
   };
+
+  const [user, setUser] = useState({
+    username: null,
+    password: null,
+    userAlias: null,
+    avatarPhotoLink: null,
+    userType: null,
+    legalPerson: false,
+    userLastName: null,
+    userFirstName: null,
+    address1Text: null,
+    address2Text: null,
+    cityName: null,
+    stateCode: null,
+    postalCode: null,
+    countryCode: null,
+    landlineNumber: null,
+    faxNumber: null,
+    cellPhoneNumber: null,
+    alternateEmail: null,
+    website: null,
+    userIDType: null,
+    userIDNumber: null,
+    userDOBDate: null,
+    userTaxCode: null,
+    userTaxCUITL: null,
+    isStore: null,
+    isStoreContact: null,
+    isSupplier: null,
+    isSupplierContact: null,
+    isShipper: null,
+    isShipperContact: null,
+    isPymntChannel: null,
+    isPymntChContact: null,
+    isMember: null,
+    isCustomer: null,
+    isSubscriber: null,
+    isBlogger: null,
+    userFacebookLink: null,
+    userTwitterLink: null,
+    userInstagramLink: null,
+    userPinterestLink: null,
+    subscriptionEmail: null,
+    createdDatime: null,
+    modifByID: null,
+    modifDatime: null,
+    userStatus: null,
+  });
+
+  useEffect(() => {
+    setUser(props.data && props.data.user);
+  }, [props.data]);
+
+  function handleChange(event) {
+    setUser({
+      ...user,
+      [event.target.name]: event.target.value,
+    });
+  }
+
+  function handleSave() {
+    console.log(user);
+  }
+
+  let fields = [
+    {
+      id: "userFirstName",
+      name: "userFirstName",
+      value: (user && user.userFirstName) || "",
+      label: "First Name",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "userLastName",
+      name: "userLastName",
+      value: (user && user.userLastName) || "",
+      label: "Last name",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "cellPhoneNumber",
+      name: "cellPhoneNumber",
+      value: (user && user.cellPhoneNumber) || "",
+      label: "Cellphone number",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "landlineNumber",
+      name: "landlineNumber",
+      value: (user && user.landlineNumber) || "",
+      label: "Landline number",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "faxNumber",
+      name: "faxNumber",
+      value: (user && user.faxNumber) || "",
+      label: "Fax number",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      isTextarea: true,
+      id: "address1Text",
+      name: "address1Text",
+      value: (user && user.address1Text) || "",
+      label: "Address 1",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 6 },
+    },
+    {
+      isTextarea: true,
+      id: "address2Text",
+      name: "address2Text",
+      value: (user && user.address2Text) || "",
+      label: "Address 2",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 6 },
+    },
+    {
+      id: "cityName",
+      name: "cityName",
+      value: (user && user.cityName) || "",
+      label: "City name",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "postalCode",
+      name: "postalCode",
+      value: (user && user.postalCode) || "",
+      label: "Postal code",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "stateCode",
+      name: "stateCode",
+      value: (user && user.stateCode) || "",
+      label: "State code",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "countryCode",
+      name: "countryCode",
+      value: (user && user.countryCode) || "",
+      label: "Country code",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "username",
+      name: "username",
+      value: (user && user.username) || "",
+      label: "Username",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 6 },
+    },
+    {
+      id: "password",
+      name: "password",
+      value: (user && user.password) || "",
+      label: "Password",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 6 },
+    },
+
+    {
+      id: "avatarPhotoLink",
+      name: "avatarPhotoLink",
+      value: (user && user.avatarPhotoLink) || "",
+      label: "Avatar",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "userAlias",
+      name: "userAlias",
+      value: (user && user.userAlias) || "",
+      label: "Alias",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      type: "checkbox",
+      id: "legalPerson",
+      name: "legalPerson",
+      value: (user && user.legalPerson) || "",
+      label: "Is Legal Person",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "alternateEmail",
+      name: "alternateEmail",
+      value: (user && user.alternateEmail) || "",
+      label: "Alternate email",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "website",
+      name: "website",
+      value: (user && user.website) || "",
+      label: "Website",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      type: "dropdown",
+      options: [
+        { value: "1", label: "Driver's license" },
+        { value: "2", label: "INE" },
+      ],
+      valueKey: "value",
+      labelKey: "label",
+      id: "userIDType",
+      name: "userIDType",
+      value: (user && user.userIDType) || "",
+      label: "ID type",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "userIDNumber",
+      name: "userIDNumber",
+      value: (user && user.userIDNumber) || "",
+      label: "ID Number",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "userDOBDate",
+      name: "userDOBDate",
+      value: (user && user.userDOBDate) || "",
+      label: "DOB Date",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "userTaxCode",
+      name: "userTaxCode",
+      value: (user && user.userTaxCode) || "",
+      label: "Tax Code",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "userTaxCUITL",
+      name: "userTaxCUITL",
+      value: (user && user.userTaxCUITL) || "",
+      label: "Tax CUITL",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "userFacebookLink",
+      name: "userFacebookLink",
+      value: (user && user.userFacebookLink) || "",
+      label: "Facebook Link",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "userTwitterLink",
+      name: "userTwitterLink",
+      value: (user && user.userTwitterLink) || "",
+      label: "Twitter Link",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "userInstagramLink",
+      name: "userInstagramLink",
+      value: (user && user.userInstagramLink) || "",
+      label: "Instagram Link",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "userPinterestLink",
+      name: "userPinterestLink",
+      value: (user && user.userPinterestLink) || "",
+      label: "Pinterest Link",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      type: "subtitle",
+      label: "User Type",
+      grid: { xs: 6, sm: 3, md: 12 },
+    },
+    {
+      type: "radiogroup",
+      options: [
+        { value: "corporate", label: "Corporate" },
+        { value: "nonPrivileged", label: "Non Privileged" },
+        { value: "privileged", label: "Privileged" },
+      ],
+      defaultValue: "corporate",
+      id: "userType",
+      name: "userType",
+      value: (user && user.userType) || "",
+      label: "User Type",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+
+    /*
+   
+    {
+      type: "dropdown",
+      options: [
+        { value: "1", label: "Super Admin" },
+        { value: "2", label: "Site " },
+        { value: "3", label: "Not available" },
+        { value: "4", label: "Out of Stock" },
+        { value: "5", label: "Backordered" },
+        { value: "6", label: "Suspended" },
+        { value: "7", label: "Outdated" },
+        { value: "8", label: "Decommisioned" },
+        { value: "9", label: "Invalid" },
+      ],
+      valueKey: "value",
+      labelKey: "label",
+      id: "userType",
+      name: "userType",
+      value: (user && user.userType) || "",
+      label: "User type",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },*/
+  ];
 
   let isSupplierView = false;
 
   const [userType, setUserType] = useState(null);
   const [userRole, setUserRole] = useState("");
 
-  const { loading, error, data } = useQuery(queries.GET_USER_DATA_BY_ID, {
-    skip: action === "add",
-    variables: {
-      userId: resourceId,
-    },
-  });
   const [updateTodo] = useMutation(mutations.ADD_USER);
 
   const handleTypeChange = (event) => {
@@ -61,42 +427,6 @@ function UserEditForm(props) {
     }
   };
 
-  let submitButton = {
-    root: {
-      "&:hover": {
-        backgroundColor: appFunctions.getHoverColor(
-          props.styles.mobileNavBar.paper.background
-        ),
-      },
-      color: props.styles.mobileNavBar.paper.color,
-      backgroundColor: props.styles.topBar.background,
-    },
-  };
-  let styledTextfield = {
-    root: {
-      "& label.Mui-focused": {
-        color: props.styles.mobileNavBar.paper.background,
-      },
-      "& .MuiInput-underline:after": {
-        borderBottomColor: props.styles.mobileNavBar.paper.background,
-      },
-      "& .MuiOutlinedInput-root": {
-        "&.Mui-focused fieldset": {
-          borderColor: props.styles.mobileNavBar.paper.background,
-        },
-      },
-    },
-  };
-  let styledCheckbox = {
-    root: {
-      color: props.styles.mobileNavBar.paper.background,
-      "&$checked": {
-        color: props.styles.mobileNavBar.paper.background,
-      },
-    },
-    checked: {},
-  };
-
   let styledRadio = {
     root: {
       color: props.styles.mobileNavBar.paper.background,
@@ -106,13 +436,8 @@ function UserEditForm(props) {
     },
     checked: {},
   };
-  const SubmitButton = withStyles(() => submitButton)(Button);
-  const CssTextField = withStyles(() => styledTextfield)(TextField);
-  const CssCheckbox = withStyles(() => styledCheckbox)(Checkbox);
-  const CssRadio = withStyles(() => styledRadio)(Radio);
 
-  if (loading) return <p></p>;
-  if (error) return <p>There is an error!</p>;
+  const CssRadio = withStyles(() => styledRadio)(Radio);
 
   return (
     <>
@@ -127,6 +452,24 @@ function UserEditForm(props) {
           }}
         >
           <h3>{action.charAt(0).toUpperCase() + action.slice(1)} User</h3>
+          <FormFieldsGroup
+            fields={fields}
+            css={textFieldCSS.root}
+            cssCheckbox={checkboxCSS.root}
+            cssRadio={radioCSS.root}
+          />
+          <Grid item xs={12} sm={6} md={12} style={styles.cmsSubmitButton}>
+            <Button className={submitButtonCSS.root} onClick={handleSave}>
+              Submit
+            </Button>
+          </Grid>
+          {/*
+
+
+              corporate => Department (isStore), Supplier (isSupplier), Shipper (isShipper), Payment Channel (isPymntChannel)
+              privileged => Super User, Site Manager, Site Staff, Deparment Manager, Deparment Admin, Deparment Staff (userType 1-7)
+              Non Privileged => Customer (isCustomer), Member (isMember), Subscriber (isSubscriber), Blogger (isBlogger) 
+
           <Grid container spacing={1}>
             <Grid item xs={6} sm={3} md={3}>
               <CssTextField
@@ -533,6 +876,7 @@ function UserEditForm(props) {
 
           {
             {
+              
               corporate: (
                 <>
                   <Grid container spacing={1}>
@@ -821,6 +1165,7 @@ function UserEditForm(props) {
                   </Grid>
                 </>
               ),
+              
               privileged: (
                 <>
                   <h3>Role</h3>
@@ -928,6 +1273,7 @@ function UserEditForm(props) {
                   </FormControl>
                 </>
               ),
+              
               nonPrivileged: (
                 <>
                   <Grid container spacing={1}>
@@ -1125,7 +1471,7 @@ function UserEditForm(props) {
             >
               <SubmitButton type="submit">Submit </SubmitButton>
             </Grid>
-          </Grid>
+        </Grid>*/}
         </form>
       </Container>
     </>

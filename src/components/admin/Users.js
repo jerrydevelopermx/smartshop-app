@@ -7,10 +7,12 @@ import Button from "@material-ui/core/Button";
 import DataTable from "../common/DataTable";
 import UserEditForm from "./forms/UserEditForm";
 import queries from "../../graphql/queries";
+import EditForms from "../EditForms";
 
 import { CellParams } from "@material-ui/data-grid";
 
 function Users(props) {
+  console.log(props);
   const { loading, error, data } = useQuery(queries.GET_USERS_DATA);
   if (loading) return <p></p>;
   if (error) return <p>There is an error!</p>;
@@ -70,60 +72,28 @@ function Users(props) {
       field: "",
       headerName: "",
       sortable: false,
-      width: 90,
+      width: 200,
       disableClickEventBubbling: true,
       renderCell: (params: CellParams) => {
         return (
-          <EditButton
-            component={NavLink}
-            to={
-              props.pageId === "0"
-                ? `/admin/users/edit/${params.getValue("id")}`
-                : `/store/${props.pageId}/admin/users/edit/${params.getValue(
-                    "id"
-                  )}`
-            }
-          >
-            Edit
-          </EditButton>
+          <>
+            <EditButton
+              component={NavLink}
+              to={
+                props.pageId === "0"
+                  ? `/admin/users/edit/${params.getValue("id")}`
+                  : `/store/${props.pageId}/admin/users/edit/${params.getValue(
+                      "id"
+                    )}`
+              }
+            >
+              Edit
+            </EditButton>
+            <DeleteButton>Delete</DeleteButton>
+          </>
         );
       },
     },
-    {
-      field: "",
-      headerName: "",
-      sortable: false,
-      width: 90,
-      disableClickEventBubbling: true,
-      renderCell: (params: CellParams) => {
-        return <DeleteButton>Delete</DeleteButton>;
-      },
-    },
-    /*{
-      field: "",
-      headerName: "",
-      sortable: false,
-      width: 100,
-      disableClickEventBubbling: true,
-      renderCell: (params: CellParams) => {
-        const onClick = () => {
-          const api: GridApi = params.api;
-          const fields = api
-            .getAllColumns()
-            .map((c) => c.field)
-            .filter((c) => c !== "__check__" && !!c);
-          const thisRow = {};
-
-          fields.forEach((f) => {
-            thisRow[f] = params.getValue(f);
-          });
-
-          return alert(JSON.stringify(thisRow, null, 4));
-        };
-
-        return <Button onClick={onClick}>Click</Button>;
-      },
-    },*/
   ];
 
   return (
@@ -145,7 +115,12 @@ function Users(props) {
           <DataTable columns={columns} rows={data.users} />
         </>
       ) : (
-        <UserEditForm styles={props.styles} />
+        <EditForms
+          type="USER"
+          action="add"
+          styles={props.styles}
+          appButtons={props.buttons}
+        />
       )}
     </Container>
   );

@@ -1,217 +1,130 @@
-import React, { useState } from "react";
-import { gql, useQuery, useMutation } from "@apollo/client";
-
-import TextField from "@material-ui/core/TextField";
-import Checkbox from "@material-ui/core/Checkbox";
-import { useParams } from "react-router";
-import Grid from "@material-ui/core/Grid";
-import Container from "@material-ui/core/Container";
-import Button from "@material-ui/core/Button";
-
-import appFunctions from "../../../js/functions";
-import { withStyles } from "@material-ui/core/styles";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import queries from "../../../graphql/queries";
+import React, { useState, useEffect } from "react";
+import { useMutation } from "@apollo/client";
+import { Grid, Container, Button } from "@material-ui/core";
+import mutations from "../../../graphql/mutations";
+import computedStyles from "../../../styles/computedStyles";
+import FormFieldsGroup from "./FormFieldsGroup";
+import styles from "../../../styles/app";
 
 function CampaignEditForm(props) {
-  const [user, setUser] = useState({ lastName: "" });
+  let textFieldCSS = computedStyles.textField(props);
+  let submitButtonCSS = computedStyles.submitButton(props);
 
-  const handleOnChange = (event) => {
-    console.log(event.target.name);
-    //data.user[event.target.name] = event.target.value;
-    console.log(data.user[event.target.name], event.target.value);
-    //setUser({ ...user, [event.target.name]: event.target.value });
-  };
-  let { id, section, action, resourceId } = useParams();
-  const { loading, error, data } = useQuery(queries.GET_CAMPAIGN_DATA_BY_ID, {
-    skip: action === "add",
-    variables: {
-      campaignId: resourceId,
-    },
+  const [campaign, setCampaign] = useState({
+    campaignNumber: "",
+    campaignOccurrence: "",
+    campaignStatus: "",
+    campaignType: "",
+    departmentID: "",
+    productID: "",
+    gridPositionIndex: "",
+    promotedFromDatime: "",
+    promotedToDatime: "",
   });
-  const [updateTodo] = useMutation(queries.ADD_USER);
 
-  let styledButton = {
-    root: {
-      "&:hover": {
-        backgroundColor: appFunctions.getHoverColor(
-          props.styles.mobileNavBar.paper.background
-        ),
-      },
-      color: props.styles.mobileNavBar.paper.color,
-      backgroundColor: props.styles.topBar.background,
+  useEffect(() => {
+    setCampaign(props.data && props.data.campaign);
+  }, [props.data]);
+
+  let fields = [
+    {
+      id: "campaignNumber",
+      name: "campaignNumber",
+      value: (campaign && campaign.campaignNumber) || "",
+      label: "Campaign number",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 4 },
     },
-  };
-
-  const SubmitButton = withStyles((theme) => styledButton)(Button);
-
-  const CssTextField = withStyles({
-    root: {
-      "& label.Mui-focused": {
-        color: props.styles.mobileNavBar.paper.background,
-      },
-      "& .MuiInput-underline:after": {
-        borderBottomColor: props.styles.mobileNavBar.paper.background,
-      },
-      "& .MuiOutlinedInput-root": {
-        "&.Mui-focused fieldset": {
-          borderColor: props.styles.mobileNavBar.paper.background,
-        },
-      },
+    {
+      id: "campaignType",
+      name: "campaignType",
+      value: (campaign && campaign.campaignType) || "",
+      label: "Campaign Type",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 4 },
     },
-  })(TextField);
-
-  const CssCheckbox = withStyles({
-    root: {
-      color: props.styles.mobileNavBar.paper.background,
-      "&$checked": {
-        color: props.styles.mobileNavBar.paper.background,
-      },
+    {
+      id: "campaignBelongs",
+      name: "campaignBelongs",
+      value: (campaign && campaign.departmentID) || "",
+      label:
+        campaign && campaign.campaignType === "1" ? "Department" : "Product",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 4 },
     },
-    checked: {},
-  })(Checkbox);
+    {
+      id: "campaignOccurrence",
+      name: "campaignOccurrence",
+      value: (campaign && campaign.campaignOccurrence) || "",
+      label: "Ocurrence",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 6 },
+    },
+    {
+      id: "gridPositionIndex",
+      name: "gridPositionIndex",
+      value: (campaign && campaign.gridPositionIndex) || "",
+      label: "Grid position",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 6 },
+    },
+    {
+      id: "promotedFromDatime",
+      name: "promotedFromDatime",
+      value: (campaign && campaign.promotedFromDatime) || "",
+      label: "From date",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 6 },
+    },
+    {
+      id: "promotedToDatime",
+      name: "promotedToDatime",
+      value: (campaign && campaign.promotedToDatime) || "",
+      label: "Grid position",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 6 },
+    },
+  ];
+  function handleChange(event) {
+    setCampaign({
+      ...campaign,
+      [event.target.name]: event.target.value,
+    });
+  }
+  function handleSave() {
+    console.log(campaign);
+  }
 
-  if (loading) return <p></p>;
-  if (error) return <p>There is an error!</p>;
+  const [updateTodo] = useMutation(mutations.ADD_USER);
 
   return (
-    <>
-      <Container component="main" maxWidth="md">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            //addTodo({ variables: { type: input.value } });
-            //input.value = '';
-          }}
-        >
-          <h3>{action.charAt(0).toUpperCase() + action.slice(1)} Campaign</h3>
-          <Grid container spacing={1}>
-            <Grid item xs={6} sm={3} md={4}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                id="deptName"
-                label="Campaign number"
-                name="deptName"
-                autoFocus
-                id="custom-css-outlined-input"
-                onChange={handleOnChange}
-                value={
-                  data && data.campaign ? data.campaign.campaignNumber : ""
-                }
-              />
-            </Grid>
-            <Grid item xs={6} sm={3} md={4}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="category"
-                label="Campaign Type"
-                id="FirstName"
-                value={data && data.campaign ? data.campaign.campaignType : ""}
-              />
-            </Grid>
-            <Grid item xs={12} sm={3} md={4}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="Ocurrence"
-                label={
-                  data && data.campaign
-                    ? data.campaign.campaignType === "1"
-                      ? "Department"
-                      : "Product"
-                    : "Product/Department"
-                }
-                id="MI"
-                value={
-                  data && data.campaign
-                    ? data.campaign.campaignType === "1"
-                      ? data.campaign.departmentID
-                      : data.campaign.productID
-                    : ""
-                }
-              />
-            </Grid>
-          </Grid>
-          <Grid container spacing={1}>
-            <Grid item xs={6} sm={3} md={6}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="city"
-                label="Ocurrence"
-                id="city"
-                value={
-                  data && data.campaign ? data.campaign.campaignOccurrence : ""
-                }
-              />
-            </Grid>
-            <Grid item xs={6} sm={3} md={6}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="city"
-                label="Grid Position"
-                id="city"
-                value={
-                  data && data.campaign ? data.campaign.gridPositionIndex : ""
-                }
-              />
-            </Grid>
-          </Grid>
-          <Grid container spacing={1}>
-            <Grid item xs={6} sm={3} md={6}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="state"
-                label="From date"
-                id="state"
-                value={
-                  data && data.campaign ? data.campaign.promotedFromDatime : ""
-                }
-              />
-            </Grid>
-            <Grid item xs={6} sm={3} md={6}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="zipCode"
-                label="To date"
-                id="zipCode"
-                value={
-                  data && data.campaign ? data.campaign.promotedToDatime : ""
-                }
-              />
-            </Grid>
-          </Grid>
-
-          <Grid container spacing={1}>
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={12}
-              style={{ padding: "30px", textAlign: "center" }}
-            >
-              <SubmitButton type="submit">Submit </SubmitButton>
-            </Grid>
-          </Grid>
-        </form>
-      </Container>
-    </>
+    <Container component="main" maxWidth="md">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          //addTodo({ variables: { type: input.value } });
+          //input.value = '';
+        }}
+      >
+        <h3>
+          {props.action.charAt(0).toUpperCase() + props.action.slice(1)}{" "}
+          Campaign
+        </h3>
+        <FormFieldsGroup fields={fields} css={textFieldCSS.root} />
+        <Grid item xs={12} sm={6} md={12} style={styles.cmsSubmitButton}>
+          <Button className={submitButtonCSS.root} onClick={handleSave}>
+            Submit
+          </Button>
+        </Grid>
+      </form>
+    </Container>
   );
 }
 

@@ -24,7 +24,7 @@ function FullPage(props) {
     <div style={data.page.styles.body}>
       <Header
         logo={data.page.logo}
-        blogLink={data.page.blogLink}
+        blogLink={data.page.bloglink}
         menu={js.header}
         pageId={data.page.id}
         styles={data.page.styles.header}

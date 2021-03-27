@@ -1,61 +1,65 @@
 import React, { useState } from "react";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormHelperText from "@material-ui/core/FormHelperText";
+import { useMutation, useLazyQuery } from "@apollo/client";
 import { Editor } from "@tinymce/tinymce-react";
-import Button from "@material-ui/core/Button";
-
-import appFunctions from "../../../js/functions";
-import { withStyles } from "@material-ui/core/styles";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import Grid from "@material-ui/core/Grid";
-import Container from "@material-ui/core/Container";
-import { useQuery, useMutation } from "@apollo/client";
+import { toast } from "react-toastify";
+import {
+  InputLabel,
+  Button,
+  FormControl,
+  Select,
+  Grid,
+  Container,
+} from "@material-ui/core";
 import queries from "../../../graphql/queries";
 import mutations from "../../../graphql/mutations";
+import computedStyles from "../../../styles/computedStyles";
+import styles from "../../../styles/app";
+import components from "../../../js/components";
 
 function JsonContent(props) {
-  const { loading, error, data } = useQuery(queries.GET_CONTENT_BY_ID, {
-    variables: {
-      id: 51,
-      storeId: 0,
-    },
-  });
-  const [addEdit] = useMutation(mutations.UPDATE_CONTENT);
-  const [content, setContent] = useState("");
-  let styledButton = {
-    root: {
-      "&:hover": {
-        backgroundColor: appFunctions.getHoverColor(
-          props.styles.mobileNavBar.paper.background
-        ),
-      },
-      color: props.styles.mobileNavBar.paper.color,
-      backgroundColor: props.styles.topBar.background,
-    },
-  };
+  let submitButtonCSS = computedStyles.submitButton(props);
 
-  const SubmitButton = withStyles((theme) => styledButton)(Button);
+  const [getHTMLContent, { data }] = useLazyQuery(
+    queries.GET_HTML_CONTENT_BY_ID_SECTION
+  );
+  const [updateContent] = useMutation(mutations.UPDATE_HTML_CONTENT);
+  const [selectedSection, setSelectedSection] = useState("");
+  const [content, setContent] = useState("");
 
   function handleEditorChange(content, editor) {
     setContent(content);
   }
 
   function saveContent() {
-    addEdit({
+    updateContent({
       variables: {
-        id: 51,
+        id: props.pageId,
+        sectionId: selectedSection,
         content: {
           content: content,
         },
       },
-
-      onCompleted: () => console.log("done"),
-    });
+    }).then(
+      (res) => {
+        toast.success("HTML updated succesfully!", components.toastifyConfig);
+      },
+      (err) => console.log(err)
+    );
   }
 
-  if (loading) return <p></p>;
-  if (error) return <p>There is an error!</p>;
+  function handleChange(event) {
+    getHTMLContent({
+      variables: {
+        id: props.pageId,
+        sectionId: event.target.value,
+      },
+    });
+
+    setSelectedSection(event.target.value);
+  }
+
+  /*if (loading) return <p></p>;
+  if (error) return <p>There is an error!</p>; */
   return (
     <Container component="main" maxWidth="lg">
       <Grid container spacing={1}>
@@ -66,30 +70,31 @@ function JsonContent(props) {
             </InputLabel>
             <Select
               native
-              label="Age"
+              label="Blog"
               inputProps={{
-                name: "age",
+                name: "blog",
                 id: "outlined-age-native-simple",
               }}
+              value={selectedSection}
+              onChange={handleChange}
             >
               <option aria-label="None" value="" />
-              <option value={10}>Blog</option>
-              <option value={20}>Contact Us</option>
-              <option value={30}>Our Mission</option>
-              <option value={10}>Who we are</option>
-              <option value={20}>Board & Staff</option>
-              <option value={30}>Site's Features</option>
-              <option value={10}>Site's Membership</option>
-              <option value={20}>History</option>
-              <option value={30}>Site Policies</option>
-              <option value={30}>Membership Policies</option>
-              <option value={30}>Customers Policies</option>
-              <option value={30}>Visitors Policies</option>
+              <option value={"blog"}>Blog</option>
+              <option value={"contactUs"}>Contact Us</option>
+              <option value={"ourMission"}>Our Mission</option>
+              <option value={"whoWeAre"}>Who we are</option>
+              <option value={"board"}>Board & Staff</option>
+              <option value={"features"}>Site's Features</option>
+              <option value={"membership"}>Site's Membership</option>
+              <option value={"history"}>History</option>
+              <option value={"sitePolicies"}>Site Policies</option>
+              <option value={"membershipPolicies"}>Membership Policies</option>
+              <option value={"customersPolicies"}>Customers Policies</option>
+              <option value={"visitorsPolicies"}>Visitors Policies</option>
             </Select>
           </FormControl>
           <Editor
             apiKey="pav6ogx2bhi6boahep8gt9hz5tprm5ljw9xmyy4lljbl9bxv"
-            initialValue={data.newContent && data.newContent.content}
             init={{
               height: 450,
               width: 1100,
@@ -104,20 +109,17 @@ function JsonContent(props) {
              alignleft aligncenter alignright alignjustify | \
              bullist numlist outdent indent | removeformat | help",
             }}
+            value={data && data.siteHtmlContent.content}
             onEditorChange={handleEditorChange}
           />
         </Grid>
       </Grid>
-      <div>{content}</div>
+      {/*<div>{content}</div>*/}
       <Grid container spacing={1}>
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          md={12}
-          style={{ padding: "30px", textAlign: "center" }}
-        >
-          <SubmitButton onClick={saveContent}>Submit </SubmitButton>
+        <Grid item xs={12} sm={6} md={12} style={styles.cmsSubmitButton}>
+          <Button className={submitButtonCSS.root} onClick={saveContent}>
+            Submit
+          </Button>
         </Grid>
       </Grid>
     </Container>

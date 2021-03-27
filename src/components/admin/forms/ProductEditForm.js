@@ -1,101 +1,602 @@
-import React, { useState } from "react";
-import { gql, useQuery, useMutation } from "@apollo/client";
-
-import TextField from "@material-ui/core/TextField";
-import Checkbox from "@material-ui/core/Checkbox";
+import React, { useState, useEffect } from "react";
+import { useMutation, useLazyQuery } from "@apollo/client";
 import { useParams } from "react-router";
-import Grid from "@material-ui/core/Grid";
-import Container from "@material-ui/core/Container";
-import Button from "@material-ui/core/Button";
-
-import appFunctions from "../../../js/functions";
-import { withStyles } from "@material-ui/core/styles";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
+import { Grid, Container, Button } from "@material-ui/core/";
+import mutations from "../../../graphql/mutations";
 import queries from "../../../graphql/queries";
+import computedStyles from "../../../styles/computedStyles";
+import FormFieldsGroup from "./FormFieldsGroup";
+import styles from "../../../styles/app";
+import ImgContentEditRow from "./ImgContentEditRow";
 
 function ProductEditForm(props) {
   console.log(props);
-  const [user, setUser] = useState({ lastName: "" });
+  let { action } = useParams();
+  let textFieldCSS = computedStyles.textField(props);
+  let submitButtonCSS = computedStyles.submitButton(props);
+  let changeButtonCSS = computedStyles.changeButton(props);
+  let checkboxCSS = computedStyles.checkbox(props);
+  console.log(checkboxCSS);
+  const [categories, setCategories] = useState([]);
+  const [campaigns, setCampaigns] = useState([]);
+  const [product, setProduct] = useState({
+    productNumber: "",
+    departmentID: "",
+    productSKU: "",
+    productEAN: "",
+    productShortName: "",
+    productDescription: "",
+    prodCategoryCode: "", //dropdown
+    prodSubcategoryCode: "", //dropdown
+    brandCode: "", //dropdown
+    modelCode: "", //dropdown
+    yearCode: "", //dropdown
+    styleCode: "", //dropdown
+    genderCode: "", //dropdown
+    packagingCode: "", //dropdown
+    materialCode: "", //dropdown
+    colorCode: "", //dropdown
+    sizeCode: "", //dropdown
+    flavorCode: "", //dropdown
+    attribMask: "", //  NO
+    attributeMapCode: "", //_NO
+    prodUOMCode: "",
+    prodUnitsInStockNumber: "",
+    inventoryCostMethod: "",
+    prodUnitCostAmount: "",
+    prodMSRPAmount: "",
+    prodUnitPriceAmount: "",
+    prodCurrencyType: "", //dropdown
+    prodDiscountType: "", //dropdown
+    prodDiscountCondition: "",
+    prodDiscountNumber: "",
+    prodPriceCorrectionFactor: "",
+    prodUnitsOnOrder: "",
+    prodReplenishType: "", //dropdown
+    prodUISThresholdNumber: "",
+    pendReplenOrderNumber: "",
+    prodRankingType: "", //dropdown
+    prodStatus: "", //dropdown
+    prodLocation1Text: "",
+    prodLocation2Text: "",
+    prodSpecifications: "",
+    prodNotes: "",
+    prodDefaultContentLink: "",
+    prodDefaultHoverLink: "",
+    supplier1ID: "", //dropdown
+    supplier1ProdID: "", //dropdown
+    supplier2ID: "", //dropdown
+    supplier2ProdID: "", //dropdown
+    campaigning: false, //checkbox
+    campaignID: "", //dropdown
+    gridPromotedPositionIndex: "",
+    gridDefaulPositiontIndex: "",
+    prodPriorityNumber: "",
+  });
 
-  const handleOnChange = (event) => {
-    console.log(event.target.name);
-    //data.user[event.target.name] = event.target.value;
-    console.log(data.user[event.target.name], event.target.value);
-    //setUser({ ...user, [event.target.name]: event.target.value });
-  };
-  let { id, section, action, resourceId } = useParams();
-  const { loading, error, data } = useQuery(
-    queries.GET_DEPARTMENTS_DATA_BY_ID,
-    {
-      skip: action === "add",
-      variables: {
-        deptId: resourceId,
-      },
-    }
+  useEffect(() => {
+    setProduct(props.data && props.data.producto);
+    setCategories(props.data && props.data.prodCategories);
+    setCampaigns(props.data && props.data.campaigns);
+  }, [props.data]);
+
+  const [getSubcategories, { data }] = useLazyQuery(
+    queries.GET_SUBCATEGORIES_BY_CATEGORY_ID
   );
-  const [updateTodo] = useMutation(queries.ADD_USER);
 
-  let styledButton = {
-    root: {
-      "&:hover": {
-        backgroundColor: appFunctions.getHoverColor(
-          props.styles.mobileNavBar.paper.background
-        ),
-      },
-      color: props.styles.mobileNavBar.paper.color,
-      backgroundColor: props.styles.topBar.background,
+  let fields = [
+    {
+      id: "productNumber",
+      name: "productNumber",
+      value: (product && product.productNumber) || "",
+      label: "Product Number",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
     },
-  };
-
-  let changeButton = {
-    root: {
-      "&:hover": {
-        backgroundColor: props.appButtons.change.root.hover.backgroundColor,
-      },
-      color: props.appButtons.change.root.color,
-      backgroundColor: props.appButtons.change.root.backgroundColor,
+    {
+      id: "productShortName",
+      name: "productShortName",
+      value: (product && product.productShortName) || "",
+      label: "Short Name",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
     },
-  };
+    {
+      id: "productSKU",
+      name: "productSKU",
+      value: (product && product.productSKU) || "",
+      label: "SKU",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "productEAN",
+      name: "productEAN",
+      value: (product && product.productEAN) || "",
+      label: "EAN",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "prodUOMCode",
+      name: "prodUOMCode",
+      value: (product && product.prodUOMCode) || "",
+      label: "UOM Code",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "prodRankingType",
+      name: "prodRankingType",
+      value: (product && product.prodRankingType) || "",
+      label: "Ranking type",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
 
-  const ChangeButton = withStyles((theme) => changeButton)(Button);
-  const SubmitButton = withStyles((theme) => styledButton)(Button);
+    // ************
+    {
+      isTextarea: true,
+      id: "productDescription",
+      name: "productDescription",
+      value: (product && product.productDescription) || "",
+      label: "Description",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 4 },
+    },
+    {
+      isTextarea: true,
+      id: "prodSpecifications",
+      name: "prodSpecifications",
+      value: (product && product.prodSpecifications) || "",
+      label: "Specifications",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 4 },
+    },
+    {
+      isTextarea: true,
+      id: "prodNotes",
+      name: "prodNotes",
+      value: (product && product.prodNotes) || "",
+      label: "Notes",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 4 },
+    },
+    {
+      type: "dropdown",
+      options: categories,
+      valueKey: "prodCategoryCode",
+      labelKey: "prodCategoryName",
+      id: "prodCategoryCode",
+      name: "prodCategoryCode",
+      value: (product && product.prodCategoryCode) || "",
+      label: "Category",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 4 },
+    },
+    {
+      type: "dropdown",
+      options: data && data.prodSubcategories,
+      valueKey: "prodSubcategoryCode",
+      labelKey: "prodSubcategoryName",
+      id: "prodSubcategoryCode",
+      name: "prodSubcategoryCode",
+      value: (product && product.prodSubcategoryCode) || "",
+      label: "Subcategory",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 4 },
+    },
+    {
+      type: "dropdown",
+      options: [
+        { value: "1", label: "Active" },
+        { value: "2", label: "On Sale" },
+        { value: "3", label: "Not available" },
+        { value: "4", label: "Out of Stock" },
+        { value: "5", label: "Backordered" },
+        { value: "6", label: "Suspended" },
+        { value: "7", label: "Outdated" },
+        { value: "8", label: "Decommisioned" },
+        { value: "9", label: "Invalid" },
+      ],
+      valueKey: "value",
+      labelKey: "label",
+      id: "prodStatus",
+      name: "prodStatus",
+      value: (product && product.prodStatus) || "",
+      label: "Status",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 4 },
+    },
+    {
+      type: "subtitle",
+      label: "Location",
+      grid: { xs: 6, sm: 3, md: 4 },
+    },
+    {
+      type: "subtitle",
+      label: "Supplier",
+      grid: { xs: 6, sm: 3, md: 8 },
+    },
+    {
+      id: "prodLocation1Text",
+      name: "prodLocation1Text",
+      value: (product && product.prodLocation1Text) || "",
+      label: "Row number",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "prodLocation2Text",
+      name: "prodLocation2Text",
+      value: (product && product.prodLocation2Text) || "",
+      label: "Shelve number",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "supplier1ID",
+      name: "supplier1ID",
+      value: (product && product.supplier1ID) || "",
+      label: "Supplier 1",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "supplier1ProdID",
+      name: "supplier1ProdID",
+      value: (product && product.supplier1ProdID) || "",
+      label: "Prod # S1",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "supplier2ID",
+      name: "supplier2ID",
+      value: (product && product.supplier2ID) || "",
+      label: "Supplier 2",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "supplier2ProdID",
+      name: "supplier2ProdID",
+      value: (product && product.supplier2ProdID) || "",
+      label: "Prod # S2",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
 
-  const CssTextField = withStyles({
-    root: {
-      "& label.Mui-focused": {
-        color: props.styles.mobileNavBar.paper.background,
-      },
-      "& .MuiInput-underline:after": {
-        borderBottomColor: props.styles.mobileNavBar.paper.background,
-      },
-      "& .MuiOutlinedInput-root": {
-        "&.Mui-focused fieldset": {
-          borderColor: props.styles.mobileNavBar.paper.background,
+    // ************
+    {
+      type: "subtitle",
+      label: "Attributes",
+      grid: { xs: 6, sm: 3, md: 12 },
+    },
+    {
+      id: "brandCode",
+      name: "brandCode",
+      value: (product && product.brandCode) || "",
+      label: "Brand",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "modelCode",
+      name: "modelCode",
+      value: (product && product.modelCode) || "",
+      label: "Model",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "yearCode",
+      name: "yearCode",
+      value: (product && product.yearCode) || "",
+      label: "Year",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "styleCode",
+      name: "styleCode",
+      value: (product && product.styleCode) || "",
+      label: "Style",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "genderCode",
+      name: "genderCode",
+      value: (product && product.genderCode) || "",
+      label: "Gender",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "packagingCode",
+      name: "packagingCode",
+      value: (product && product.packagingCode) || "",
+      label: "Packaging Code",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "materialCode",
+      name: "materialCode",
+      value: (product && product.materialCode) || "",
+      label: "Material",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "colorCode",
+      name: "colorCode",
+      value: (product && product.colorCode) || "",
+      label: "Color",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "sizeCode",
+      name: "sizeCode",
+      value: (product && product.sizeCode) || "",
+      label: "Size",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "flavorCode",
+      name: "flavorCode",
+      value: (product && product.flavorCode) || "",
+      label: "Flavor",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      type: "subtitle",
+      label: "Stock in Units",
+      grid: { xs: 6, sm: 3, md: 4 },
+    },
+    {
+      type: "subtitle",
+      label: "Stock in Money",
+      grid: { xs: 6, sm: 3, md: 8 },
+    },
+    {
+      id: "prodUnitsInStockNumber",
+      name: "prodUnitsInStockNumber",
+      value: (product && product.prodUnitsInStockNumber) || "",
+      label: "Available",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "prodReplenishType",
+      name: "prodReplenishType",
+      value: (product && product.prodReplenishType) || "",
+      label: "Restock criteria",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "prodUnitCostAmount",
+      name: "prodUnitCostAmount",
+      value: (product && product.prodUnitCostAmount) || "",
+      label: "Unit Cost",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "prodMSRPAmount",
+      name: "prodMSRPAmount",
+      value: (product && product.prodMSRPAmount) || "",
+      label: "MSRP",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "prodUnitPriceAmount",
+      name: "prodUnitPriceAmount",
+      value: (product && product.prodUnitPriceAmount) || "",
+      label: "Unit price",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "prodCurrencyType",
+      name: "prodCurrencyType",
+      value: (product && product.prodCurrencyType) || "",
+      label: "Currency",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "prodUISThresholdNumber",
+      name: "prodUISThresholdNumber",
+      value: (product && product.prodUISThresholdNumber) || "",
+      label: "Restock Threshold",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "pendReplenOrderNumber",
+      name: "pendReplenOrderNumber",
+      value: (product && product.pendReplenOrderNumber) || "",
+      label: "Replenishmnt order",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "prodDiscountType",
+      name: "prodDiscountType",
+      value: (product && product.prodDiscountType) || "",
+      label: "Discount code",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "prodDiscountCondition",
+      name: "prodDiscountCondition",
+      value: (product && product.prodDiscountCondition) || "",
+      label: "Discount condition",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "prodDiscountNumber",
+      name: "prodDiscountNumber",
+      value: (product && product.prodDiscountNumber) || "",
+      label: "Amount or %",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "prodPriceCorrectionFactor",
+      name: "prodPriceCorrectionFactor",
+      value: (product && product.prodPriceCorrectionFactor) || "",
+      label: "Correction factor",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "prodUnitsOnOrder",
+      name: "prodUnitsOnOrder",
+      value: (product && product.prodUnitsOnOrder) || "",
+      label: "Product units",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+
+    {
+      type: "subtitle",
+      label: "Product Visibility",
+      grid: { xs: 6, sm: 3, md: 12 },
+    },
+    {
+      id: "gridDefaulPositiontIndex",
+      name: "gridDefaulPositiontIndex",
+      value: (product && product.gridDefaulPositiontIndex) || "",
+      label: "Default position",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      id: "gridPromotedPositionIndex",
+      name: "gridPromotedPositionIndex",
+      value: (product && product.gridPromotedPositionIndex) || "",
+      label: "Promoted position",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+
+    {
+      id: "prodPriorityNumber",
+      name: "prodPriorityNumber",
+      value: (product && product.prodPriorityNumber) || "",
+      label: "Priority number",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 2 },
+    },
+    {
+      type: "checkbox",
+      id: "campaigning",
+      name: "campaigning",
+      value: (product && product.campaigning) || "",
+      label: "Is Campaigning",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      type: "dropdown",
+      options: campaigns,
+      valueKey: "id",
+      labelKey: "campaignNumber",
+      id: "campaignID",
+      name: "campaignID",
+      value: (product && product.campaignID) || "",
+      label: "Campaign",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+  ];
+
+  function handleChange(event) {
+    console.log(event.target.name, event.target.value, event.target.checked);
+    setProduct({
+      ...product,
+      [event.target.name]:
+        event.target.name !== "campaigning"
+          ? event.target.value
+          : event.target.checked,
+    });
+
+    console.log(product);
+
+    if (event.target.name === "prodCategoryCode") {
+      getSubcategories({
+        variables: {
+          categoryCode: event.target.value,
         },
-      },
-    },
-  })(TextField);
-
-  const CssCheckbox = withStyles({
-    root: {
-      color: props.styles.mobileNavBar.paper.background,
-      "&$checked": {
-        color: props.styles.mobileNavBar.paper.background,
-      },
-    },
-    checked: {},
-  })(Checkbox);
-
-  if (loading) return <p></p>;
-  if (error) return <p>There is an error!</p>;
+        onCompleted: (data) => {
+          console.log("data ", data);
+        },
+      });
+    }
+  }
+  function handleSave() {
+    console.log(product);
+  }
 
   return (
     <>
-      <Container component="main" maxWidth="lg">
+      <Container component="main" maxWidth="xl">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -104,415 +605,47 @@ function ProductEditForm(props) {
           }}
         >
           <h3>{action.charAt(0).toUpperCase() + action.slice(1)} Product</h3>
-          <Grid container spacing={1}>
-            <Grid item xs={6} sm={3} md={2}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                id="deptName"
-                label="Product Number"
-                name="deptName"
-                autoFocus
-                id="custom-css-outlined-input"
-                onChange={handleOnChange}
-                value={
-                  data && data.department ? data.department.departmentName : ""
-                }
-              />
-            </Grid>
-            <Grid item xs={6} sm={3} md={2}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="category"
-                label="SKU Prefix"
-                id="FirstName"
-                value={data && data.user ? data.user.userFirstName : ""}
-              />
-            </Grid>
-            <Grid item xs={12} sm={3} md={2}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="ShortName"
-                label="Short Name"
-                id="MI"
-              />
-            </Grid>
-            <Grid item xs={12} sm={3} md={3}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="ShortName"
-                label="Specifications"
-                id="MI"
-              />
-            </Grid>
-            <Grid item xs={12} sm={3} md={3}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="ShortName"
-                label="Notes"
-                id="MI"
-              />
-            </Grid>
-          </Grid>
-          <Grid container spacing={1}>
-            <Grid item xs={6} sm={3} md={2}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="city"
-                label="EAN"
-                id="city"
-                value={data && data.user ? data.user.cityName : ""}
-              />
-            </Grid>
-            <Grid item xs={6} sm={3} md={2}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="state"
-                label="Category"
-                id="state"
-                value={data && data.user ? data.user.stateCode : ""}
-              />
-            </Grid>
-            <Grid item xs={6} sm={3} md={2}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="zipCode"
-                label="Subcategory"
-                id="zipCode"
-                value={data && data.user ? data.user.postalCode : ""}
-              />
-            </Grid>
-            <Grid item xs={6} sm={3} md={2}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="country"
-                label="UOM Code"
-                id="country"
-                value={data && data.user ? data.user.countryCode : ""}
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={4} md={2}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="email"
-                label="Ranking"
-                id="email"
-                value={data && data.user ? data.user.username : ""}
-              />
-            </Grid>
-            <Grid item xs={6} sm={4} md={2}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="password"
-                label="Status"
-                id="password"
-                value={data && data.user ? data.user.password : ""}
-              />
-            </Grid>
-          </Grid>
-
-          <Grid container spacing={1}>
-            <Grid item xs={6} sm={3} md={2}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="city"
-                label="Location row"
-                id="city"
-                value={data && data.user ? data.user.cityName : ""}
-              />
-            </Grid>
-            <Grid item xs={6} sm={3} md={2}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="state"
-                label="Location Shelve"
-                id="state"
-                value={data && data.user ? data.user.stateCode : ""}
-              />
-            </Grid>
-            <Grid item xs={6} sm={3} md={2}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="zipCode"
-                label="Supplier 1"
-                id="zipCode"
-                value={data && data.user ? data.user.postalCode : ""}
-              />
-            </Grid>
-            <Grid item xs={6} sm={3} md={2}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="country"
-                label="Product #S1"
-                id="country"
-                value={data && data.user ? data.user.countryCode : ""}
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={4} md={2}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="email"
-                label="Supplier 2"
-                id="email"
-                value={data && data.user ? data.user.username : ""}
-              />
-            </Grid>
-            <Grid item xs={6} sm={4} md={2}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="password"
-                label="Product #S2"
-                id="password"
-                value={data && data.user ? data.user.password : ""}
-              />
-            </Grid>
-          </Grid>
-          <h4>Main Image</h4>
-          <Grid container spacing={2}>
-            <Grid
-              container
-              align="center"
-              justify="center"
-              direction="column"
-              xs={12}
-              sm={3}
-              md={2}
-            >
-              <img
-                src={`${process.env.PUBLIC_URL}/imgs/bag1.jpg`}
-                alt=""
-                style={{ height: "90px", padding: "5px" }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="slide1"
-                label="Slide 1"
-                id="slide1"
-                value="https://my-bucket.s3.us-west-2.amazonaws.com/slide1.png"
-              />
-            </Grid>
-            <Grid
-              container
-              align="center"
-              justify="center"
-              direction="column"
-              xs={12}
-              sm={3}
-              md={1}
-            >
-              <ChangeButton>Change</ChangeButton>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="slide1"
-                label="Grid default position"
-                id="slide1"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="slide1"
-                label="Grid priority"
-                id="slide1"
-              />
-            </Grid>
-          </Grid>
-          <h4>Gallery</h4>
-          <Grid container spacing={1}>
-            <Grid
-              container
-              align="center"
-              justify="center"
-              direction="column"
-              xs={12}
-              sm={3}
-              md={2}
-            >
-              <img
-                src={`${process.env.PUBLIC_URL}/imgs/bag2.jpg`}
-                alt=""
-                style={{ height: "90px", padding: "5px" }}
-              />
-            </Grid>
-            <Grid
-              container
-              align="center"
-              justify="center"
-              direction="column"
-              xs={12}
-              sm={3}
-              md={2}
-            >
-              <img
-                src={`${process.env.PUBLIC_URL}/imgs/bag3.jpg`}
-                alt=""
-                style={{ height: "90px", padding: "5px" }}
-              />
-            </Grid>
-            <Grid
-              container
-              align="center"
-              justify="center"
-              direction="row"
-              xs={12}
-              sm={3}
-              md={4}
-            >
-              <img
-                src={`${process.env.PUBLIC_URL}/imgs/bag4.jpg`}
-                alt=""
-                style={{ width: "100px", padding: "5px" }}
-              />
-            </Grid>
-            <Grid
-              container
-              align="center"
-              justify="center"
-              direction="column"
-              xs={12}
-              sm={3}
-              md={2}
-            >
-              <img
-                src={`${process.env.PUBLIC_URL}/imgs/bag5.jpg`}
-                alt=""
-                style={{ height: "90px", padding: "5px" }}
-              />
-            </Grid>
-            <Grid
-              container
-              align="center"
-              justify="center"
-              direction="column"
-              xs={12}
-              sm={3}
-              md={2}
-            >
-              <img
-                src={`${process.env.PUBLIC_URL}/imgs/bag6.jpg`}
-                alt=""
-                style={{ height: "90px", padding: "5px" }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container spacing={1}>
-            <Grid item xs={6} sm={3} md={2}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                id="deptName"
-                label="Image 1"
-                name="deptName"
-                autoFocus
-                id="custom-css-outlined-input"
-                onChange={handleOnChange}
-                value="https://my-bucket.s3.us-west-2.amazonaws.com/gallery1.png"
-              />
-            </Grid>
-            <Grid item xs={6} sm={3} md={2}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="category"
-                label="Image 2"
-                id="FirstName"
-                value="https://my-bucket.s3.us-west-2.amazonaws.com/gallery2.png"
-              />
-            </Grid>
-            <Grid item xs={12} sm={3} md={4}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="ShortName"
-                label="Image 3"
-                id="MI"
-                value="https://my-bucket.s3.us-west-2.amazonaws.com/gallery1.png"
-              />
-            </Grid>
-            <Grid item xs={12} sm={3} md={2}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="ShortName"
-                label="Image 4"
-                id="MI"
-                value="https://my-bucket.s3.us-west-2.amazonaws.com/gallery3.png"
-              />
-            </Grid>
-            <Grid item xs={12} sm={3} md={2}>
-              <CssTextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="ShortName"
-                label="Image 5"
-                id="MI"
-                value="https://my-bucket.s3.us-west-2.amazonaws.com/gallery4.png"
-              />
-            </Grid>
-          </Grid>
-          <Grid container spacing={1}>
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={12}
-              style={{ padding: "30px", textAlign: "center" }}
-            >
-              <SubmitButton type="submit">Submit </SubmitButton>
-            </Grid>
+          <FormFieldsGroup
+            fields={fields}
+            css={textFieldCSS.root}
+            cssCheckbox={checkboxCSS.root}
+          />
+          {[
+            { name: "prodDefaultContentLink", label: "Default Image" },
+            { name: "prodDefaultHoverLink", label: "Hover Image" },
+          ].map((field, index) => (
+            <ImgContentEditRow
+              key={field.name}
+              id={field.name}
+              label={field.label}
+              css={textFieldCSS.root}
+              style={styles.cmsSlidesPreview}
+              cssButton={changeButtonCSS.root}
+              defaultValue={(product && product[field.name]) || ""}
+            />
+          ))}
+          <h4 style={{ margin: "3px" }}>Product Gallery</h4>
+          {[
+            { name: "img1ContentLink", label: "Image 1" },
+            { name: "img2ContentLink", label: "Image 2" },
+            { name: "img3ContentLink", label: "Image 3" },
+            { name: "img4ContentLink", label: "Image 4" },
+            { name: "img5ContentLink", label: "Image 5" },
+          ].map((field, index) => (
+            <ImgContentEditRow
+              key={field.name}
+              id={field.name}
+              label={field.label}
+              css={textFieldCSS.root}
+              style={styles.cmsSlidesPreview}
+              cssButton={changeButtonCSS.root}
+              defaultValue={(product && product.prodDefaultContentLink) || ""}
+            />
+          ))}
+          <Grid item xs={12} sm={6} md={12} style={styles.cmsSubmitButton}>
+            <Button className={submitButtonCSS.root} onClick={handleSave}>
+              Submit
+            </Button>
           </Grid>
         </form>
       </Container>

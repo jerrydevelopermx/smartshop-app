@@ -3,14 +3,17 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import { NavHashLink as NavLink } from "react-router-hash-link";
 import SocialMedia from "./SocialMedia";
+import ModalContent from "./ModalContent";
 import { useLazyQuery } from "@apollo/client";
 import queries from "../../graphql/queries.js";
-import ModalContent from "./ModalContent";
 
 function Footer(props) {
+  console.log(props);
   const useStyles = makeStyles((theme) => props.appStyles);
   const classes = useStyles();
-  const [getContent, { data }] = useLazyQuery(queries.GET_CONTENT_BY_SECTION);
+  const [getContent, { data }] = useLazyQuery(
+    queries.GET_HTML_CONTENT_BY_ID_SECTION
+  );
   const [modalStatus, setModalStatus] = useState({
     open: false,
     sectionId: "",
@@ -18,10 +21,11 @@ function Footer(props) {
   });
 
   const menuClickHandler = (action, event) => {
+    console.log(props.pageId);
     event.preventDefault();
     getContent({
       variables: {
-        storeId: props.pageId,
+        id: props.pageId,
         sectionId: action,
       },
     });
@@ -36,13 +40,13 @@ function Footer(props) {
 
   return (
     <footer className={classes.bottomBar} style={props.styles.bottomBar}>
-      {data && data.content ? (
+      {data && data.siteHtmlContent ? (
         <ModalContent
           open={modalStatus.open}
           styles={props.modalStyles}
           status={modalStatus}
           onClose={closeModal}
-          content={data.content}
+          content={data.siteHtmlContent}
         />
       ) : null}
       <Grid container spacing={2}>

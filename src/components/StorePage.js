@@ -77,7 +77,7 @@ function StorePage(props) {
       />
       <Header
         logo={data.page.logo}
-        blogLink={data.page.blogLink}
+        blogLink={data.page.bloglink}
         menu={js.header}
         pageId={data.page.id}
         inputRef={videoRef}

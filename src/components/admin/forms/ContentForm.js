@@ -1,495 +1,343 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Checkbox from "@material-ui/core/Checkbox";
-import { useParams } from "react-router";
-import Grid from "@material-ui/core/Grid";
-import Container from "@material-ui/core/Container";
-import appFunctions from "../../../js/functions";
-import { withStyles } from "@material-ui/core/styles";
-import { useQuery } from "@apollo/client";
-import queries from "../../../graphql/queries";
+import React, { useState, useEffect } from "react";
+import { useMutation } from "@apollo/client";
+import { Button, Grid, Container } from "@material-ui/core";
+import { toast } from "react-toastify";
+import mutations from "../../../graphql/mutations";
+import computedStyles from "../../../styles/computedStyles";
+import styles from "../../../styles/app";
+import components from "../../../js/components";
+import MediaContentEditRow from "./MediaContentEditRow";
+import FormFieldsGroup from "./FormFieldsGroup";
 
 function ContentForm(props) {
-  let { id, section, action, resourceId } = useParams();
-  const { loading, error, data } = useQuery(queries.GET_USER_DATA_BY_ID, {
-    skip: action === "add",
-    variables: {
-      userId: 44,
-    },
+  let textFieldCSS = computedStyles.textField(props);
+  let submitButtonCSS = computedStyles.submitButton(props);
+  let changeButtonCSS = computedStyles.changeButton(props);
+  let urlRefs = {};
+
+  const [content, setContent] = useState({
+    siteTitleText: "",
+    siteMetaDescriptionText: "",
+    blogLink: "",
+    tourDefaultLink: "",
+    event1DefaultLink: "",
+    event2DefaultLink: "",
+    event3DefaultLink: "",
+    slide1DefaultLink: "",
+    slide2DefaultLink: "",
+    slide3DefaultLink: "",
+    slide4DefaultLink: "",
+    slide5DefaultLink: "",
+    siteFacebookLink: "",
+    siteTwitterLink: "",
+    siteInstagramLink: "",
+    sitePinterestLink: "",
+    siteCopyright: "",
   });
-  let styledButton = {
-    root: {
-      "&:hover": {
-        backgroundColor: appFunctions.getHoverColor(
-          props.styles.mobileNavBar.paper.background
-        ),
-      },
-      color: props.styles.mobileNavBar.paper.color,
-      backgroundColor: props.styles.topBar.background,
-    },
+
+  const [viewContent, setViewContent] = useState({
+    slide1DefaultLink: "",
+    slide2DefaultLink: "",
+    slide3DefaultLink: "",
+    slide4DefaultLink: "",
+    slide5DefaultLink: "",
+    tourDefaultLink: "",
+    event1DefaultLink: "",
+    event2DefaultLink: "",
+    event3DefaultLink: "",
+  });
+  urlRefs = {
+    slide1DefaultLink: cleanUrlReferences(
+      "slide1DefaultLink",
+      "url",
+      props.data.slide1DefaultLink
+    ),
+    slide2DefaultLink: cleanUrlReferences(
+      "slide2DefaultLink",
+      "url",
+      props.data.slide2DefaultLink
+    ),
+    slide3DefaultLink: cleanUrlReferences(
+      "slide3DefaultLink",
+      "url",
+      props.data.slide3DefaultLink
+    ),
+    slide4DefaultLink: cleanUrlReferences(
+      "slide4DefaultLink",
+      "url",
+      props.data.slide4DefaultLink
+    ),
+    slide5DefaultLink: cleanUrlReferences(
+      "slide5DefaultLink",
+      "url",
+      props.data.slide5DefaultLink
+    ),
+    tourDefaultLink: cleanUrlReferences(
+      "tourDefaultLink",
+      "url",
+      props.data.tourDefaultLink
+    ),
+    event1DefaultLink: cleanUrlReferences(
+      "event1DefaultLink",
+      "url",
+      props.data.event1DefaultLink
+    ),
+    event2DefaultLink: cleanUrlReferences(
+      "event2DefaultLink",
+      "url",
+      props.data.event2DefaultLink
+    ),
+    event3DefaultLink: cleanUrlReferences(
+      "event3DefaultLink",
+      "url",
+      props.data.event3DefaultLink
+    ),
   };
-  let changeButton = {
-    root: {
-      "&:hover": {
-        backgroundColor: props.appButtons.change.root.hover.backgroundColor,
-      },
-      color: props.appButtons.change.root.color,
-      backgroundColor: props.appButtons.change.root.backgroundColor,
+
+  let fieldsGroupTop = [
+    {
+      id: "siteTitleText",
+      name: "siteTitleText",
+      value: content.siteTitleText,
+      label: "Browser Label",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 4 },
     },
-  };
-
-  const SubmitButton = withStyles((theme) => styledButton)(Button);
-  const ChangeButton = withStyles((theme) => changeButton)(Button);
-
-  const CssTextField = withStyles({
-    root: {
-      "& label.Mui-focused": {
-        color: props.styles.mobileNavBar.paper.background,
-      },
-      "& .MuiInput-underline:after": {
-        borderBottomColor: props.styles.mobileNavBar.paper.background,
-      },
-      "& .MuiOutlinedInput-root": {
-        "&.Mui-focused fieldset": {
-          borderColor: props.styles.mobileNavBar.paper.background,
-        },
-      },
+    {
+      id: "siteMetaDescriptionText",
+      name: "siteMetaDescriptionText",
+      value: content.siteMetaDescriptionText,
+      label: "Site Description",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 4 },
     },
-  })(TextField);
-
-  const CssCheckbox = withStyles({
-    root: {
-      color: props.styles.mobileNavBar.paper.background,
-      "&$checked": {
-        color: props.styles.mobileNavBar.paper.background,
-      },
+    {
+      id: "blogLink",
+      name: "blogLink",
+      value: content.blogLink,
+      label: "Blog Link",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 4 },
     },
-    checked: {},
-  })(Checkbox);
+  ];
 
-  if (loading) return <p></p>;
-  if (error) return <p>There is an error!</p>;
+  let fieldsGroupBottom = [
+    {
+      id: "siteFacebookLink",
+      name: "siteFacebookLink",
+      value: content.siteFacebookLink,
+      label: "Facebook",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "siteInstagramLink",
+      name: "siteInstagramLink",
+      value: content.siteInstagramLink,
+      label: "Instagram",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "siteTwitterLink",
+      name: "siteTwitterLink",
+      value: content.siteTwitterLink,
+      label: "Twitter",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "sitePinterestLink",
+      name: "sitePinterestLink",
+      value: content.sitePinterestLink,
+      label: "Pinterest",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "siteCopyright",
+      name: "siteCopyright",
+      value: content.siteCopyright,
+      label: "Copyright",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 6 },
+    },
+  ];
 
+  const [updateSiteContent] = useMutation(mutations.UPDATE_SITE_CONTENT);
+
+  useEffect(() => {
+    setViewContent({
+      slide1DefaultLink: cleanUrlReferences(
+        "slide1DefaultLink",
+        "ref",
+        props.data.slide1DefaultLink
+      ),
+      slide2DefaultLink: cleanUrlReferences(
+        "slide2DefaultLink",
+        "ref",
+        props.data.slide2DefaultLink
+      ),
+      slide3DefaultLink: cleanUrlReferences(
+        "slide3DefaultLink",
+        "ref",
+        props.data.slide3DefaultLink
+      ),
+      slide4DefaultLink: cleanUrlReferences(
+        "slide4DefaultLink",
+        "ref",
+        props.data.slide4DefaultLink
+      ),
+      slide5DefaultLink: cleanUrlReferences(
+        "slide5DefaultLink",
+        "ref",
+        props.data.slide5DefaultLink
+      ),
+      tourDefaultLink: cleanUrlReferences(
+        "tourDefaultLink",
+        "ref",
+        props.data.tourDefaultLink
+      ),
+      event1DefaultLink: cleanUrlReferences(
+        "event1DefaultLink",
+        "ref",
+        props.data.event1DefaultLink
+      ),
+      event2DefaultLink: cleanUrlReferences(
+        "event2DefaultLink",
+        "ref",
+        props.data.event2DefaultLink
+      ),
+      event3DefaultLink: cleanUrlReferences(
+        "event3DefaultLink",
+        "ref",
+        props.data.event3DefaultLink
+      ),
+    });
+    setContent({
+      siteTitleText: props.data.siteTitleText,
+      siteMetaDescriptionText: props.data.siteMetaDescriptionText,
+      blogLink: props.data.blogLink,
+      tourDefaultLink: props.data.tourDefaultLink,
+      event1DefaultLink: props.data.event1DefaultLink,
+      event2DefaultLink: props.data.event2DefaultLink,
+      event3DefaultLink: props.data.event3DefaultLink,
+      slide1DefaultLink: props.data.slide1DefaultLink,
+      slide2DefaultLink: props.data.slide2DefaultLink,
+      slide3DefaultLink: props.data.slide3DefaultLink,
+      slide4DefaultLink: props.data.slide4DefaultLink,
+      slide5DefaultLink: props.data.slide5DefaultLink,
+      siteFacebookLink: props.data.siteFacebookLink,
+      siteTwitterLink: props.data.siteTwitterLink,
+      siteInstagramLink: props.data.siteInstagramLink,
+      sitePinterestLink: props.data.sitePinterestLink,
+      siteCopyright: props.data.siteCopyright,
+    });
+  }, []);
+
+  function cleanUrlReferences(key, type, url) {
+    let splittedUrl = url.split("&ref=");
+    urlRefs[key] = splittedUrl[0];
+    return type === "url"
+      ? splittedUrl[0]
+      : splittedUrl[1]
+      ? splittedUrl[1]
+      : "";
+  }
+  function handleChange(event) {
+    setContent({
+      ...content,
+      [event.target.name]: event.target.value,
+    });
+  }
+  function handleViewChange(event) {
+    setViewContent({
+      ...viewContent,
+      [event.target.name]: event.target.value,
+    });
+    let sp = content[event.target.name].split("&ref=");
+    setContent({
+      ...content,
+      [event.target.name]:
+        sp[0] + (event.target.value !== "" ? "&ref=" + event.target.value : ""),
+    });
+  }
+
+  function handleSave() {
+    updateSiteContent({
+      variables: {
+        id: props.pageId,
+        content: content,
+      },
+    }).then(
+      (res) => {
+        toast.success(
+          "Content updated succesfully!",
+          components.toastifyConfig
+        );
+      },
+      (err) => console.log(err)
+    );
+  }
   return (
     <>
       <Container component="main" maxWidth="lg">
-        <Grid container spacing={1}>
-          <Grid item xs={6} sm={3} md={4}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Browser Label"
-              name="name"
-              autoFocus
-              id="custom-css-outlined-input"
-              value="Be Smart Online Shop"
-            />
-          </Grid>
-          <Grid item xs={6} sm={3} md={4}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="description"
-              label="Site Description"
-              id="description"
-              value="Online products shopping"
-            />
-          </Grid>
-          <Grid item xs={12} sm={3} md={4}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="blogLink"
-              label="Blog Link"
-              id="blogLink"
-              value="/blog"
-            />
-          </Grid>
-        </Grid>
+        <FormFieldsGroup fields={fieldsGroupTop} css={textFieldCSS.root} />
         <h4>Slides</h4>
-        <Grid container spacing={1}>
-          <Grid item xs={12} sm={6} md={5}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="slide1"
-              label="Slide 1"
-              id="slide1"
-              value="https://my-bucket.s3.us-west-2.amazonaws.com/slide1.png"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="slide1link"
-              label="Slide 1 Link"
-              id="slide1link"
-              value="/store/2/"
-            />
-          </Grid>
-          <Grid
-            container
-            align="center"
-            justify="center"
-            direction="column"
-            xs={12}
-            sm={3}
-            md={4}
-          >
-            <img
-              src={`${process.env.PUBLIC_URL}/imgs/banner1.jpg`}
-              alt=""
-              style={{ height: "90px", padding: "5px" }}
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={1}>
-          <Grid item xs={12} sm={6} md={5}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="slide2"
-              label="Slide 2"
-              id="slide2"
-              value="https://my-bucket.s3.us-west-2.amazonaws.com/slide2.png"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="slide2link"
-              label="Slide 2 Link"
-              id="slide1link"
-              value="store/1/product/4"
-            />
-          </Grid>
-          <Grid
-            container
-            align="center"
-            justify="center"
-            direction="column"
-            xs={12}
-            sm={3}
-            md={4}
-          >
-            <img
-              src={`${process.env.PUBLIC_URL}/imgs/banner2.jpg`}
-              alt=""
-              style={{ height: "90px", padding: "5px" }}
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={1}>
-          <Grid item xs={12} sm={6} md={5}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="slide3"
-              label="Slide 3"
-              id="slide3"
-              value="https://my-bucket.s3.us-west-2.amazonaws.com/slide3.png"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="slide3link"
-              label="Slide 3 Link"
-              id="slide3link"
-            />
-          </Grid>
-          <Grid
-            container
-            align="center"
-            justify="center"
-            direction="column"
-            xs={12}
-            sm={3}
-            md={4}
-          >
-            <img
-              src={`${process.env.PUBLIC_URL}/imgs/banner3.jpg`}
-              alt=""
-              style={{ height: "90px", padding: "5px" }}
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={1}>
-          <Grid item xs={12} sm={6} md={5}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="slide4"
-              label="Slide 4"
-              id="slide4"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="slide4link"
-              label="Slide 4 Link"
-              id="slide4link"
-            />
-          </Grid>
-          <Grid
-            container
-            align="center"
-            justify="center"
-            direction="column"
-            xs={12}
-            sm={3}
-            md={1}
-          >
-            <ChangeButton>Add</ChangeButton>
-          </Grid>
-        </Grid>
-        <Grid container spacing={1}>
-          <Grid item xs={12} sm={6} md={5}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="slide5"
-              label="Slide 5"
-              id="slide5"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="slide45ink"
-              label="Slide 5 Link"
-              id="slide5link"
-            />
-          </Grid>
-          <Grid
-            container
-            align="center"
-            justify="center"
-            direction="column"
-            xs={12}
-            sm={3}
-            md={1}
-          >
-            <ChangeButton>Add</ChangeButton>
-          </Grid>
-        </Grid>
-        <h4>Events</h4>
-        <Grid container spacing={1}>
-          <Grid item xs={12} sm={6} md={5}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="event1"
-              label="Event 1"
-              id="event1"
-              value="https://my-bucket.s3.us-west-2.amazonaws.com/event1.png"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="event1link"
-              label="Event 1 Link"
-              id="event1link"
-              value="/store/2/"
-            />
-          </Grid>
-          <Grid
-            container
-            align="center"
-            justify="center"
-            direction="column"
-            xs={12}
-            sm={3}
-            md={4}
-          >
-            <img
-              src={`${process.env.PUBLIC_URL}/imgs/offers1.jpg`}
-              alt=""
-              style={{ height: "90px", padding: "5px" }}
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={1}>
-          <Grid item xs={12} sm={6} md={5}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="event2"
-              label="Event 2"
-              id="event1"
-              value="https://my-bucket.s3.us-west-2.amazonaws.com/event4.png"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="event2link"
-              label="Event 2 Link"
-              id="event2link"
-            />
-          </Grid>
-          <Grid
-            container
-            align="center"
-            justify="center"
-            direction="column"
-            xs={12}
-            sm={3}
-            md={4}
-          >
-            <img
-              src={`${process.env.PUBLIC_URL}/imgs/offers4.jpg`}
-              alt=""
-              style={{ height: "90px", padding: "5px" }}
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={1}>
-          <Grid item xs={12} sm={6} md={5}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="event3"
-              label="Event 3"
-              id="event3"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="event3link"
-              label="Event 3 Link"
-              id="event3link"
-            />
-          </Grid>
-          <Grid
-            container
-            align="center"
-            justify="center"
-            direction="column"
-            xs={12}
-            sm={3}
-            md={1}
-          >
-            <ChangeButton>Add</ChangeButton>
-          </Grid>
-        </Grid>
-        <h4>Social Networks</h4>
-        <Grid container spacing={1}>
-          <Grid item xs={6} sm={3} md={3}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="faceboom"
-              label="Facebook"
-              name="facebook"
-              id="custom-css-outlined-input"
-              value="http://www.facebook.com/Smartshop"
-            />
-          </Grid>
-          <Grid item xs={6} sm={3} md={3}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="twitter"
-              label="Twitter"
-              id="twitter"
-            />
-          </Grid>
-          <Grid item xs={12} sm={3} md={3}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="instagram"
-              label="Instagram"
-              id="instagram"
-              value="http://www.instagram.com/Smartshop"
-            />
-          </Grid>
-          <Grid item xs={12} sm={3} md={3}>
-            <CssTextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="youtube"
-              label="Youtube"
-              id="youtube"
-              value="http://www.youtube.com/Smartshop"
-            />
-          </Grid>
-        </Grid>
-        <Grid item xs={6} sm={3} md={6}>
-          <CssTextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="copyright"
-            label="Copyright"
-            name="copyright"
-            id="custom-css-outlined-input"
-            value="@Copyright. 2020 | HLProductions"
+        {[1, 2, 3, 4, 5].map((number) => (
+          <MediaContentEditRow
+            key={`mediaElement${number}`}
+            id={`slide${number}`}
+            label={`Slide ${number}`}
+            css={textFieldCSS.root}
+            style={styles.cmsSlidesPreview}
+            cssButton={changeButtonCSS.root}
+            defaultValue={urlRefs[`slide${number}DefaultLink`]}
+            value={viewContent[`slide${number}DefaultLink`]}
+            onChange={handleViewChange}
           />
-        </Grid>
+        ))}
+        <h4>Tour Video</h4>
+        <MediaContentEditRow
+          key={`videoElement1`}
+          id={`tour`}
+          label={`Video`}
+          css={textFieldCSS.root}
+          style={styles.cmsSlidesPreview}
+          cssButton={changeButtonCSS.root}
+          defaultValue={urlRefs[`tourDefaultLink`]}
+          value={viewContent[`tourDefaultLink`]}
+          isVideo={true}
+          onChange={handleViewChange}
+        />
+        <h4>Events</h4>
+        {[1, 2, 3].map((number) => (
+          <MediaContentEditRow
+            key={`eventsElement${number}`}
+            id={`event${number}`}
+            label={`Event ${number}`}
+            css={textFieldCSS.root}
+            style={styles.cmsSlidesPreview}
+            cssButton={changeButtonCSS.root}
+            defaultValue={urlRefs[`event${number}DefaultLink`]}
+            value={viewContent[`event${number}DefaultLink`]}
+            onChange={handleViewChange}
+          />
+        ))}
+        <h4>Social Networks</h4>
+        <FormFieldsGroup fields={fieldsGroupBottom} css={textFieldCSS.root} />
         <Grid item xs={12} sm={6} md={12} style={{ textAlign: "center" }}>
-          <SubmitButton>Submit </SubmitButton>
+          <Button className={submitButtonCSS.root} onClick={handleSave}>
+            Submit
+          </Button>
         </Grid>
       </Container>
     </>

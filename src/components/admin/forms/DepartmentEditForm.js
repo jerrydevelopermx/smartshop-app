@@ -19,15 +19,12 @@ function DepartmentEditForm(props) {
   };
 
   let { id, section, action, resourceId } = useParams();
-  const { loading, error, data } = useQuery(
-    queries.GET_DEPARTMENTS_DATA_BY_ID,
-    {
-      skip: action === "add",
-      variables: {
-        deptId: resourceId,
-      },
-    }
-  );
+  const { loading, error, data } = useQuery(queries.GET_DEPARTMENT_DATA_BY_ID, {
+    skip: action === "add",
+    variables: {
+      deptId: resourceId,
+    },
+  });
 
   const [addEdit] = useMutation(mutations.ADD_DEPT);
 
@@ -106,6 +103,55 @@ function DepartmentEditForm(props) {
             //input.value = '';
           }}
         >
+          {/* 
+            let fields = [
+    {
+      id: "siteFacebookLink",
+      name: "siteFacebookLink",
+      value: content.siteFacebookLink,
+      label: "Facebook",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "siteInstagramLink",
+      name: "siteInstagramLink",
+      value: content.siteInstagramLink,
+      label: "Instagram",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "siteTwitterLink",
+      name: "siteTwitterLink",
+      value: content.siteTwitterLink,
+      label: "Twitter",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "sitePinterestLink",
+      name: "sitePinterestLink",
+      value: content.sitePinterestLink,
+      label: "Pinterest",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 3 },
+    },
+    {
+      id: "siteCopyright",
+      name: "siteCopyright",
+      value: content.siteCopyright,
+      label: "Copyright",
+      required: false,
+      onChange: handleChange,
+      grid: { xs: 6, sm: 3, md: 6 },
+    },
+  ];
+          */}
           <h3>{action.charAt(0).toUpperCase() + action.slice(1)} Department</h3>
           <Grid container spacing={1}>
             <Grid item xs={6} sm={3} md={4}>
@@ -118,7 +164,7 @@ function DepartmentEditForm(props) {
                 name="departmentName"
                 label="Department Name"
                 defaultValue={
-                  data && data.department ? data.department.departmentName : ""
+                  data && data.c ? data.department.departmentName : ""
                 }
                 inputRef={(node) => {
                   department.departmentName = node;

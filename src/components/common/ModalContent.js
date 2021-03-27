@@ -1,15 +1,17 @@
 import React from "react";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
+
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import { withStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
-import { makeStyles } from "@material-ui/core/styles";
+import CloseIcon from "@material-ui/icons/Close";
+
+import ReactHtmlParser from "react-html-parser";
 import appFunctions from "../../js/functions";
+import components from "../../js/components";
 import ContactForm from "./ContactForm";
 
 function ModalContent(props) {
@@ -106,7 +108,7 @@ function ModalContent(props) {
       aria-labelledby="max-width-dialog-title"
     >
       <DialogTitle style={props.styles.header} id="max-width-dialog-title">
-        {props.content.title}
+        {components.modalTitles[props.status.sectionId]}
         <IconButton
           aria-label="close"
           style={{
@@ -121,15 +123,8 @@ function ModalContent(props) {
         </IconButton>
       </DialogTitle>
       <DialogContent style={props.styles.body}>
-        {props.content.content &&
-          props.content.content.length > 0 &&
-          props.content.content.map((paragraph, index) => (
-            <Typography variant="body2" key={"pr" + index} paragraph={true}>
-              {paragraph.text}
-            </Typography>
-          ))}
-        {/* styles={data.page.styles.header} pageId={data.page.id} */}
-        {props.status.sectionId === "contact" ? (
+        {props.content && ReactHtmlParser(props.content.content)}
+        {props.status.sectionId === "contactUs" ? (
           <ContactForm
             styles={props.styles.header}
             pageId={props.status.storeId}

@@ -24,6 +24,11 @@ function App() {
         <Route exact path="/admin" component={AdminPage} />
         <Route
           exact
+          path="/admin/departments/:departmentId/:deptSection/:itemId"
+          component={AdminPage}
+        />
+        <Route
+          exact
           path="/admin/departments/:departmentId/:deptSection"
           component={AdminPage}
         />

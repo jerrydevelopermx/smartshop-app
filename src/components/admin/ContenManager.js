@@ -1,19 +1,10 @@
 import React from "react";
-import Container from "@material-ui/core/Container";
-
-import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Paper from "@material-ui/core/Paper";
-
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
+import { useQuery } from "@apollo/client";
+import { Container, Paper, Tabs, Tab, Box } from "@material-ui/core";
 import AppearanceForm from "./forms/AppearanceForm";
 import ContentForm from "./forms/ContentForm";
 import JsonContent from "./forms/JsonContent";
-import { useQuery } from "@apollo/client";
 import queries from "../../graphql/queries";
 
 function TabPanel(props) {
@@ -33,7 +24,6 @@ function TabPanel(props) {
 }
 
 function ContentManager(props) {
-  console.log(props);
   const { loading, error, data } = useQuery(queries.GET_CMS_BY_ID, {
     variables: {
       siteId: props.pageId,
@@ -94,7 +84,7 @@ function ContentManager(props) {
       siteTwitterLink,
       siteInstagramLink,
       sitePinterestLink,
-      siteCopyrights,
+      siteCopyright,
     } = data;
     switch (type) {
       case "appearance":
@@ -109,7 +99,25 @@ function ContentManager(props) {
         };
         break;
       case "content":
-        return { siteID, siteLogoLink };
+        return {
+          siteTitleText,
+          siteMetaDescriptionText,
+          tourDefaultLink,
+          event1DefaultLink,
+          event2DefaultLink,
+          event3DefaultLink,
+          blogLink,
+          slide1DefaultLink,
+          slide2DefaultLink,
+          slide3DefaultLink,
+          slide4DefaultLink,
+          slide5DefaultLink,
+          siteFacebookLink,
+          siteTwitterLink,
+          siteInstagramLink,
+          sitePinterestLink,
+          siteCopyright,
+        };
         break;
     }
   }
@@ -133,16 +141,22 @@ function ContentManager(props) {
       <TabPanel value={value} index={0}>
         <AppearanceForm
           styles={props.styles}
+          appStyles={props.appStyles}
           appButtons={props.appButtons}
           data={getData(data.siteCMS, "appearance")}
           pageId={props.pageId}
         />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <ContentForm styles={props.styles} appButtons={props.appButtons} />
+        <ContentForm
+          styles={props.styles}
+          appButtons={props.appButtons}
+          data={getData(data.siteCMS, "content")}
+          pageId={props.pageId}
+        />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <JsonContent styles={props.styles} />
+        <JsonContent styles={props.styles} pageId={props.pageId} />
       </TabPanel>
     </Container>
   );
