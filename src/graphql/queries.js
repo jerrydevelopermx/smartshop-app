@@ -84,6 +84,7 @@ const queries = {
             }
             body {
               background
+              color
             }
             closebutton {
               root {
@@ -170,6 +171,7 @@ const queries = {
             }
             body {
               background
+              color
             }
             closebutton {
               root {
@@ -245,6 +247,7 @@ const queries = {
             }
             body {
               background
+              color
             }
             closebutton {
               root {
@@ -844,6 +847,7 @@ const queries = {
             }
             body {
               background
+              color
             }
             closebutton {
               root {
@@ -987,6 +991,7 @@ const queries = {
             }
             body {
               background
+              color
             }
             closebutton {
               root {
@@ -1066,6 +1071,7 @@ const queries = {
             }
             body {
               background
+              color
             }
             closebutton {
               root {

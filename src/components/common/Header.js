@@ -279,6 +279,7 @@ function Header(props) {
           status={modalStatus}
           onClose={closeModal}
           content={data.siteHtmlContent}
+          fontFamily={props.fontFamily}
         />
       ) : null}
 
@@ -349,6 +350,7 @@ function Header(props) {
                                     top: "40px",
                                     position: "relative",
                                     fontFamily: props.fontFamily,
+                                    color: props.styles.styledmenu.paper.color,
                                   }}
                                 >
                                   {user.userName !== undefined

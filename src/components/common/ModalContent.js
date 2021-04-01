@@ -16,6 +16,7 @@ import ContactForm from "./ContactForm";
 
 function ModalContent(props) {
   console.log(props);
+
   const useStyles = makeStyles((theme) => ({
     modalPaper: {
       minHeight: "80vh",
@@ -67,6 +68,7 @@ function ModalContent(props) {
           borderLeft: "15px solid transparent",
         },
       },
+      fontFamily: props.fontFamily,
     },
   }));
   const classes = useStyles();
@@ -80,6 +82,7 @@ function ModalContent(props) {
       },
       color: props.styles.closebutton.root.color,
       backgroundColor: props.styles.closebutton.root.background,
+      fontFamily: props.fontFamily,
     },
   };
 
@@ -107,7 +110,15 @@ function ModalContent(props) {
       open={props.open}
       aria-labelledby="max-width-dialog-title"
     >
-      <DialogTitle style={props.styles.header} id="max-width-dialog-title">
+      <DialogTitle
+        disableTypography="true"
+        style={{
+          color: props.styles.header.color,
+          background: props.styles.header.background,
+          fontFamily: props.fontFamily,
+        }}
+        id="max-width-dialog-title"
+      >
         {components.modalTitles[props.status.sectionId]}
         <IconButton
           aria-label="close"
@@ -115,7 +126,7 @@ function ModalContent(props) {
             position: "absolute",
             right: "8px",
             top: "8px",
-            color: "#fff",
+            color: props.styles.header.color,
           }}
           onClick={props.onClose}
         >

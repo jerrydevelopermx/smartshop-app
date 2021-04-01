@@ -14,7 +14,7 @@ function VideoGallery(props) {
       className={classes.videoContainer}
     >
       <div className={classes.videoPlayer}>
-        <Typography variant="h4">Take a Tour!</Typography>
+        <h4>Take a Tour!</h4>
         {props.video ? (
           <Player fluid={true} autoPlay={false} src={props.video.src} />
         ) : null}

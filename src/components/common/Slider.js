@@ -42,7 +42,7 @@ function Slider(props) {
       style={props.styles}
     >
       {props.id === "events-scroll" ? (
-        <Typography variant="h4">Hot Sales, Promos and Events</Typography>
+        <h4>Hot Sales, Promos and Events</h4>
       ) : null}
       <Carousel
         showArrows={true}
