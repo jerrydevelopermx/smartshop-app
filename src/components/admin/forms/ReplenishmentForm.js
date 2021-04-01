@@ -8,11 +8,11 @@ function ReplenishmentForm(props) {
   let textFieldCSS = computedStyles.textField(props);
   let submitButtonCSS = computedStyles.submitButton(props);
   const [replenishmentOrder, setReplenishmentOrder] = useState({
-    replenishmentOrderNr: "",
-    productID: "",
-    supplierID: "",
-    repGenDatime: "",
-    quantityOrdered: "",
+    replenishmentordernr: "",
+    productid: "",
+    supplierid: "",
+    repgendatime: "",
+    quantityordered: "",
   });
 
   useEffect(() => {
@@ -21,46 +21,46 @@ function ReplenishmentForm(props) {
 
   let fields = [
     {
-      id: "replenishmentOrderNr",
-      name: "replenishmentOrderNr",
+      id: "replenishmentordernr",
+      name: "replenishmentordernr",
       value:
-        (replenishmentOrder && replenishmentOrder.replenishmentOrderNr) || "",
+        (replenishmentOrder && replenishmentOrder.replenishmentordernr) || "",
       label: "Order",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 4 },
     },
     {
-      id: "productID",
-      name: "productID",
-      value: (replenishmentOrder && replenishmentOrder.productID) || "",
+      id: "productid",
+      name: "productid",
+      value: (replenishmentOrder && replenishmentOrder.productid) || "",
       label: "Product Number",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 4 },
     },
     {
-      id: "supplierID",
-      name: "supplierID",
-      value: (replenishmentOrder && replenishmentOrder.supplierID) || "",
+      id: "supplierid",
+      name: "supplierid",
+      value: (replenishmentOrder && replenishmentOrder.supplierid) || "",
       label: "Supplier #",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 4 },
     },
     {
-      id: "repGenDatime",
-      name: "repGenDatime",
-      value: (replenishmentOrder && replenishmentOrder.repGenDatime) || "",
+      id: "repgendatime",
+      name: "repgendatime",
+      value: (replenishmentOrder && replenishmentOrder.repgendatime) || "",
       label: "Date",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 6 },
     },
     {
-      id: "quantityOrdered",
-      name: "quantityOrdered",
-      value: (replenishmentOrder && replenishmentOrder.quantityOrdered) || "",
+      id: "quantityordered",
+      name: "quantityordered",
+      value: (replenishmentOrder && replenishmentOrder.quantityordered) || "",
       label: "Quantity",
       required: false,
       onChange: handleChange,

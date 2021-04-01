@@ -16,7 +16,7 @@ function ReplenishmentOrder(props) {
       aria-labelledby="max-width-dialog-title"
     >
       <DialogTitle
-        style={props.styles.mobileNavBar.paper}
+        style={props.styles.mobilenavbar.paper}
         id="max-width-dialog-title"
       >
         Replenishment Order

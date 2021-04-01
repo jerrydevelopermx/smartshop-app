@@ -75,11 +75,11 @@ function ModalContent(props) {
     root: {
       "&:hover": {
         backgroundColor: appFunctions.getHoverColor(
-          props.styles.closeButton.root.backgroundColor
+          props.styles.closebutton.root.background
         ),
       },
-      color: props.styles.closeButton.root.color,
-      backgroundColor: props.styles.closeButton.root.backgroundColor,
+      color: props.styles.closebutton.root.color,
+      backgroundColor: props.styles.closebutton.root.background,
     },
   };
 

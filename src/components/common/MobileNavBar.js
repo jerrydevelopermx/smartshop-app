@@ -18,6 +18,15 @@ function MobileNavBar(props) {
   const [state, setState] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
 
+  const useStyles2 = makeStyles((theme) => ({
+    listItem: {
+      "& span": {
+        fontFamily: props.fontFamily,
+      },
+    },
+  }));
+  const classes2 = useStyles2();
+
   const toggleDrawer = (open) => (event) => {
     if (
       event.type === "keydown" &&
@@ -71,7 +80,10 @@ function MobileNavBar(props) {
                   element.label === "Blog" &&
                   props.blogLink.indexOf("http") !== -1 ? (
                     <ListItemLink href={props.blogLink} key={element.label}>
-                      <ListItemText primary={element.label} />
+                      <ListItemText
+                        className={classes2.listItem}
+                        primary={element.label}
+                      />
                     </ListItemLink>
                   ) : (
                     <ListItem
@@ -84,13 +96,19 @@ function MobileNavBar(props) {
                         toggleDrawer(false);
                       }}
                     >
-                      <ListItemText primary={element.label} />
+                      <ListItemText
+                        className={classes2.listItem}
+                        primary={element.label}
+                      />
                     </ListItem>
                   )
                 ) : element.type === "submenu" ? (
                   <div key={"f" + index}>
                     <ListItem key={"s" + index} button onClick={handleClick}>
-                      <ListItemText primary="Our Services" />
+                      <ListItemText
+                        className={classes2.listItem}
+                        primary="Our Services"
+                      />
                       {submenuOpen ? <ExpandLess /> : <ExpandMore />}
                     </ListItem>
                     <Collapse in={submenuOpen} timeout="auto" unmountOnExit>
@@ -105,7 +123,10 @@ function MobileNavBar(props) {
                             }}
                             style={{ marginLeft: "10px" }}
                           >
-                            <ListItemText primary={submenu.text} />
+                            <ListItemText
+                              className={classes2.listItem}
+                              primary={submenu.text}
+                            />
                           </ListItem>
                         ))}
                       </List>

@@ -25,9 +25,9 @@ function MediaContentEditRow(props) {
           variant="outlined"
           margin="normal"
           fullWidth
-          id={`${props.id}DefaultLink`}
+          id={`${props.id}defaultlink`}
           label={`${props.label} Link`}
-          name={`${props.id}DefaultLink`}
+          name={`${props.id}defaultlink`}
           value={props.value}
           onChange={props.onChange}
         />

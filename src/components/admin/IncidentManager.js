@@ -5,26 +5,26 @@ import DataTable from "../common/DataTable";
 import queries from "../../graphql/queries";
 
 function IncidentManager(props) {
-  const { loading, error, data } = useQuery(queries.GET_USERS_DATA_INCIDENTS);
+  const { loading, error, data } = useQuery(queries.GET_INCIDENTS_DATA);
   if (loading) return <p></p>;
   if (error) return <p>There is an error!</p>;
 
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
-    { field: "emailAddress", headerName: "Email", width: 180 },
+    { field: "emailaddress", headerName: "Email", width: 180 },
     {
-      field: "lastAndFirstName",
+      field: "lastandfirstname",
       headerName: "Name",
       width: 150,
     },
     {
-      field: "companyName",
+      field: "companyname",
       headerName: "Company",
       width: 150,
     },
-    { field: "departmentID", headerName: "Dept", width: 80 },
-    { field: "messageType", headerName: "Message type", width: 150 },
-    { field: "messageSubject", headerName: "Message subject", width: 240 },
+    { field: "departmentid", headerName: "Dept", width: 80 },
+    { field: "messagetype", headerName: "Message type", width: 150 },
+    { field: "messagesubject", headerName: "Message subject", width: 240 },
   ];
   return (
     <Container component="main" maxWidth="xl">

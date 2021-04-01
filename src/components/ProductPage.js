@@ -47,7 +47,7 @@ function ProductPage(props) {
   const CartButton = withStyles((theme) => styledCartButton)(Button);
   const WishListButton = withStyles((theme) => styledWishButton)(Button);
 
-  const { loading, error, data } = useQuery(queries.GET_PRODUCT_BY_ID, {
+  const { loading, error, data } = useQuery(queries.GET_PRODUCT_PAGE_BY_ID, {
     variables: {
       productId: productId,
       storeId: id,
@@ -56,15 +56,22 @@ function ProductPage(props) {
   if (loading) return <p></p>;
   if (error) return <p>There is an error!</p>;
   return (
-    <div style={data.page.styles.body}>
+    <div
+      style={{
+        background: data.page.styles.body.background,
+        fontFamily: data.page.styles.body.fontfamily,
+        color: data.page.styles.body.color,
+      }}
+    >
       <Header
         logo={data.page.logo}
         blogLink={data.page.bloglink}
         menu={js.header}
         pageId={data.page.id}
         styles={data.page.styles.header}
-        modalStyles={data.page.styles.modalStyles}
+        modalStyles={data.page.styles.modalstyles}
         appStyles={appStyles.header}
+        fontFamily={data.page.styles.body.fontfamily}
       />
       <main style={{ margin: "120px" }}>
         <h2>Product page</h2>

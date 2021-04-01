@@ -86,14 +86,14 @@ function Departments(props) {
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "departmentID", headerName: "Department ID", width: 140 },
-    { field: "departmentName", headerName: "Name", width: 130 },
+    { field: "departmentid", headerName: "Department ID", width: 140 },
+    { field: "departmentname", headerName: "Name", width: 130 },
     {
-      field: "deptStatus",
+      field: "deptstatus",
       headerName: "Status",
       width: 80,
     },
-    { field: "createdDatime", headerName: "Created", width: 130 },
+    { field: "createddatime", headerName: "Created", width: 130 },
     /*{ field: "modifiedDatime", headerName: "Updated", width: 100 },
     { field: "createdByID", headerName: "Created by", width: 100 },*/
     {
@@ -109,7 +109,7 @@ function Departments(props) {
             to={
               props.pageId === "0"
                 ? `/admin/departments/${params.getValue(
-                    "departmentID"
+                    "departmentid"
                   )}/edit/${params.getValue("id")}`
                 : `/store/${props.pageId}/admin/departments/${params.getValue(
                     "id"
@@ -141,7 +141,7 @@ function Departments(props) {
         return (
           <CmsButton
             component={NavLink}
-            to={`/admin/departments/${params.getValue("departmentID")}/cms`}
+            to={`/admin/departments/${params.getValue("departmentid")}/cms`}
           >
             CMS
           </CmsButton>
@@ -159,7 +159,7 @@ function Departments(props) {
           <CampaignsButton
             component={NavLink}
             to={`/admin/departments/${params.getValue(
-              "departmentID"
+              "departmentid"
             )}/campaigns`}
           >
             Campaigns
@@ -178,7 +178,7 @@ function Departments(props) {
           <InventoryButton
             component={NavLink}
             to={`/admin/departments/${params.getValue(
-              "departmentID"
+              "departmentid"
             )}/inventory`}
           >
             Inventory

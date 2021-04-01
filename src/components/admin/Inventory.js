@@ -49,27 +49,27 @@ function Inventory(props) {
 
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
-    { field: "productNumber", headerName: "Number", width: 100 },
-    { field: "productSKU", headerName: "SKU", width: 120 },
+    { field: "productnumber", headerName: "Number", width: 100 },
+    { field: "productsku", headerName: "SKU", width: 120 },
     {
-      field: "productShortName",
+      field: "productshortname",
       headerName: "Short Name",
       width: 120,
     },
-    { field: "productDescription", headerName: "Description", width: 160 },
-    { field: "prodCategoryCode", headerName: "Category", width: 120 },
-    { field: "prodSubcategoryCode", headerName: "Subcategory", width: 120 },
+    { field: "productdescription", headerName: "Description", width: 160 },
+    { field: "prodcategorycode", headerName: "Category", width: 120 },
+    { field: "prodsubcategorycode", headerName: "Subcategory", width: 120 },
 
-    /* { field: "brandCode", headerName: "Brd", width: 70 },
-    { field: "modelCode", headerName: "Mod", width: 70 },
-    { field: "yearCode", headerName: "Yr", width: 50 },
-    { field: "styleCode", headerName: "Stl", width: 50 },
-    { field: "genderCode", headerName: "Gnd", width: 50 },
-    { field: "packagingCode", headerName: "Pck", width: 50 },
-    { field: "materialCode", headerName: "Mat", width: 50 },
-    { field: "colorCode", headerName: "Col", width: 50 },
-    { field: "sizeCode", headerName: "Sze", width: 50 },
-    { field: "flavorCode", headerName: "Flv", width: 50 },*/
+    /* { field: "brandcode", headerName: "Brd", width: 70 },
+    { field: "modelcode", headerName: "Mod", width: 70 },
+    { field: "yearcode", headerName: "Yr", width: 50 },
+    { field: "stylecode", headerName: "Stl", width: 50 },
+    { field: "gendercode", headerName: "Gnd", width: 50 },
+    { field: "packagingcode", headerName: "Pck", width: 50 },
+    { field: "materialcode", headerName: "Mat", width: 50 },
+    { field: "colorcode", headerName: "Col", width: 50 },
+    { field: "sizecode", headerName: "Sze", width: 50 },
+    { field: "flavorcode", headerName: "Flv", width: 50 },*/
 
     {
       field: "",
@@ -105,14 +105,14 @@ function Inventory(props) {
 
   const replenishmentsColumns = [
     { field: "id", headerName: "ID", width: 50 },
-    { field: "repGenDatime", headerName: "Date", width: 120 },
-    { field: "supplierID", headerName: "Supplier", width: 100 },
-    { field: "replenishmentOrderNr", headerName: "Rep. Order Num", width: 120 },
-    { field: "repLineItemNr", headerName: "Invoice", width: 100 },
-    { field: "quantityOrdered", headerName: "Quantity", width: 100 },
-    { field: "actualUnitCost", headerName: "Unit Cost", width: 100 },
-    { field: "quantityReceived", headerName: "MSRP", width: 90 },
-    { field: "productID", headerName: "SKU", width: 90 },
+    { field: "repgendatime", headerName: "Date", width: 120 },
+    { field: "supplierid", headerName: "Supplier", width: 100 },
+    { field: "replenishmentordernr", headerName: "Rep. Order Num", width: 120 },
+    { field: "replineitemnr", headerName: "Invoice", width: 100 },
+    { field: "quantityordered", headerName: "Quantity", width: 100 },
+    { field: "actualunitcost", headerName: "Unit Cost", width: 100 },
+    { field: "quantityreceived", headerName: "MSRP", width: 90 },
+    { field: "productid", headerName: "SKU", width: 90 },
     {
       field: "",
       headerName: "Actions",

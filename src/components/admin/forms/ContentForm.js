@@ -6,6 +6,7 @@ import mutations from "../../../graphql/mutations";
 import computedStyles from "../../../styles/computedStyles";
 import styles from "../../../styles/app";
 import components from "../../../js/components";
+
 import MediaContentEditRow from "./MediaContentEditRow";
 import FormFieldsGroup from "./FormFieldsGroup";
 
@@ -16,107 +17,107 @@ function ContentForm(props) {
   let urlRefs = {};
 
   const [content, setContent] = useState({
-    siteTitleText: "",
-    siteMetaDescriptionText: "",
-    blogLink: "",
-    tourDefaultLink: "",
-    event1DefaultLink: "",
-    event2DefaultLink: "",
-    event3DefaultLink: "",
-    slide1DefaultLink: "",
-    slide2DefaultLink: "",
-    slide3DefaultLink: "",
-    slide4DefaultLink: "",
-    slide5DefaultLink: "",
-    siteFacebookLink: "",
-    siteTwitterLink: "",
-    siteInstagramLink: "",
-    sitePinterestLink: "",
-    siteCopyright: "",
+    sitetitletext: "",
+    sitemetadescriptiontext: "",
+    bloglink: "",
+    tourdefaultlink: "",
+    event1defaultlink: "",
+    event2defaultlink: "",
+    event3defaultlink: "",
+    slide1defaultlink: "",
+    slide2defaultlink: "",
+    slide3defaultlink: "",
+    slide4defaultlink: "",
+    slide5defaultlink: "",
+    sitefacebooklink: "",
+    sitetwitterlink: "",
+    siteinstagramlink: "",
+    sitepinterestlink: "",
+    sitecopyright: "",
   });
 
   const [viewContent, setViewContent] = useState({
-    slide1DefaultLink: "",
-    slide2DefaultLink: "",
-    slide3DefaultLink: "",
-    slide4DefaultLink: "",
-    slide5DefaultLink: "",
-    tourDefaultLink: "",
-    event1DefaultLink: "",
-    event2DefaultLink: "",
-    event3DefaultLink: "",
+    slide1defaultlink: "",
+    slide2defaultlink: "",
+    slide3defaultlink: "",
+    slide4defaultlink: "",
+    slide5defaultlink: "",
+    tourdefaultlink: "",
+    event1defaultlink: "",
+    event2defaultlink: "",
+    event3defaultlink: "",
   });
   urlRefs = {
-    slide1DefaultLink: cleanUrlReferences(
-      "slide1DefaultLink",
+    slide1defaultlink: cleanUrlReferences(
+      "slide1defaultlink",
       "url",
-      props.data.slide1DefaultLink
+      props.data.slide1defaultlink
     ),
-    slide2DefaultLink: cleanUrlReferences(
-      "slide2DefaultLink",
+    slide2defaultlink: cleanUrlReferences(
+      "slide2defaultlink",
       "url",
-      props.data.slide2DefaultLink
+      props.data.slide2defaultlink
     ),
-    slide3DefaultLink: cleanUrlReferences(
-      "slide3DefaultLink",
+    slide3defaultlink: cleanUrlReferences(
+      "slide3defaultlink",
       "url",
-      props.data.slide3DefaultLink
+      props.data.slide3defaultlink
     ),
-    slide4DefaultLink: cleanUrlReferences(
-      "slide4DefaultLink",
+    slide4defaultlink: cleanUrlReferences(
+      "slide4defaultlink",
       "url",
-      props.data.slide4DefaultLink
+      props.data.slide4defaultlink
     ),
-    slide5DefaultLink: cleanUrlReferences(
-      "slide5DefaultLink",
+    slide5defaultlink: cleanUrlReferences(
+      "slide5defaultlink",
       "url",
-      props.data.slide5DefaultLink
+      props.data.slide5defaultlink
     ),
-    tourDefaultLink: cleanUrlReferences(
-      "tourDefaultLink",
+    tourdefaultlink: cleanUrlReferences(
+      "tourdefaultlink",
       "url",
-      props.data.tourDefaultLink
+      props.data.tourdefaultlink
     ),
-    event1DefaultLink: cleanUrlReferences(
-      "event1DefaultLink",
+    event1defaultlink: cleanUrlReferences(
+      "event1defaultlink",
       "url",
-      props.data.event1DefaultLink
+      props.data.event1defaultlink
     ),
-    event2DefaultLink: cleanUrlReferences(
-      "event2DefaultLink",
+    event2defaultlink: cleanUrlReferences(
+      "event2defaultlink",
       "url",
-      props.data.event2DefaultLink
+      props.data.event2defaultlink
     ),
-    event3DefaultLink: cleanUrlReferences(
-      "event3DefaultLink",
+    event3defaultlink: cleanUrlReferences(
+      "event3defaultlink",
       "url",
-      props.data.event3DefaultLink
+      props.data.event3defaultlink
     ),
   };
 
   let fieldsGroupTop = [
     {
-      id: "siteTitleText",
-      name: "siteTitleText",
-      value: content.siteTitleText,
+      id: "sitetitletext",
+      name: "sitetitletext",
+      value: content.sitetitletext,
       label: "Browser Label",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 4 },
     },
     {
-      id: "siteMetaDescriptionText",
-      name: "siteMetaDescriptionText",
-      value: content.siteMetaDescriptionText,
+      id: "sitemetadescriptiontext",
+      name: "sitemetadescriptiontext",
+      value: content.sitemetadescriptiontext,
       label: "Site Description",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 4 },
     },
     {
-      id: "blogLink",
-      name: "blogLink",
-      value: content.blogLink,
+      id: "bloglink",
+      name: "bloglink",
+      value: content.bloglink,
       label: "Blog Link",
       required: false,
       onChange: handleChange,
@@ -126,45 +127,45 @@ function ContentForm(props) {
 
   let fieldsGroupBottom = [
     {
-      id: "siteFacebookLink",
-      name: "siteFacebookLink",
-      value: content.siteFacebookLink,
+      id: "sitefacebooklink",
+      name: "sitefacebooklink",
+      value: content.sitefacebooklink,
       label: "Facebook",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 3 },
     },
     {
-      id: "siteInstagramLink",
-      name: "siteInstagramLink",
-      value: content.siteInstagramLink,
+      id: "siteinstagramlink",
+      name: "siteinstagramlink",
+      value: content.siteinstagramlink,
       label: "Instagram",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 3 },
     },
     {
-      id: "siteTwitterLink",
-      name: "siteTwitterLink",
-      value: content.siteTwitterLink,
+      id: "sitetwitterlink",
+      name: "sitetwitterlink",
+      value: content.sitetwitterlink,
       label: "Twitter",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 3 },
     },
     {
-      id: "sitePinterestLink",
-      name: "sitePinterestLink",
-      value: content.sitePinterestLink,
+      id: "sitepinterestlink",
+      name: "sitepinterestlink",
+      value: content.sitepinterestlink,
       label: "Pinterest",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 3 },
     },
     {
-      id: "siteCopyright",
-      name: "siteCopyright",
-      value: content.siteCopyright,
+      id: "sitecopyright",
+      name: "sitecopyright",
+      value: content.sitecopyright,
       label: "Copyright",
       required: false,
       onChange: handleChange,
@@ -176,70 +177,70 @@ function ContentForm(props) {
 
   useEffect(() => {
     setViewContent({
-      slide1DefaultLink: cleanUrlReferences(
-        "slide1DefaultLink",
+      slide1defaultlink: cleanUrlReferences(
+        "slide1defaultlink",
         "ref",
-        props.data.slide1DefaultLink
+        props.data.slide1defaultlink
       ),
-      slide2DefaultLink: cleanUrlReferences(
-        "slide2DefaultLink",
+      slide2defaultlink: cleanUrlReferences(
+        "slide2defaultlink",
         "ref",
-        props.data.slide2DefaultLink
+        props.data.slide2defaultlink
       ),
-      slide3DefaultLink: cleanUrlReferences(
-        "slide3DefaultLink",
+      slide3defaultlink: cleanUrlReferences(
+        "slide3defaultlink",
         "ref",
-        props.data.slide3DefaultLink
+        props.data.slide3defaultlink
       ),
-      slide4DefaultLink: cleanUrlReferences(
-        "slide4DefaultLink",
+      slide4defaultlink: cleanUrlReferences(
+        "slide4defaultlink",
         "ref",
-        props.data.slide4DefaultLink
+        props.data.slide4defaultlink
       ),
-      slide5DefaultLink: cleanUrlReferences(
-        "slide5DefaultLink",
+      slide5defaultlink: cleanUrlReferences(
+        "slide5defaultlink",
         "ref",
-        props.data.slide5DefaultLink
+        props.data.slide5defaultlink
       ),
-      tourDefaultLink: cleanUrlReferences(
-        "tourDefaultLink",
+      tourdefaultlink: cleanUrlReferences(
+        "tourdefaultlink",
         "ref",
-        props.data.tourDefaultLink
+        props.data.tourdefaultlink
       ),
-      event1DefaultLink: cleanUrlReferences(
-        "event1DefaultLink",
+      event1defaultlink: cleanUrlReferences(
+        "event1defaultlink",
         "ref",
-        props.data.event1DefaultLink
+        props.data.event1defaultlink
       ),
-      event2DefaultLink: cleanUrlReferences(
-        "event2DefaultLink",
+      event2defaultlink: cleanUrlReferences(
+        "event2defaultlink",
         "ref",
-        props.data.event2DefaultLink
+        props.data.event2defaultlink
       ),
-      event3DefaultLink: cleanUrlReferences(
-        "event3DefaultLink",
+      event3defaultlink: cleanUrlReferences(
+        "event3defaultlink",
         "ref",
-        props.data.event3DefaultLink
+        props.data.event3defaultlink
       ),
     });
     setContent({
-      siteTitleText: props.data.siteTitleText,
-      siteMetaDescriptionText: props.data.siteMetaDescriptionText,
-      blogLink: props.data.blogLink,
-      tourDefaultLink: props.data.tourDefaultLink,
-      event1DefaultLink: props.data.event1DefaultLink,
-      event2DefaultLink: props.data.event2DefaultLink,
-      event3DefaultLink: props.data.event3DefaultLink,
-      slide1DefaultLink: props.data.slide1DefaultLink,
-      slide2DefaultLink: props.data.slide2DefaultLink,
-      slide3DefaultLink: props.data.slide3DefaultLink,
-      slide4DefaultLink: props.data.slide4DefaultLink,
-      slide5DefaultLink: props.data.slide5DefaultLink,
-      siteFacebookLink: props.data.siteFacebookLink,
-      siteTwitterLink: props.data.siteTwitterLink,
-      siteInstagramLink: props.data.siteInstagramLink,
-      sitePinterestLink: props.data.sitePinterestLink,
-      siteCopyright: props.data.siteCopyright,
+      sitetitletext: props.data.sitetitletext,
+      sitemetadescriptiontext: props.data.sitemetadescriptiontext,
+      bloglink: props.data.bloglink,
+      tourdefaultlink: props.data.tourdefaultlink,
+      event1defaultlink: props.data.event1defaultlink,
+      event2defaultlink: props.data.event2defaultlink,
+      event3defaultlink: props.data.event3defaultlink,
+      slide1defaultlink: props.data.slide1defaultlink,
+      slide2defaultlink: props.data.slide2defaultlink,
+      slide3defaultlink: props.data.slide3defaultlink,
+      slide4defaultlink: props.data.slide4defaultlink,
+      slide5defaultlink: props.data.slide5defaultlink,
+      sitefacebooklink: props.data.sitefacebooklink,
+      sitetwitterlink: props.data.sitetwitterlink,
+      siteinstagramlink: props.data.siteinstagramlink,
+      sitepinterestlink: props.data.sitepinterestlink,
+      sitecopyright: props.data.sitecopyright,
     });
   }, []);
 
@@ -300,8 +301,8 @@ function ContentForm(props) {
             css={textFieldCSS.root}
             style={styles.cmsSlidesPreview}
             cssButton={changeButtonCSS.root}
-            defaultValue={urlRefs[`slide${number}DefaultLink`]}
-            value={viewContent[`slide${number}DefaultLink`]}
+            defaultValue={urlRefs[`slide${number}defaultlink`]}
+            value={viewContent[`slide${number}defaultlink`]}
             onChange={handleViewChange}
           />
         ))}
@@ -313,8 +314,8 @@ function ContentForm(props) {
           css={textFieldCSS.root}
           style={styles.cmsSlidesPreview}
           cssButton={changeButtonCSS.root}
-          defaultValue={urlRefs[`tourDefaultLink`]}
-          value={viewContent[`tourDefaultLink`]}
+          defaultValue={urlRefs[`tourdefaultlink`]}
+          value={viewContent[`tourdefaultlink`]}
           isVideo={true}
           onChange={handleViewChange}
         />
@@ -325,10 +326,11 @@ function ContentForm(props) {
             id={`event${number}`}
             label={`Event ${number}`}
             css={textFieldCSS.root}
+            d
             style={styles.cmsSlidesPreview}
             cssButton={changeButtonCSS.root}
-            defaultValue={urlRefs[`event${number}DefaultLink`]}
-            value={viewContent[`event${number}DefaultLink`]}
+            defaultValue={urlRefs[`event${number}efaultlink`]}
+            value={viewContent[`event${number}defaultlink`]}
             onChange={handleViewChange}
           />
         ))}

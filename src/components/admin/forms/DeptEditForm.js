@@ -9,29 +9,29 @@ function DeptEditForm(props) {
   let submitButtonCSS = computedStyles.submitButton(props);
 
   const [department, setDepartment] = useState({
-    campaignID: null,
+    campaignid: null,
     campaigning: null,
-    contactID: null,
-    contractLink: null,
-    createdByID: null,
-    createdDatime: null,
-    departmentID: null,
-    departmentName: null,
-    departmentNumber: null,
-    deptCategoryNumber: null,
-    deptDefaultImageLink: null,
+    contactid: null,
+    contractlink: null,
+    createdbyid: null,
+    createddatime: null,
+    departmentid: null,
+    departmentname: null,
+    departmentnumber: null,
+    deptcategorynumber: null,
+    deptdefaultimagelink: null,
     deptLogoLink: null,
-    deptPriorityNumber: null,
-    deptStatus: null,
-    gridDefaultPositionIndex: null,
-    gridPromotedPositionIndex: null,
+    deptprioritynumber: null,
+    deptstatus: null,
+    griddefaultpositionindex: null,
+    gridpromotedpositionindex: null,
     id: null,
-    modifiedByID: null,
-    modifiedDatime: null,
-    placeHolderCode: null,
-    placeHolderSinceDate: null,
-    placeHolderThruDate: null,
-    placeHolderType: null,
+    modifiedbyid: null,
+    modifieddatime: null,
+    placeholdercode: null,
+    placeholdersincedate: null,
+    placeholderthrudate: null,
+    placeholdertype: null,
   });
 
   useEffect(() => {
@@ -48,7 +48,7 @@ function DeptEditForm(props) {
     {
       id: "departmentName",
       name: "departmentName",
-      value: (department && department.departmentName) || "",
+      value: (department && department.departmentname) || "",
       label: "Department Name",
       required: false,
       onChange: handleChange,
@@ -57,7 +57,7 @@ function DeptEditForm(props) {
     {
       id: "deptCategoryNumber",
       name: "deptCategoryNumber",
-      value: (department && department.deptCategoryNumber) || "",
+      value: (department && department.deptcategorynumber) || "",
       label: "Category",
       required: false,
       onChange: handleChange,
@@ -66,7 +66,7 @@ function DeptEditForm(props) {
     {
       id: "contractLink",
       name: "contractLink",
-      value: (department && department.contractLink) || "",
+      value: (department && department.contractlink) || "",
       label: "Contract Link",
       required: false,
       onChange: handleChange,
@@ -75,7 +75,7 @@ function DeptEditForm(props) {
     {
       id: "placeHolderSinceDate",
       name: "placeHolderSinceDate",
-      value: (department && department.placeHolderSinceDate) || "",
+      value: (department && department.placeholdersincedate) || "",
       label: "Placeholder Since",
       required: false,
       onChange: handleChange,
@@ -84,7 +84,7 @@ function DeptEditForm(props) {
     {
       id: "placeHolderThruDate",
       name: "placeHolderThruDate",
-      value: (department && department.placeHolderThruDate) || "",
+      value: (department && department.placeholderthrudate) || "",
       label: "Placeholder to",
       required: false,
       onChange: handleChange,
@@ -93,7 +93,7 @@ function DeptEditForm(props) {
     {
       id: "placeHolderType",
       name: "placeHolderType",
-      value: (department && department.placeHolderType) || "",
+      value: (department && department.placeholdertype) || "",
       label: "Placeholder type",
       required: false,
       onChange: handleChange,
@@ -102,7 +102,7 @@ function DeptEditForm(props) {
     {
       id: "placeHolderCode",
       name: "placeHolderCode",
-      value: (department && department.placeHolderCode) || "",
+      value: (department && department.placeholdercode) || "",
       label: "Placeholder code",
       required: false,
       onChange: handleChange,
@@ -111,7 +111,7 @@ function DeptEditForm(props) {
     {
       id: "deptLogoLink",
       name: "deptLogoLink",
-      value: (department && department.deptLogoLink) || "",
+      value: (department && department.deptlogolink) || "",
       label: "Hover Logo",
       required: false,
       onChange: handleChange,
@@ -120,7 +120,7 @@ function DeptEditForm(props) {
     {
       id: "deptDefaultImageLink",
       name: "deptDefaultImageLink",
-      value: (department && department.deptDefaultImageLink) || "",
+      value: (department && department.deptdefaultimagelink) || "",
       label: "Default Image",
       required: false,
       onChange: handleChange,
@@ -129,7 +129,7 @@ function DeptEditForm(props) {
     {
       id: "gridDefaultPositionIndex",
       name: "gridDefaultPositionIndex",
-      value: (department && department.gridDefaultPositionIndex) || "",
+      value: (department && department.griddefaultpositionindex) || "",
       label: "Grid default position",
       required: false,
       onChange: handleChange,
@@ -138,7 +138,7 @@ function DeptEditForm(props) {
     {
       id: "gridPromotedPositionIndex",
       name: "gridPromotedPositionIndex",
-      value: (department && department.gridPromotedPositionIndex) || "",
+      value: (department && department.gridpromotedpositionindex) || "",
       label: "Grid promoted position",
       required: false,
       onChange: handleChange,
@@ -147,7 +147,7 @@ function DeptEditForm(props) {
     {
       id: "deptPriorityNumber",
       name: "deptPriorityNumber",
-      value: (department && department.deptPriorityNumber) || "",
+      value: (department && department.deptprioritynumber) || "",
       label: "Priority number",
       required: false,
       onChange: handleChange,
@@ -165,7 +165,7 @@ function DeptEditForm(props) {
     {
       id: "campaignID",
       name: "campaignID",
-      value: (department && department.campaignID) || "",
+      value: (department && department.campaignid) || "",
       label: "Campaign",
       required: false,
       onChange: handleChange,

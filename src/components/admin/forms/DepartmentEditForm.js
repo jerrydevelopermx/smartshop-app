@@ -32,11 +32,11 @@ function DepartmentEditForm(props) {
     root: {
       "&:hover": {
         backgroundColor: appFunctions.getHoverColor(
-          props.styles.mobileNavBar.paper.background
+          props.styles.mobilenavbar.paper.background
         ),
       },
-      color: props.styles.mobileNavBar.paper.color,
-      backgroundColor: props.styles.topBar.background,
+      color: props.styles.mobilenavbar.paper.color,
+      backgroundColor: props.styles.topbar.background,
     },
   };
 
@@ -45,14 +45,14 @@ function DepartmentEditForm(props) {
   const CssTextField = withStyles({
     root: {
       "& label.Mui-focused": {
-        color: props.styles.mobileNavBar.paper.background,
+        color: props.styles.mobilenavbar.paper.background,
       },
       "& .MuiInput-underline:after": {
-        borderBottomColor: props.styles.mobileNavBar.paper.background,
+        borderBottomColor: props.styles.mobilenavbar.paper.background,
       },
       "& .MuiOutlinedInput-root": {
         "&.Mui-focused fieldset": {
-          borderColor: props.styles.mobileNavBar.paper.background,
+          borderColor: props.styles.mobilenavbar.paper.background,
         },
       },
     },
@@ -60,9 +60,9 @@ function DepartmentEditForm(props) {
 
   const CssCheckbox = withStyles({
     root: {
-      color: props.styles.mobileNavBar.paper.background,
+      color: props.styles.mobilenavbar.paper.background,
       "&$checked": {
-        color: props.styles.mobileNavBar.paper.background,
+        color: props.styles.mobilenavbar.paper.background,
       },
     },
     checked: {},

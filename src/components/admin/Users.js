@@ -52,21 +52,21 @@ function Users(props) {
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
     { field: "username", headerName: "Username", width: 180 },
-    { field: "userFirstName", headerName: "Name", width: 170 },
+    { field: "userfirstname", headerName: "Name", width: 170 },
     {
-      field: "userType",
+      field: "usertype",
       headerName: "User type",
       width: 100,
     },
     {
-      field: "departmentID",
+      field: "departmentid",
       headerName: "Dept",
       width: 80,
     },
-    { field: "userStatus", headerName: "Status", width: 100 },
-    { field: "createdDatime", headerName: "Created", width: 120 },
-    { field: "modifDatime", headerName: "Modified", width: 120 },
-    { field: "modifByID", headerName: "Modified by", width: 100 },
+    { field: "userstatus", headerName: "Status", width: 100 },
+    { field: "createddatime", headerName: "Created", width: 120 },
+    { field: "modifdatime", headerName: "Modified", width: 120 },
+    { field: "modifbyid", headerName: "Modified by", width: 100 },
 
     {
       field: "",

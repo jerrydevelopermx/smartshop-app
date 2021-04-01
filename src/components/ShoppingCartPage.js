@@ -14,6 +14,7 @@ import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 import appFunctions from "../js/functions";
 
 function ShoppingCartPage(props) {
+  console.log(props);
   let cartItems = [
     {
       image: "bag1.jpg",
@@ -38,11 +39,11 @@ function ShoppingCartPage(props) {
     root: {
       "&:hover": {
         backgroundColor: appFunctions.getHoverColor(
-          props.styles.closeButton.root.backgroundColor
+          props.styles.closebutton.root.background
         ),
       },
-      color: props.styles.closeButton.root.color,
-      backgroundColor: props.styles.closeButton.root.backgroundColor,
+      color: props.styles.closebutton.root.color,
+      backgroundColor: props.styles.closebutton.root.background,
     },
   };
 

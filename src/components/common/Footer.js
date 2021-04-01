@@ -39,7 +39,7 @@ function Footer(props) {
   }
 
   return (
-    <footer className={classes.bottomBar} style={props.styles.bottomBar}>
+    <footer className={classes.bottomBar} style={props.styles.bottombar}>
       {data && data.siteHtmlContent ? (
         <ModalContent
           open={modalStatus.open}
@@ -67,7 +67,7 @@ function Footer(props) {
                       {column.options.map((option, index) => (
                         <li key={"footOpt" + index}>
                           <NavLink
-                            style={props.styles.footerLinks}
+                            style={props.styles.footerlinks}
                             className={classes.footerLinks}
                             to=""
                             onClick={(e) => menuClickHandler(option.action, e)}

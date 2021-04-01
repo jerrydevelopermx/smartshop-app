@@ -18,6 +18,7 @@ import appFunctions from "../../js/functions";
 import "../../styles/app";
 
 function Header(props) {
+  console.log(props);
   let history = useHistory();
   let user = JSON.parse(localStorage.getItem("user"));
 
@@ -116,10 +117,17 @@ function Header(props) {
       },
     },
     toolbarSecondary: props.appStyles.toolbarSecondary,
+    listItem: {
+      "& span": {
+        color: props.styles.styledmenu.paper.color,
+        fontFamily: props.fontFamily,
+      },
+    },
   }));
+
   const classes = useStyles();
 
-  const StyledMenu = withStyles(props.styles.styledMenu)((props) => (
+  const StyledMenu = withStyles(props.styles.styledmenu)((props) => (
     <Menu
       elevation={0}
       getContentAnchorEl={null}
@@ -134,7 +142,7 @@ function Header(props) {
       {...props}
     />
   ));
-  const StyledlLoggedMenu = withStyles(props.styles.styledMenu)((props) => (
+  const StyledlLoggedMenu = withStyles(props.styles.styledmenu)((props) => (
     <Menu
       style={{ marginTop: "40px" }}
       elevation={0}
@@ -155,7 +163,7 @@ function Header(props) {
     root: {
       "&:hover": {
         backgroundColor: appFunctions.getHoverColor(
-          props.styles.styledMenu.paper.backgroundColor
+          props.styles.styledmenu.paper.background
         ),
       },
     },
@@ -276,7 +284,7 @@ function Header(props) {
 
       <AppBar
         position="fixed"
-        style={props.styles.topBar}
+        style={props.styles.topbar}
         className={classes.header}
       >
         {props.pageId !== "0" ? (
@@ -293,9 +301,10 @@ function Header(props) {
               pageId={props.pageId}
               blogLink={props.blogLink}
               classes={props.classes}
-              styles={props.styles.mobileNavBar}
+              styles={props.styles.mobilenavbar}
               appStyles={props.appStyles.modalMenu}
               onClick={mobileMenuClickHandler}
+              fontFamily={props.fontFamily}
             />
           </Hidden>
           {props.menu &&
@@ -309,7 +318,7 @@ function Header(props) {
                         <a
                           target="_new"
                           className={classes.headerMenu}
-                          style={props.styles.headerMenu}
+                          style={props.styles.headermenu}
                           href={props.blogLink}
                         >
                           {item.label}
@@ -336,7 +345,11 @@ function Header(props) {
                                   alt=""
                                 />
                                 <span
-                                  style={{ top: "40px", position: "relative" }}
+                                  style={{
+                                    top: "40px",
+                                    position: "relative",
+                                    fontFamily: props.fontFamily,
+                                  }}
                                 >
                                   {user.userName !== undefined
                                     ? user.userName
@@ -351,28 +364,41 @@ function Header(props) {
                                 onClose={handleCloseMenu}
                               >
                                 <StyledMenuItem onClick={goToAdmin}>
-                                  <ListItemText primary={"Admin"} />
-                                </StyledMenuItem>
-                                <StyledMenuItem>
-                                  <ListItemText primary={"My Profile"} />
-                                </StyledMenuItem>
-                                <StyledMenuItem>
-                                  <ListItemText primary={"My Pending Tasks"} />
+                                  <ListItemText
+                                    className={classes.listItem}
+                                    primary={"Admin"}
+                                  />
                                 </StyledMenuItem>
                                 <StyledMenuItem>
                                   <ListItemText
+                                    className={classes.listItem}
+                                    primary={"My Profile"}
+                                  />
+                                </StyledMenuItem>
+                                <StyledMenuItem>
+                                  <ListItemText
+                                    className={classes.listItem}
+                                    primary={"My Pending Tasks"}
+                                  />
+                                </StyledMenuItem>
+                                <StyledMenuItem>
+                                  <ListItemText
+                                    className={classes.listItem}
                                     primary={"My Completed Tasks"}
                                   />
                                 </StyledMenuItem>
                                 <StyledMenuItem onClick={handleLogout}>
-                                  <ListItemText primary={"Logout"} />
+                                  <ListItemText
+                                    className={classes.listItem}
+                                    primary={"Logout"}
+                                  />
                                 </StyledMenuItem>
                               </StyledlLoggedMenu>
                             </>
                           ) : (
                             <NavLink
                               className={classes.headerMenu}
-                              style={props.styles.headerMenu}
+                              style={props.styles.headermenu}
                               to={getMenuLinks(item)}
                               onClick={(e) =>
                                 item.label !== "Blog" && item.action
@@ -399,7 +425,7 @@ function Header(props) {
                         id={item.id}
                         onClick={handleClick}
                         className={classes.headerMenu}
-                        style={props.styles.headerMenu}
+                        style={props.styles.headermenu}
                         exact
                         to=""
                       >
@@ -424,7 +450,10 @@ function Header(props) {
                                 : handleSubMenuClick(submenu.action)
                             }
                           >
-                            <ListItemText primary={submenu.text} />
+                            <ListItemText
+                              className={classes.listItem}
+                              primary={submenu.text}
+                            />
                           </StyledMenuItem>
                         ))}
                       </StyledMenu>

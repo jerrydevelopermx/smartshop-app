@@ -12,7 +12,7 @@ import ResetPasswordForm from "./common/ResetPasswordForm";
 
 function FullPage(props) {
   let { id, section } = useParams();
-  const { loading, error, data } = useQuery(queries.GET_FULL_PAGE, {
+  const { loading, error, data } = useQuery(queries.GET_PAGE_INFO, {
     variables: {
       storeId: id !== undefined ? id : 0,
     },
@@ -21,15 +21,22 @@ function FullPage(props) {
   if (error) return <p>There is an error!</p>;
 
   return (
-    <div style={data.page.styles.body}>
+    <div
+      style={{
+        background: data.page.styles.body.background,
+        fontFamily: data.page.styles.body.fontfamily,
+        color: data.page.styles.body.color,
+      }}
+    >
       <Header
         logo={data.page.logo}
         blogLink={data.page.bloglink}
         menu={js.header}
         pageId={data.page.id}
         styles={data.page.styles.header}
-        modalStyles={data.page.styles.modalStyles}
+        modalStyles={data.page.styles.modalstyles}
         appStyles={appStyles.header}
+        fontFamily={data.page.styles.body.fontfamily}
       />
       <main style={{ marginTop: "120px" }}>
         {section === "login" ? (

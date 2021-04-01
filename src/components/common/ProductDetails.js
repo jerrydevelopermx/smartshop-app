@@ -20,9 +20,9 @@ import queries from "../../graphql/queries.js";
 function ProductDetails(props) {
   let styledCloseButton = {
     root: {
-      "&:hover": props.styles.closeButton.root.hover,
-      color: props.styles.closeButton.root.color,
-      backgroundColor: props.styles.closeButton.root.backgroundColor,
+      "&:hover": props.styles.closebutton.root.hover,
+      color: props.styles.closebutton.root.color,
+      backgroundColor: props.styles.closebutton.root.background,
     },
   };
 
@@ -45,7 +45,7 @@ function ProductDetails(props) {
   const CartButton = withStyles((theme) => styledCartButton)(Button);
   const WishListButton = withStyles((theme) => styledWishButton)(Button);
 
-  const { loading, error, data } = useQuery(queries.GET_PRODUCT_BY_ID, {
+  const { loading, error, data } = useQuery(queries.GET_PRODUCT_PAGE_BY_ID, {
     variables: {
       storeId: props.params.pageId,
       id: props.params.productId,

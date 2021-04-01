@@ -56,18 +56,18 @@ function Campaigns(props) {
 
   const columns = [
     { field: "id", headerName: "ID", width: 70, key: "campaignID" },
-    { field: "campaignNumber", headerName: "Number", width: 140 },
-    { field: "departmentID", headerName: "Dept", width: 130 },
+    { field: "campaignnumber", headerName: "Number", width: 140 },
+    { field: "departmentid", headerName: "Dept", width: 130 },
     {
-      field: "campaignType",
+      field: "campaigntype",
       headerName: "Type",
       width: 90,
     },
-    { field: "campaignOccurrence", headerName: "Ocurrence", width: 140 },
-    { field: "gridPositionIndex", headerName: "Position", width: 140 },
-    { field: "promotedFromDatime", headerName: "From", width: 140 },
-    { field: "promotedToDatime", headerName: "To", width: 140 },
-    { field: "campaignStatus", headerName: "Status", width: 140 },
+    { field: "campaignoccurrence", headerName: "Ocurrence", width: 140 },
+    { field: "gridpositionindex", headerName: "Position", width: 140 },
+    { field: "promotedfromdatime", headerName: "From", width: 140 },
+    { field: "promotedtodatime", headerName: "To", width: 140 },
+    { field: "campaignstatus", headerName: "Status", width: 140 },
     {
       field: "",
       headerName: "",

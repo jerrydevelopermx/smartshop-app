@@ -22,7 +22,7 @@ function StorePage(props) {
   const [filtersApplied, setFiltersApplied] = useState([]);
   const [linkTop, settLinkTop] = useState("none");
 
-  const { loading, error, data } = useQuery(queries.GET_PAGE_INFO, {
+  const { loading, error, data } = useQuery(queries.GET_HOME_PAGE_INFO, {
     variables: { storeId: props.match.params.id ? props.match.params.id : 0 },
   });
 
@@ -74,10 +74,11 @@ function StorePage(props) {
       style={{
         background: data.page.styles.body.background,
         fontFamily: data.page.styles.body.fontfamily,
+        color: data.page.styles.body.color,
       }}
     >
       <BackToTop
-        backgroundColor={data.page.styles.header.topBar.background}
+        backgroundColor={data.page.styles.header.topbar.background}
         display={linkTop}
       />
       <Header
@@ -87,8 +88,9 @@ function StorePage(props) {
         pageId={data.page.id}
         inputRef={videoRef}
         styles={data.page.styles.header}
-        modalStyles={data.page.styles.modalStyles}
+        modalStyles={data.page.styles.modalstyles}
         appStyles={appStyles.header}
+        fontFamily={data.page.styles.body.fontfamily}
       />
       <main>
         <Slider
@@ -114,7 +116,7 @@ function StorePage(props) {
             items={filteredItems !== null ? filteredItems : data.storeGrid}
             pageId={data.page.id}
             appStyles={appStyles}
-            modalStyles={data.page.styles.modalStyles}
+            modalStyles={data.page.styles.modalstyles}
           />
 
           {filteredItems !== null && filteredItems.length === 0 ? (
@@ -141,7 +143,7 @@ function StorePage(props) {
         pageId={data.page.id}
         appStyles={appStyles.footer}
         styles={data.page.styles.footer}
-        modalStyles={data.page.styles.modalStyles}
+        modalStyles={data.page.styles.modalstyles}
         content={js.footer}
         socialMedia={data.page.footer}
       />

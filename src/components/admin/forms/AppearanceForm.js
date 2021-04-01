@@ -17,14 +17,15 @@ import ColorPicker from "../../common/ColorPicker";
 import computedStyles from "../../../styles/computedStyles";
 
 function AppearanceForm(props) {
+  console.log(props);
   const [updateAppearance] = useMutation(mutations.UPDATE_SITE_APPEARANCE);
 
   const [appearance, setAppearance] = useState({
-    siteBodyColorRGB: props.data.siteBodyColorRGB,
-    siteBodyFontColorText: props.data.siteBodyFontColorText,
-    siteMainColorRGB: props.data.siteMainColorRGB,
-    siteMainFontColorText: props.data.siteMainFontColorText,
-    siteFontNameText: props.data.siteFontNameText,
+    siteBodyColorRGB: props.data.sitebodycolorrgb,
+    siteBodyFontColorText: props.data.sitebodyfontcolortext,
+    siteMainColorRGB: props.data.sitemaincolorrgb,
+    siteMainFontColorText: props.data.sitemainfontcolortext,
+    siteFontNameText: props.data.sitefontnametext,
   });
   const [colorPickersStatus, setColorPickersStatus] = useState({
     bodyColor: false,
@@ -144,7 +145,7 @@ function AppearanceForm(props) {
               id="email"
               label="Logo URL"
               name="logUrl"
-              defaultValue={props.data.siteLogoLink}
+              defaultValue={props.data.sitelogolink}
             />
           </Grid>
 

@@ -27,59 +27,59 @@ function UserEditForm(props) {
   let userData = {
     lastName: "",
     firstName: "",
-    isStore: false,
-    isSupplier: false,
+    isstore: false,
+    issupplier: false,
 
-    isShipper: false,
-    isPymntChannel: false,
+    isshipper: false,
+    ispymntchannel: false,
   };
 
   const [user, setUser] = useState({
     username: null,
     password: null,
-    userAlias: null,
-    avatarPhotoLink: null,
-    userType: null,
-    legalPerson: false,
-    userLastName: null,
-    userFirstName: null,
-    address1Text: null,
-    address2Text: null,
-    cityName: null,
-    stateCode: null,
-    postalCode: null,
-    countryCode: null,
-    landlineNumber: null,
-    faxNumber: null,
-    cellPhoneNumber: null,
-    alternateEmail: null,
+    useralias: null,
+    avatarphotolink: null,
+    usertype: null,
+    legalperson: false,
+    userlastname: null,
+    userfirstname: null,
+    address1text: null,
+    address2text: null,
+    cityname: null,
+    statecode: null,
+    postalcode: null,
+    countrycode: null,
+    landlinenumber: null,
+    faxnumber: null,
+    cellphonenumber: null,
+    alternateemail: null,
     website: null,
-    userIDType: null,
-    userIDNumber: null,
-    userDOBDate: null,
-    userTaxCode: null,
-    userTaxCUITL: null,
-    isStore: null,
-    isStoreContact: null,
-    isSupplier: null,
-    isSupplierContact: null,
-    isShipper: null,
-    isShipperContact: null,
-    isPymntChannel: null,
-    isPymntChContact: null,
-    isMember: null,
-    isCustomer: null,
-    isSubscriber: null,
-    isBlogger: null,
-    userFacebookLink: null,
-    userTwitterLink: null,
-    userInstagramLink: null,
-    userPinterestLink: null,
-    subscriptionEmail: null,
-    createdDatime: null,
-    modifByID: null,
-    modifDatime: null,
-    userStatus: null,
+    useridtype: null,
+    useridnumber: null,
+    userdobdate: null,
+    usertaxcode: null,
+    usertaxcuitl: null,
+    isstore: null,
+    isstorecontact: null,
+    issupplier: null,
+    issuppliercontact: null,
+    isshipper: null,
+    isshippercontact: null,
+    ispymntchannel: null,
+    ispymntchcontact: null,
+    ismember: null,
+    iscustomer: null,
+    issubscriber: null,
+    isblogger: null,
+    userfacebooklink: null,
+    usertwitterlink: null,
+    userinstagramlink: null,
+    userpinterestlink: null,
+    subscriptionemail: null,
+    createddatime: null,
+    modifbyid: null,
+    modifdatime: null,
+    userstatus: null,
   });
 
   useEffect(() => {
@@ -99,45 +99,45 @@ function UserEditForm(props) {
 
   let fields = [
     {
-      id: "userFirstName",
-      name: "userFirstName",
-      value: (user && user.userFirstName) || "",
+      id: "userfirstname",
+      name: "userfirstname",
+      value: (user && user.userfirstname) || "",
       label: "First Name",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 3 },
     },
     {
-      id: "userLastName",
-      name: "userLastName",
-      value: (user && user.userLastName) || "",
+      id: "userlastname",
+      name: "userlastname",
+      value: (user && user.userlastname) || "",
       label: "Last name",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 3 },
     },
     {
-      id: "cellPhoneNumber",
-      name: "cellPhoneNumber",
-      value: (user && user.cellPhoneNumber) || "",
+      id: "cellphonenumber",
+      name: "cellphonenumber",
+      value: (user && user.cellphonenumber) || "",
       label: "Cellphone number",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 2 },
     },
     {
-      id: "landlineNumber",
-      name: "landlineNumber",
-      value: (user && user.landlineNumber) || "",
+      id: "landlinenumber",
+      name: "landlinenumber",
+      value: (user && user.landlinenumber) || "",
       label: "Landline number",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 2 },
     },
     {
-      id: "faxNumber",
-      name: "faxNumber",
-      value: (user && user.faxNumber) || "",
+      id: "faxnumber",
+      name: "faxnumber",
+      value: (user && user.faxnumber) || "",
       label: "Fax number",
       required: false,
       onChange: handleChange,
@@ -145,9 +145,9 @@ function UserEditForm(props) {
     },
     {
       isTextarea: true,
-      id: "address1Text",
-      name: "address1Text",
-      value: (user && user.address1Text) || "",
+      id: "address1text",
+      name: "address1text",
+      value: (user && user.address1text) || "",
       label: "Address 1",
       required: false,
       onChange: handleChange,
@@ -155,45 +155,45 @@ function UserEditForm(props) {
     },
     {
       isTextarea: true,
-      id: "address2Text",
-      name: "address2Text",
-      value: (user && user.address2Text) || "",
+      id: "address2text",
+      name: "address2text",
+      value: (user && user.address2text) || "",
       label: "Address 2",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 6 },
     },
     {
-      id: "cityName",
-      name: "cityName",
-      value: (user && user.cityName) || "",
+      id: "cityname",
+      name: "cityname",
+      value: (user && user.cityname) || "",
       label: "City name",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 3 },
     },
     {
-      id: "postalCode",
-      name: "postalCode",
-      value: (user && user.postalCode) || "",
+      id: "postalcode",
+      name: "postalcode",
+      value: (user && user.postalcode) || "",
       label: "Postal code",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 3 },
     },
     {
-      id: "stateCode",
-      name: "stateCode",
-      value: (user && user.stateCode) || "",
+      id: "statecode",
+      name: "statecode",
+      value: (user && user.statecode) || "",
       label: "State code",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 3 },
     },
     {
-      id: "countryCode",
-      name: "countryCode",
-      value: (user && user.countryCode) || "",
+      id: "countrycode",
+      name: "countrycode",
+      value: (user && user.countrycode) || "",
       label: "Country code",
       required: false,
       onChange: handleChange,
@@ -219,18 +219,18 @@ function UserEditForm(props) {
     },
 
     {
-      id: "avatarPhotoLink",
-      name: "avatarPhotoLink",
-      value: (user && user.avatarPhotoLink) || "",
+      id: "avatarphotolink",
+      name: "avatarphotolink",
+      value: (user && user.avatarphotolink) || "",
       label: "Avatar",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 2 },
     },
     {
-      id: "userAlias",
-      name: "userAlias",
-      value: (user && user.userAlias) || "",
+      id: "useralias",
+      name: "useralias",
+      value: (user && user.useralias) || "",
       label: "Alias",
       required: false,
       onChange: handleChange,
@@ -238,18 +238,18 @@ function UserEditForm(props) {
     },
     {
       type: "checkbox",
-      id: "legalPerson",
-      name: "legalPerson",
-      value: (user && user.legalPerson) || "",
+      id: "legalperson",
+      name: "legalperson",
+      value: (user && user.legalperson) || "",
       label: "Is Legal Person",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 2 },
     },
     {
-      id: "alternateEmail",
-      name: "alternateEmail",
-      value: (user && user.alternateEmail) || "",
+      id: "alternateemail",
+      name: "alternateemail",
+      value: (user && user.alternateemail) || "",
       label: "Alternate email",
       required: false,
       onChange: handleChange,
@@ -272,81 +272,81 @@ function UserEditForm(props) {
       ],
       valueKey: "value",
       labelKey: "label",
-      id: "userIDType",
-      name: "userIDType",
-      value: (user && user.userIDType) || "",
+      id: "useridtype",
+      name: "useridtype",
+      value: (user && user.useridtype) || "",
       label: "ID type",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 2 },
     },
     {
-      id: "userIDNumber",
-      name: "userIDNumber",
-      value: (user && user.userIDNumber) || "",
+      id: "useridnumber",
+      name: "useridnumber",
+      value: (user && user.useridnumber) || "",
       label: "ID Number",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 2 },
     },
     {
-      id: "userDOBDate",
-      name: "userDOBDate",
-      value: (user && user.userDOBDate) || "",
+      id: "userdobdate",
+      name: "userdobdate",
+      value: (user && user.userdobdate) || "",
       label: "DOB Date",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 2 },
     },
     {
-      id: "userTaxCode",
-      name: "userTaxCode",
-      value: (user && user.userTaxCode) || "",
+      id: "usertaxcode",
+      name: "usertaxcode",
+      value: (user && user.usertaxcode) || "",
       label: "Tax Code",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 3 },
     },
     {
-      id: "userTaxCUITL",
-      name: "userTaxCUITL",
-      value: (user && user.userTaxCUITL) || "",
+      id: "usertaxcuitl",
+      name: "usertaxcuitl",
+      value: (user && user.usertaxcuitl) || "",
       label: "Tax CUITL",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 3 },
     },
     {
-      id: "userFacebookLink",
-      name: "userFacebookLink",
-      value: (user && user.userFacebookLink) || "",
+      id: "userfacebooklink",
+      name: "userfacebooklink",
+      value: (user && user.userfacebooklink) || "",
       label: "Facebook Link",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 3 },
     },
     {
-      id: "userTwitterLink",
-      name: "userTwitterLink",
-      value: (user && user.userTwitterLink) || "",
+      id: "usertwitterlink",
+      name: "usertwitterlink",
+      value: (user && user.usertwitterlink) || "",
       label: "Twitter Link",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 3 },
     },
     {
-      id: "userInstagramLink",
-      name: "userInstagramLink",
-      value: (user && user.userInstagramLink) || "",
+      id: "userinstagramlink",
+      name: "userinstagramlink",
+      value: (user && user.userinstagramlink) || "",
       label: "Instagram Link",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 3 },
     },
     {
-      id: "userPinterestLink",
-      name: "userPinterestLink",
-      value: (user && user.userPinterestLink) || "",
+      id: "userpinterestlink",
+      name: "userpinterestlink",
+      value: (user && user.userpinterestlink) || "",
       label: "Pinterest Link",
       required: false,
       onChange: handleChange,
@@ -367,7 +367,7 @@ function UserEditForm(props) {
       defaultValue: "corporate",
       id: "userType",
       name: "userType",
-      value: (user && user.userType) || "",
+      value: (user && user.usertype) || "",
       label: "User Type",
       required: false,
       onChange: handleChange,
@@ -401,7 +401,7 @@ function UserEditForm(props) {
     },*/
   ];
 
-  let isSupplierView = false;
+  let issupplierView = false;
 
   const [userType, setUserType] = useState(null);
   const [userRole, setUserRole] = useState("");
@@ -429,9 +429,9 @@ function UserEditForm(props) {
 
   let styledRadio = {
     root: {
-      color: props.styles.mobileNavBar.paper.background,
+      color: props.styles.mobilenavbar.paper.background,
       "&$checked": {
-        color: props.styles.mobileNavBar.paper.background,
+        color: props.styles.mobilenavbar.paper.background,
       },
     },
     checked: {},
@@ -466,9 +466,9 @@ function UserEditForm(props) {
           {/*
 
 
-              corporate => Department (isStore), Supplier (isSupplier), Shipper (isShipper), Payment Channel (isPymntChannel)
+              corporate => Department (isstore), Supplier (issupplier), Shipper (isshipper), Payment Channel (ispymntchannel)
               privileged => Super User, Site Manager, Site Staff, Deparment Manager, Deparment Admin, Deparment Staff (userType 1-7)
-              Non Privileged => Customer (isCustomer), Member (isMember), Subscriber (isSubscriber), Blogger (isBlogger) 
+              Non Privileged => Customer (iscustomer), Member (ismember), Subscriber (issubscriber), Blogger (isblogger) 
 
           <Grid container spacing={1}>
             <Grid item xs={6} sm={3} md={3}>
@@ -479,7 +479,7 @@ function UserEditForm(props) {
                 id="lastName"
                 label="Last Name"
                 name="lastName"
-                defaultValue={data && data.user ? data.user.userLastName : ""}
+                defaultValue={data && data.user ? data.user.userlastname : ""}
                 inputRef={(node) => {
                   userData.lastName = node;
                 }}
@@ -493,7 +493,7 @@ function UserEditForm(props) {
                 name="firstName"
                 label="First Name"
                 id="firstName"
-                defaultValue={data && data.user ? data.user.userFirstName : ""}
+                defaultValue={data && data.user ? data.user.userfirstname : ""}
                 inputRef={(node) => {
                   userData.firstName = node;
                 }}
@@ -529,9 +529,9 @@ function UserEditForm(props) {
                 name="Address1"
                 label="Address 1"
                 id="Address1"
-                defaultValue={data && data.user ? data.user.address1Text : ""}
+                defaultValue={data && data.user ? data.user.address1text : ""}
                 inputRef={(node) => {
-                  userData.address1Text = node;
+                  userData.address1text = node;
                 }}
               />
             </Grid>
@@ -543,9 +543,9 @@ function UserEditForm(props) {
                 name="Address1"
                 label="Address 1"
                 id="Address1"
-                defaultValue={data && data.user ? data.user.address2Text : ""}
+                defaultValue={data && data.user ? data.user.address2text : ""}
                 inputRef={(node) => {
-                  userData.address2Text = node;
+                  userData.address2text = node;
                 }}
               />
             </Grid>
@@ -559,9 +559,9 @@ function UserEditForm(props) {
                 name="city"
                 label="City"
                 id="city"
-                defaultValue={data && data.user ? data.user.cityName : ""}
+                defaultValue={data && data.user ? data.user.cityname : ""}
                 inputRef={(node) => {
-                  userData.cityName = node;
+                  userData.cityname = node;
                 }}
               />
             </Grid>
@@ -573,9 +573,9 @@ function UserEditForm(props) {
                 name="state"
                 label="State"
                 id="state"
-                defaultValue={data && data.user ? data.user.stateCode : ""}
+                defaultValue={data && data.user ? data.user.statecode : ""}
                 inputRef={(node) => {
-                  userData.stateCode = node;
+                  userData.statecode = node;
                 }}
               />
             </Grid>
@@ -587,9 +587,9 @@ function UserEditForm(props) {
                 name="zipCode"
                 label="Zip Code"
                 id="zipCode"
-                defaultValue={data && data.user ? data.user.postalCode : ""}
+                defaultValue={data && data.user ? data.user.postalcode : ""}
                 inputRef={(node) => {
-                  userData.postalCode = node;
+                  userData.postalcode = node;
                 }}
               />
             </Grid>
@@ -601,9 +601,9 @@ function UserEditForm(props) {
                 name="country"
                 label="Country"
                 id="country"
-                defaultValue={data && data.user ? data.user.countryCode : ""}
+                defaultValue={data && data.user ? data.user.countrycode : ""}
                 inputRef={(node) => {
-                  userData.countryCode = node;
+                  userData.countrycode = node;
                 }}
               />
             </Grid>
@@ -617,9 +617,9 @@ function UserEditForm(props) {
                 name="idType"
                 label="ID Type"
                 id="idType"
-                defaultValue={data && data.user ? data.user.userIDType : ""}
+                defaultValue={data && data.user ? data.user.useridtype : ""}
                 inputRef={(node) => {
-                  userData.userIDType = node;
+                  userData.useridtype = node;
                 }}
               />
             </Grid>
@@ -631,9 +631,9 @@ function UserEditForm(props) {
                 name="idNumber"
                 label="ID Number"
                 id="idNumber"
-                defaultValue={data && data.user ? data.user.userIDNumber : ""}
+                defaultValue={data && data.user ? data.user.useridnumber : ""}
                 inputRef={(node) => {
-                  userData.userIDNumber = node;
+                  userData.useridnumber = node;
                 }}
               />
             </Grid>
@@ -645,9 +645,9 @@ function UserEditForm(props) {
                 name="taxCode"
                 label="Tax Code"
                 id="taxCode"
-                defaultValue={data && data.user ? data.user.userTaxCode : ""}
+                defaultValue={data && data.user ? data.user.usertaxcode : ""}
                 inputRef={(node) => {
-                  userData.userTaxCode = node;
+                  userData.usertaxcode = node;
                 }}
               />
             </Grid>
@@ -659,9 +659,9 @@ function UserEditForm(props) {
                 name="taxIDNumber"
                 label="Tax ID Number"
                 id="taxIDNumber"
-                defaultValue={data && data.user ? data.user.userTaxCUITL : ""}
+                defaultValue={data && data.user ? data.user.usertaxcuitl : ""}
                 inputRef={(node) => {
-                  userData.userTaxCUITL = node;
+                  userData.usertaxcuitl = node;
                 }}
               />
             </Grid>
@@ -675,9 +675,9 @@ function UserEditForm(props) {
                 name="landline"
                 label="Landline"
                 id="landline"
-                defaultValue={data && data.user ? data.user.landlineNumber : ""}
+                defaultValue={data && data.user ? data.user.landlinenumber : ""}
                 inputRef={(node) => {
-                  userData.landlineNumber = node;
+                  userData.landlinenumber = node;
                 }}
               />
             </Grid>
@@ -690,10 +690,10 @@ function UserEditForm(props) {
                 label="Cell Phone"
                 id="cellPhone"
                 defaultValue={
-                  data && data.user ? data.user.cellPhoneNumber : ""
+                  data && data.user ? data.user.cellphonenumber : ""
                 }
                 inputRef={(node) => {
-                  userData.cellPhoneNumber = node;
+                  userData.cellphonenumber = node;
                 }}
               />
             </Grid>
@@ -702,12 +702,12 @@ function UserEditForm(props) {
                 variant="outlined"
                 margin="normal"
                 fullWidth
-                name="faxNumber"
+                name="faxnumber"
                 label="Fax Number"
-                id="faxNumber"
-                defaultValue={data && data.user ? data.user.faxNumber : ""}
+                id="faxnumber"
+                defaultValue={data && data.user ? data.user.faxnumber : ""}
                 inputRef={(node) => {
-                  userData.faxNumber = node;
+                  userData.faxnumber = node;
                 }}
               />
             </Grid>
@@ -738,11 +738,11 @@ function UserEditForm(props) {
                 variant="outlined"
                 margin="normal"
                 fullWidth
-                name="userFacebookLink"
+                name="userfacebooklink"
                 label="facebook"
-                id="userFacebookLink"
+                id="userfacebooklink"
                 defaultValue={
-                  data && data.user ? data.user.userFacebookLink : ""
+                  data && data.user ? data.user.userfacebooklink : ""
                 }
               />
             </Grid>
@@ -751,11 +751,11 @@ function UserEditForm(props) {
                 variant="outlined"
                 margin="normal"
                 fullWidth
-                name="userInstagramLink"
+                name="userinstagramlink"
                 label="Instagram"
-                id="userInstagramLink"
+                id="userinstagramlink"
                 defaultValue={
-                  data && data.user ? data.user.userInstagramLink : ""
+                  data && data.user ? data.user.userinstagramlink : ""
                 }
               />
             </Grid>
@@ -764,11 +764,11 @@ function UserEditForm(props) {
                 variant="outlined"
                 margin="normal"
                 fullWidth
-                name="userTwitterLink"
+                name="usertwitterlink"
                 label="Twitter"
-                id="userTwitterLink"
+                id="usertwitterlink"
                 defaultValue={
-                  data && data.user ? data.user.userTwitterLink : ""
+                  data && data.user ? data.user.usertwitterlink : ""
                 }
               />
             </Grid>
@@ -777,11 +777,11 @@ function UserEditForm(props) {
                 variant="outlined"
                 margin="normal"
                 fullWidth
-                name="userPinterestLink"
+                name="userpinterestlink"
                 label="Pinterest"
-                id="userPinterestLink"
+                id="userpinterestlink"
                 defaultValue={
-                  data && data.user ? data.user.userPinterestLink : ""
+                  data && data.user ? data.user.userpinterestlink : ""
                 }
               />
             </Grid>
@@ -884,7 +884,7 @@ function UserEditForm(props) {
                       <FormControlLabel
                         control={
                           <CssCheckbox
-                            value="isStore"
+                            value="isstore"
                             color="primary"
                             checked={data && data.user && data.user.store}
                           />
@@ -896,7 +896,7 @@ function UserEditForm(props) {
                       <FormControlLabel
                         control={
                           <CssCheckbox
-                            value="isSupplier"
+                            value="issupplier"
                             color="primary"
                             checked={data && data.user && data.user.supplier}
                           />
@@ -908,7 +908,7 @@ function UserEditForm(props) {
                       <FormControlLabel
                         control={
                           <CssCheckbox
-                            value="isShipper"
+                            value="isshipper"
                             color="primary"
                             checked={data && data.user && data.user.shipper}
                           />
@@ -920,7 +920,7 @@ function UserEditForm(props) {
                       <FormControlLabel
                         control={
                           <CssCheckbox
-                            value="isPymntChannel"
+                            value="ispymntchannel"
                             color="primary"
                             checked={
                               data && data.user && data.user.pymntChannel

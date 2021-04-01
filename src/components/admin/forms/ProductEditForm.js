@@ -20,21 +20,21 @@ function ProductEditForm(props) {
   const [categories, setCategories] = useState([]);
   const [campaigns, setCampaigns] = useState([]);
   const [product, setProduct] = useState({
-    productNumber: "",
-    departmentID: "",
-    productSKU: "",
-    productEAN: "",
-    productShortName: "",
-    productDescription: "",
-    prodCategoryCode: "", //dropdown
-    prodSubcategoryCode: "", //dropdown
-    brandCode: "", //dropdown
-    modelCode: "", //dropdown
-    yearCode: "", //dropdown
-    styleCode: "", //dropdown
-    genderCode: "", //dropdown
-    packagingCode: "", //dropdown
-    materialCode: "", //dropdown
+    productnumber: "",
+    departmentid: "",
+    productsku: "",
+    productean: "",
+    productshortname: "",
+    productdescription: "",
+    prodcategorycode: "", //dropdown
+    prodsubcategorycode: "", //dropdown
+    brandcode: "", //dropdown
+    modelcode: "", //dropdown
+    yearcode: "", //dropdown
+    stylecode: "", //dropdown
+    gendercode: "", //dropdown
+    packagingcode: "", //dropdown
+    materialcode: "", //dropdown
     colorCode: "", //dropdown
     sizeCode: "", //dropdown
     flavorCode: "", //dropdown
@@ -86,36 +86,36 @@ function ProductEditForm(props) {
 
   let fields = [
     {
-      id: "productNumber",
-      name: "productNumber",
-      value: (product && product.productNumber) || "",
+      id: "productnumber",
+      name: "productnumber",
+      value: (product && product.productnumber) || "",
       label: "Product Number",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 2 },
     },
     {
-      id: "productShortName",
-      name: "productShortName",
-      value: (product && product.productShortName) || "",
+      id: "productshortname",
+      name: "productshortname",
+      value: (product && product.productshortname) || "",
       label: "Short Name",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 2 },
     },
     {
-      id: "productSKU",
-      name: "productSKU",
-      value: (product && product.productSKU) || "",
+      id: "productsku",
+      name: "productsku",
+      value: (product && product.productsku) || "",
       label: "SKU",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 2 },
     },
     {
-      id: "productEAN",
-      name: "productEAN",
-      value: (product && product.productEAN) || "",
+      id: "productean",
+      name: "productean",
+      value: (product && product.productean) || "",
       label: "EAN",
       required: false,
       onChange: handleChange,
@@ -143,9 +143,9 @@ function ProductEditForm(props) {
     // ************
     {
       isTextarea: true,
-      id: "productDescription",
-      name: "productDescription",
-      value: (product && product.productDescription) || "",
+      id: "productdescription",
+      name: "productdescription",
+      value: (product && product.productdescription) || "",
       label: "Description",
       required: false,
       onChange: handleChange,
@@ -174,11 +174,11 @@ function ProductEditForm(props) {
     {
       type: "dropdown",
       options: categories,
-      valueKey: "prodCategoryCode",
-      labelKey: "prodCategoryName",
-      id: "prodCategoryCode",
-      name: "prodCategoryCode",
-      value: (product && product.prodCategoryCode) || "",
+      valueKey: "prodcategorycode",
+      labelKey: "prodcategoryname",
+      id: "prodcategorycode",
+      name: "prodcategorycode",
+      value: (product && product.prodcategorycode) || "",
       label: "Category",
       required: false,
       onChange: handleChange,
@@ -187,11 +187,11 @@ function ProductEditForm(props) {
     {
       type: "dropdown",
       options: data && data.prodSubcategories,
-      valueKey: "prodSubcategoryCode",
-      labelKey: "prodSubcategoryName",
-      id: "prodSubcategoryCode",
-      name: "prodSubcategoryCode",
-      value: (product && product.prodSubcategoryCode) || "",
+      valueKey: "prodsubcategorycode",
+      labelKey: "prodsubcategoryname",
+      id: "prodsubcategorycode",
+      name: "prodsubcategorycode",
+      value: (product && product.prodsubcategorycode) || "",
       label: "Subcategory",
       required: false,
       onChange: handleChange,
@@ -292,63 +292,63 @@ function ProductEditForm(props) {
       grid: { xs: 6, sm: 3, md: 12 },
     },
     {
-      id: "brandCode",
-      name: "brandCode",
-      value: (product && product.brandCode) || "",
+      id: "brandcode",
+      name: "brandcode",
+      value: (product && product.brandcode) || "",
       label: "Brand",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 2 },
     },
     {
-      id: "modelCode",
-      name: "modelCode",
-      value: (product && product.modelCode) || "",
+      id: "modelcode",
+      name: "modelcode",
+      value: (product && product.modelcode) || "",
       label: "Model",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 2 },
     },
     {
-      id: "yearCode",
-      name: "yearCode",
-      value: (product && product.yearCode) || "",
+      id: "yearcode",
+      name: "yearcode",
+      value: (product && product.yearcode) || "",
       label: "Year",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 2 },
     },
     {
-      id: "styleCode",
-      name: "styleCode",
-      value: (product && product.styleCode) || "",
+      id: "stylecode",
+      name: "stylecode",
+      value: (product && product.stylecode) || "",
       label: "Style",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 2 },
     },
     {
-      id: "genderCode",
-      name: "genderCode",
-      value: (product && product.genderCode) || "",
+      id: "gendercode",
+      name: "gendercode",
+      value: (product && product.gendercode) || "",
       label: "Gender",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 2 },
     },
     {
-      id: "packagingCode",
-      name: "packagingCode",
-      value: (product && product.packagingCode) || "",
+      id: "packagingcode",
+      name: "packagingcode",
+      value: (product && product.packagingcode) || "",
       label: "Packaging Code",
       required: false,
       onChange: handleChange,
       grid: { xs: 6, sm: 3, md: 2 },
     },
     {
-      id: "materialCode",
-      name: "materialCode",
-      value: (product && product.materialCode) || "",
+      id: "materialcode",
+      name: "materialcode",
+      value: (product && product.materialcode) || "",
       label: "Material",
       required: false,
       onChange: handleChange,
@@ -579,7 +579,7 @@ function ProductEditForm(props) {
 
     console.log(product);
 
-    if (event.target.name === "prodCategoryCode") {
+    if (event.target.name === "prodcategorycode") {
       getSubcategories({
         variables: {
           categoryCode: event.target.value,

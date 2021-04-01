@@ -26,7 +26,7 @@ function AdminPage(props) {
   let user = JSON.parse(localStorage.getItem("user"));
   let { id, section, action, departmentId, deptSection, itemId } = useParams();
   console.log(id, section, action, departmentId, deptSection);
-  const { loading, error, data } = useQuery(queries.GET_FULL_PAGE, {
+  const { loading, error, data } = useQuery(queries.GET_PAGE_INFO, {
     variables: {
       storeId: id !== undefined ? id : 0,
     },
@@ -35,7 +35,13 @@ function AdminPage(props) {
   if (error) return <p>There is an error!</p>;
 
   return (
-    <div style={data.page.styles.body}>
+    <div
+      style={{
+        background: data.page.styles.body.background,
+        fontFamily: data.page.styles.body.fontfamily,
+        color: data.page.styles.body.color,
+      }}
+    >
       <ToastContainer
         position="top-right"
         hideProgressBar
@@ -52,8 +58,9 @@ function AdminPage(props) {
         menu={js.header}
         pageId={data.page.id}
         styles={data.page.styles.header}
-        modalStyles={data.page.styles.modalStyles}
+        modalStyles={data.page.styles.modalstyles}
         appStyles={appStyles.header}
+        fontFamily={data.page.styles.body.fontfamily}
       />
       <main
         style={{
@@ -66,12 +73,13 @@ function AdminPage(props) {
             item
             sm={2}
             md={2}
-            style={{ background: data.page.styles.header.topBar.background }}
+            style={{ background: data.page.styles.header.topbar.background }}
           >
             <Hidden only={["xs"]}>
               <LeftNavBar
                 styles={data.page.styles.header}
                 pageId={data.page.id}
+                fontFamily={data.page.styles.body.fontfamily}
               />
             </Hidden>
           </Grid>
@@ -111,7 +119,7 @@ function AdminPage(props) {
                       buttons={appStyles.buttons}
                       styles={data.page.styles.header}
                       pageId={departmentId}
-                      modalStyles={data.page.styles.modalStyles}
+                      modalStyles={data.page.styles.modalstyles}
                     />
                   ),
                   edit: (
@@ -172,7 +180,7 @@ function AdminPage(props) {
                     appButtons={appStyles.buttons}
                     styles={data.page.styles.header}
                     pageId={data.page.id}
-                    modalStyles={data.page.styles.modalStyles}
+                    modalStyles={data.page.styles.modalstyles}
                   />
                 ),
                 cms: (

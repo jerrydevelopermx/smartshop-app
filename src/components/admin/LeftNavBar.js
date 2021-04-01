@@ -33,14 +33,20 @@ function LeftNavBar(props) {
     root: {
       width: "100%",
       maxWidth: 360,
-      backgroundColor: props.styles.topBar.background,
-      color: props.styles.headerMenu.color,
+      backgroundColor: props.styles.topbar.background,
+      color: props.styles.headermenu.color,
     },
     nested: {
       paddingLeft: theme.spacing(4),
     },
     icon: {
-      color: props.styles.headerMenu.color,
+      color: props.styles.headermenu.color,
+    },
+    listItem: {
+      "& span": {
+        color: props.styles.headermenu.color,
+        fontFamily: props.fontFamily,
+      },
     },
   }));
 
@@ -66,7 +72,7 @@ function LeftNavBar(props) {
             <ListItemIcon className={classes.icon}>
               <DesktopMacIcon />
             </ListItemIcon>
-            <ListItemText primary="Site" />
+            <ListItemText className={classes.listItem} primary="Site" />
             {open.site ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={open.site} timeout="auto" unmountOnExit>
@@ -84,7 +90,10 @@ function LeftNavBar(props) {
                 <ListItemIcon className={classes.icon}>
                   <ArtTrackIcon />
                 </ListItemIcon>
-                <ListItemText primary="Content Management" />
+                <ListItemText
+                  className={classes.listItem}
+                  primary="Content Management"
+                />
               </ListItem>
               <ListItem
                 button
@@ -99,13 +108,19 @@ function LeftNavBar(props) {
                 <ListItemIcon className={classes.icon}>
                   <StarBorder />
                 </ListItemIcon>
-                <ListItemText primary="Campaign Management" />
+                <ListItemText
+                  className={classes.listItem}
+                  primary="Campaign Management"
+                />
               </ListItem>
               <ListItem button className={classes.nested}>
                 <ListItemIcon className={classes.icon}>
                   <DvrIcon />
                 </ListItemIcon>
-                <ListItemText primary="Monitoring" />
+                <ListItemText
+                  className={classes.listItem}
+                  primary="Monitoring"
+                />
               </ListItem>
               <ListItem
                 button
@@ -116,19 +131,25 @@ function LeftNavBar(props) {
                 <ListItemIcon className={classes.icon}>
                   <ReportProblemIcon />
                 </ListItemIcon>
-                <ListItemText primary="Incident Management" />
+                <ListItemText
+                  className={classes.listItem}
+                  primary="Incident Management"
+                />
               </ListItem>
               <ListItem button className={classes.nested}>
                 <ListItemIcon className={classes.icon}>
                   <UpdateIcon />
                 </ListItemIcon>
-                <ListItemText primary="Maintenance" />
+                <ListItemText
+                  className={classes.listItem}
+                  primary="Maintenance"
+                />
               </ListItem>
               <ListItem button className={classes.nested}>
                 <ListItemIcon className={classes.icon}>
                   <AssessmentIcon />
                 </ListItemIcon>
-                <ListItemText primary="Reports" />
+                <ListItemText className={classes.listItem} primary="Reports" />
               </ListItem>
             </List>
           </Collapse>
@@ -139,7 +160,7 @@ function LeftNavBar(props) {
         <ListItemIcon className={classes.icon}>
           <StoreIcon />
         </ListItemIcon>
-        <ListItemText primary="Department" />
+        <ListItemText className={classes.listItem} primary="Department" />
         {open.department ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open.department} timeout="auto" unmountOnExit>
@@ -159,7 +180,10 @@ function LeftNavBar(props) {
                 <ListItemIcon className={classes.icon}>
                   <PostAddIcon />
                 </ListItemIcon>
-                <ListItemText primary="Creation and Maintenance" />
+                <ListItemText
+                  className={classes.listItem}
+                  primary="Creation and Maintenance"
+                />
               </ListItem>
             </>
           ) : (
@@ -177,7 +201,10 @@ function LeftNavBar(props) {
                 <ListItemIcon className={classes.icon}>
                   <ArtTrackIcon />
                 </ListItemIcon>
-                <ListItemText primary="Content Management" />
+                <ListItemText
+                  className={classes.listItem}
+                  primary="Content Management"
+                />
               </ListItem>
               <ListItem
                 button
@@ -192,7 +219,10 @@ function LeftNavBar(props) {
                 <ListItemIcon className={classes.icon}>
                   <StarBorder />
                 </ListItemIcon>
-                <ListItemText primary="Campaign Manager" />
+                <ListItemText
+                  className={classes.listItem}
+                  primary="Campaign Manager"
+                />
               </ListItem>
               <ListItem
                 button
@@ -207,31 +237,43 @@ function LeftNavBar(props) {
                 <ListItemIcon className={classes.icon}>
                   <ListAltIcon />
                 </ListItemIcon>
-                <ListItemText primary="Inventory Management" />
+                <ListItemText
+                  className={classes.listItem}
+                  primary="Inventory Management"
+                />
               </ListItem>
               <ListItem button className={classes.nested}>
                 <ListItemIcon className={classes.icon}>
                   <AddShoppingCartIcon />
                 </ListItemIcon>
-                <ListItemText primary="Orders Management" />
+                <ListItemText
+                  className={classes.listItem}
+                  primary="Orders Management"
+                />
               </ListItem>
               <ListItem button className={classes.nested}>
                 <ListItemIcon className={classes.icon}>
                   <MonetizationOnIcon />
                 </ListItemIcon>
-                <ListItemText primary="Payments Management" />
+                <ListItemText
+                  className={classes.listItem}
+                  primary="Payments Management"
+                />
               </ListItem>
               <ListItem button className={classes.nested}>
                 <ListItemIcon className={classes.icon}>
                   <AssessmentIcon />
                 </ListItemIcon>
-                <ListItemText primary="Reports" />
+                <ListItemText className={classes.listItem} primary="Reports" />
               </ListItem>
               <ListItem button className={classes.nested}>
                 <ListItemIcon className={classes.icon}>
                   <TuneIcon />
                 </ListItemIcon>
-                <ListItemText primary="Analytics" />
+                <ListItemText
+                  className={classes.listItem}
+                  primary="Analytics"
+                />
               </ListItem>
             </>
           )}
@@ -241,7 +283,7 @@ function LeftNavBar(props) {
         <ListItemIcon className={classes.icon}>
           <GroupIcon />
         </ListItemIcon>
-        <ListItemText primary="Users" />
+        <ListItemText className={classes.listItem} primary="Users" />
         {open.users ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open.users} timeout="auto" unmountOnExit>
@@ -259,7 +301,10 @@ function LeftNavBar(props) {
             <ListItemIcon className={classes.icon}>
               <PostAddIcon />
             </ListItemIcon>
-            <ListItemText primary="Creation and Maintenance" />
+            <ListItemText
+              className={classes.listItem}
+              primary="Creation and Maintenance"
+            />
           </ListItem>
           <ListItem
             button
@@ -274,7 +319,10 @@ function LeftNavBar(props) {
             <ListItemIcon className={classes.icon}>
               <PlaylistAddCheckIcon />
             </ListItemIcon>
-            <ListItemText primary="Queries and Lists" />
+            <ListItemText
+              className={classes.listItem}
+              primary="Queries and Lists"
+            />
           </ListItem>
           <ListItem
             button
@@ -289,13 +337,16 @@ function LeftNavBar(props) {
             <ListItemIcon className={classes.icon}>
               <TrendingUpIcon />
             </ListItemIcon>
-            <ListItemText primary="Activity tracker" />
+            <ListItemText
+              className={classes.listItem}
+              primary="Activity tracker"
+            />
           </ListItem>
           <ListItem button className={classes.nested}>
             <ListItemIcon className={classes.icon}>
               <AssessmentIcon />
             </ListItemIcon>
-            <ListItemText primary="Reports" />
+            <ListItemText className={classes.listItem} primary="Reports" />
           </ListItem>
         </List>
       </Collapse>
